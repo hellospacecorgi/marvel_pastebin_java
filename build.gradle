@@ -7,16 +7,15 @@
  */
 
 plugins {
-    // Apply the java plugin to add support for Java
     id 'java'
-
-    // Apply the application plugin to add support for building a CLI application.
+    id 'org.openjfx.javafxplugin' version '0.0.8'
     id 'application'
+    id 'jacoco'
 }
 
+sourceCompatibility = 11
+
 repositories {
-    // Use jcenter for resolving dependencies.
-    // You can declare any Maven/Ivy/file repository here.
     jcenter()
 }
 
@@ -24,11 +23,47 @@ dependencies {
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:29.0-jre'
 
+    // https://mvnrepository.com/artifact/org.json/json
+    implementation group: 'org.json', name: 'json', version: '20090211'
+
     // Use JUnit test framework
     testImplementation 'junit:junit:4.13'
+
+    // https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
+    implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+
+    compile group:'org.xerial', name:'sqlite-jdbc', version:'3.32.3.2'
+}
+
+javafx{
+    modules = ['javafx.controls', 'javafx.fxml']
+    version = '16'
+}
+
+jacoco {
+    toolVersion = "0.8.5"
+    reportsDir = file("$buildDir/jacocoreports/")
+}
+
+jacocoTestReport {
+    reports {
+        html.enabled = true
+        csv.enabled = false
+        xml.enabled = false
+        html.destination file("${buildDir}/jacocoHTML")
+    }
+}
+
+test {
+    test.finalizedBy jacocoTestReport
+    reports {
+        junitXml.enabled = false
+        html.enabled = true
+    }
+
 }
 
 application {
     // Define the main class for the application.
-    mainClassName = 'SCD2_2021_Exam.App'
+    mainClassName = 'marvel.pastebin.App'
 }
