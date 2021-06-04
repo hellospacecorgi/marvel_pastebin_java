@@ -41,11 +41,17 @@ The version where this is fully completed and tested in tagged with version `<ve
 
 ### RED-GREEN-REFACTOR Commits
 
-**RED** <URL for commit where tests for specific feature is finished, can be compiled and run but do not pass>
+**RED** 
 
-**GREEN** <URL for commit where features are implemented and tests passed>
+<<URL for commit where tests for specific feature is finished, can be compiled and run but do not pass>>
 
-**REFACTOR** <URL for commit where some of that implementation is refactored but tests still passing>
+**GREEN** 
+
+<URL for commit where features are implemented and tests passed>
+
+**REFACTOR** 
+
+<<URL for commit where some of that implementation is refactored but tests still passing>>
 
 
 ### Javadoc location
