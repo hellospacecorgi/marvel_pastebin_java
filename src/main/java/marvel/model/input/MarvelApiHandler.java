@@ -11,20 +11,23 @@ import java.net.http.HttpResponse;
 
 public class MarvelApiHandler {
     private ResponseHandler responseHandler;
-    private String publicKey = "9809e50b4e4428f620e48572801b007f";
-    private String privateKey = "6480971221bbbb81b20b3ae5a50d3093b463c62f";
+    private String publicKey;
+    private String privateKey;
     private HttpClient client;
 
-    public MarvelApiHandler(){
+    public MarvelApiHandler(String publicKey, String privateKey){
+        if(publicKey == null || privateKey == null){
+            throw new NullPointerException();
+        }
+        if(publicKey.isEmpty() || privateKey.isEmpty()){
+            System.out.println("Input API key is empty - check config file");
+            throw new IllegalArgumentException();
+        }
+        this.publicKey = publicKey;
+        this.privateKey = privateKey;
         client = HttpClient.newHttpClient();
         responseHandler = new ResponseHandler();
     }
-
-    public void setKeys(String publicKey, String privateKey){
-        this.publicKey = publicKey;
-        this.privateKey = privateKey;
-    }
-
 
     public String generateHash(){
         if(publicKey != null && privateKey != null){

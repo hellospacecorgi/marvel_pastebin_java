@@ -14,6 +14,8 @@ public class ModelImpl implements ModelFacade{
     InputModel input;
     OutputModel output;
 
+    CharacterInfo currentCharacter;
+
     /**
      * Takes in a version of InputModel and OutputModel for online/offline versions.
      * @param input takes in a input model implementation
@@ -24,7 +26,7 @@ public class ModelImpl implements ModelFacade{
         this.output = output;
 
         ConfigHandler config = new ConfigHandler(configFilePath);
-        this.input.setApiHandler(new MarvelApiHandler());
+        this.input.setApiHandler(new MarvelApiHandler(config.getInputPublicKey(), config.getInputPrivateKey()));
 
     }
 
@@ -52,6 +54,12 @@ public class ModelImpl implements ModelFacade{
         if(name.isEmpty() || name.isBlank()){
             throw new IllegalArgumentException();
         }
-        return input.getInfoByName(name);
+        currentCharacter = input.getInfoByName(name);
+        return currentCharacter;
+    }
+
+    @Override
+    public CharacterInfo getCurrentCharacter() {
+        return currentCharacter;
     }
 }

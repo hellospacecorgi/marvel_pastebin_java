@@ -1,12 +1,16 @@
 package marvel;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import marvel.model.character.CharacterInfo;
+import marvel.model.character.*;
 import marvel.model.ModelFacade;
 
 import java.io.IOException;
@@ -49,11 +53,6 @@ public class MainPresenter {
         this.model = model;
     }
 
-//    @FXML
-//    public void initialize(){
-//
-//    }
-
     /**
      * Triggered by 'Search Character' button.
      * Expects textfield to have string value input.
@@ -76,10 +75,104 @@ public class MainPresenter {
         result = result.concat("ID: ").concat(String.valueOf(info.getId()));
         result = result.concat("\nName: ").concat(info.getName());
         result = result.concat("\nDescription: ").concat(info.getDescription());
+        result = result.concat("\nNumber of Comics: ").concat(String.valueOf(info.getNComics()));
+        result = result.concat("\nNumber of Stories: ").concat(String.valueOf(info.getNStories()));
+        result = result.concat("\nNumber of Events: ").concat(String.valueOf(info.getNEvents()));
+        result = result.concat("\nNumber of Series: ").concat(String.valueOf(info.getNSeries()));
         message.setText(result);
-        //Image img = model.getInputSubModel().getThumbnailImage(info.getThumbnail().getPath());
+
         //Update view with response
+        updateCenterComics(); //show list of comics by default
+
+        //Image img = model.getInputSubModel().getThumbnailImage(info.getThumbnail().getPath());
         //thumbnail.setImage(img);
 
+    }
+
+    @FXML
+    public void onComics(){
+        updateCenterComics();
+    }
+
+    public void updateCenterComics(){
+        ObservableList<Comic> clist = FXCollections.observableArrayList(model.getCurrentCharacter().getComicList());
+
+        TableColumn<ResourceUrl, String> name = new TableColumn<>("Comic Name");
+        name.setCellValueFactory(new PropertyValueFactory<>("name"));
+        TableColumn<ResourceUrl, String> path = new TableColumn<>("URL Path");
+        path.setCellValueFactory(new PropertyValueFactory<>("resourcePath"));
+
+        centerTable.getItems().clear();
+        centerTable.getColumns().clear();
+        centerTable.setItems(clist);
+        centerTable.getColumns().addAll(name, path);
+
+    }
+
+
+    @FXML
+    public void onUrl(){
+        ObservableList<ResourceUrl> rlist = FXCollections.observableArrayList(model.getCurrentCharacter().getUrls());
+
+        TableColumn<ResourceUrl, String> type = new TableColumn<>("Type");
+        type.setCellValueFactory(new PropertyValueFactory<>("type"));
+        TableColumn<ResourceUrl, String> path = new TableColumn<>("URL Path");
+        path.setCellValueFactory(new PropertyValueFactory<>("url"));
+
+        centerTable.getItems().clear();
+        centerTable.getColumns().clear();
+        centerTable.setItems(rlist);
+        centerTable.getColumns().addAll(type, path);
+
+    }
+
+    @FXML
+    public void onStories(){
+        ObservableList<Story> clist = FXCollections.observableArrayList(model.getCurrentCharacter().getStoryList());
+
+        TableColumn<Story, String> name = new TableColumn<>("Story Name");
+        name.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+        TableColumn<Story, String> type = new TableColumn<>("Type");
+        type.setCellValueFactory(new PropertyValueFactory<>("type"));
+
+        TableColumn<Story, String> path = new TableColumn<>("URL Path");
+        path.setCellValueFactory(new PropertyValueFactory<>("resourcePath"));
+
+        centerTable.getItems().clear();
+        centerTable.getColumns().clear();
+        centerTable.setItems(clist);
+        centerTable.getColumns().addAll(name, type, path);
+    }
+
+    @FXML
+    public void onEvents(){
+        ObservableList<Event> clist = FXCollections.observableArrayList(model.getCurrentCharacter().getEventList());
+
+        TableColumn<Event, String> name = new TableColumn<>("Event Name");
+        name.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+        TableColumn<Event, String> path = new TableColumn<>("URL Path");
+        path.setCellValueFactory(new PropertyValueFactory<>("resourcePath"));
+
+        centerTable.getItems().clear();
+        centerTable.getColumns().clear();
+        centerTable.setItems(clist);
+        centerTable.getColumns().addAll(name, path);
+    }
+
+    @FXML
+    public void onSeries(){
+        ObservableList<Series> clist = FXCollections.observableArrayList(model.getCurrentCharacter().getSeriesList());
+
+        TableColumn<Series, String> name = new TableColumn<>("Comic Name");
+        name.setCellValueFactory(new PropertyValueFactory<>("name"));
+        TableColumn<Series, String> path = new TableColumn<>("URL Path");
+        path.setCellValueFactory(new PropertyValueFactory<>("resourcePath"));
+
+        centerTable.getItems().clear();
+        centerTable.getColumns().clear();
+        centerTable.setItems(clist);
+        centerTable.getColumns().addAll(name, path);
     }
 }

@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane prefHeight="500.0" prefWidth="800.0" stylesheets="@Main.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="600.0" prefWidth="900.0" stylesheets="@Main.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <top>
       <VBox alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="74.0" prefWidth="800.0" BorderPane.alignment="CENTER">
          <children>
@@ -29,7 +29,7 @@
       </VBox>
    </top>
    <bottom>
-      <VBox prefHeight="113.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="157.0" prefWidth="900.0" BorderPane.alignment="CENTER">
          <children>
             <HBox alignment="BOTTOM_CENTER" prefHeight="182.0" prefWidth="800.0">
                <children>
@@ -69,18 +69,13 @@
       </VBox>
    </bottom>
    <right>
-      <VBox prefHeight="313.0" prefWidth="237.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="413.0" prefWidth="238.0" BorderPane.alignment="CENTER">
          <children>
             <ImageView fx:id="thumbnail" fitHeight="174.0" fitWidth="235.0" pickOnBounds="true" preserveRatio="true">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
             </ImageView>
-            <TableView fx:id="urlTable" prefHeight="200.0" prefWidth="230.0" VBox.vgrow="ALWAYS">
-               <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" />
-               </VBox.margin>
-            </TableView>
          </children>
       </VBox>
    </right>
@@ -89,27 +84,32 @@
          <children>
             <HBox prefHeight="33.0" prefWidth="563.0">
                <children>
-                  <Button mnemonicParsing="false" text="Comics">
+                  <Button mnemonicParsing="false" onAction="#onComics" text="Comics">
                      <HBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" text="Stories">
+                  <Button mnemonicParsing="false" onAction="#onStories" text="Stories">
                      <HBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" text="Events">
+                  <Button mnemonicParsing="false" onAction="#onEvents" text="Events">
                      <HBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" text="Series">
+                  <Button mnemonicParsing="false" onAction="#onSeries" text="Series">
                      <HBox.margin>
-                        <Insets bottom="5.0" left="5.0" top="5.0" />
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </HBox.margin>
                   </Button>
-                  <Region prefHeight="30.0" prefWidth="121.0" HBox.hgrow="ALWAYS" />
+                  <Button mnemonicParsing="false" onAction="#onUrl" text="URLs">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Region prefHeight="31.0" prefWidth="30.0" HBox.hgrow="ALWAYS" />
                   <Button mnemonicParsing="false" text="Load from cache">
                      <HBox.margin>
                         <Insets bottom="5.0" left="5.0" top="5.0" />
@@ -117,7 +117,7 @@
                   </Button>
                </children>
             </HBox>
-            <TableView fx:id="centerTable" fixedCellSize="0.0" prefHeight="287.0" prefWidth="563.0" VBox.vgrow="ALWAYS">
+            <TableView fx:id="centerTable" fixedCellSize="0.0" prefHeight="375.0" prefWidth="626.0" VBox.vgrow="ALWAYS">
                <VBox.margin>
                   <Insets bottom="5.0" />
                </VBox.margin>

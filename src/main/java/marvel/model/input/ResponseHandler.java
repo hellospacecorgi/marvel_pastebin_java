@@ -56,7 +56,7 @@ public class ResponseHandler {
                 JSONArray list = comics.getJSONArray("items");
                 List<Comic> clist = new ArrayList<>();
                 for(int j = 0; j < list.length() ; j ++){
-                    JSONObject c = list.getJSONObject(i);
+                    JSONObject c = list.getJSONObject(j);
                     clist.add(new Comic(c.getString("name"), c.getString("resourceURI")));
                 }
 
@@ -66,7 +66,7 @@ public class ResponseHandler {
                 list = stories.getJSONArray("items");
                 List<Story> slist = new ArrayList<>();
                 for(int j = 0; j < list.length() ; j ++){
-                    JSONObject c = list.getJSONObject(i);
+                    JSONObject c = list.getJSONObject(j);
                     slist.add(new Story(c.getString("name"), c.getString("type"), c.getString("resourceURI")));
                 }
 
@@ -76,7 +76,7 @@ public class ResponseHandler {
                 list = events.getJSONArray("items");
                 List<Event> elist = new ArrayList<>();
                 for(int j = 0; j < list.length() ; j ++){
-                    JSONObject c = list.getJSONObject(i);
+                    JSONObject c = list.getJSONObject(j);
                     elist.add(new Event(c.getString("name"), c.getString("resourceURI")));
                 }
 
@@ -86,7 +86,7 @@ public class ResponseHandler {
                 list = series.getJSONArray("items");
                 List<Series> seriesList = new ArrayList<>();
                 for(int j = 0; j < list.length() ; j ++){
-                    JSONObject c = list.getJSONObject(i);
+                    JSONObject c = list.getJSONObject(j);
                     seriesList.add(new Series(c.getString("name"), c.getString("resourceURI")));
                 }
 
@@ -94,7 +94,7 @@ public class ResponseHandler {
                 list = character.getJSONArray("urls");
                 List<ResourceUrl> ulist = new ArrayList<>();
                 for(int j = 0; j < list.length() ; j ++){
-                    JSONObject c = list.getJSONObject(i);
+                    JSONObject c = list.getJSONObject(j);
                     ulist.add(new ResourceUrl(c.getString("type"), c.getString("url")));
                 }
 
@@ -105,6 +105,10 @@ public class ResponseHandler {
                 info.setSeriesList(seriesList);
                 info.setEventList(elist);
                 info.setStoryList(slist);
+                info.setNComics(numComics);
+                info.setNEvents(numEvents);
+                info.setNSeries(numSeries);
+                info.setNStories(numStories);
             }
 
             return info;

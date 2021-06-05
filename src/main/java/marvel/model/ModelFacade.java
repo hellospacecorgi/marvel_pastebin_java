@@ -7,6 +7,8 @@ public interface ModelFacade {
     public InputModel getInputSubModel();
     public OutputModel getOutputSubModel();
 
+    public CharacterInfo getCurrentCharacter();
+
     public CharacterInfo getCharacterInfo(String name);
 
     //public boolean sendReport();
