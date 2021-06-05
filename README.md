@@ -46,15 +46,21 @@ The version where this is fully completed and tested in tagged with version `<ve
 
 **RED** 
 
-<<URL for commit where tests for specific feature is finished, can be compiled and run but do not pass>>
+<a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/34085ddc84013575a8313846ef4f753bdca4a33b">34085ddc84013575a8313846ef4f753bdca4a33b</a>
+
+Added tests with mocks for ModelImpl, which implements ModelFacade, mocked InputModel and OutputModel, tests for getCharacterInfo() functionality, methods decalred in interface, actual functionality not yet implemented.
 
 **GREEN** 
 
-<URL for commit where features are implemented and tests passed>
+<a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/62ae76d3050793e2555b3bb024b43f5bfe3f4f7f">62ae76d3050793e2555b3bb024b43f5bfe3f4f7f</a>
+
+ModelImpl's getCharacterInfo() implemented, interactions with mocks for valid and invalid character names passed tests.
 
 **REFACTOR** 
 
-<<URL for commit where some of that implementation is refactored but tests still passing>>
+<a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/f50a188a001db8954dbbf479fb1fc5b0a4fed0f7">f50a188a001db8954dbbf479fb1fc5b0a4fed0f7</a>
+
+Oranised model package structure, added null and empty string checks in ModelImpl getCharacterInfo(), added setApiKey() to InputModel, implemented OfflineMarvelModel getInfoByName() and getThumbnalImage(). Tests still Green.
 
 ---
 
