@@ -17,16 +17,16 @@ public class ConfigHandler {
     private String outputKey = "";
 
     public ConfigHandler(String filePath){
-//        JSONParser parser = new JSONParser();
-//        try {
-//            Object object = parser.parse(new FileReader(filePath));
-//            JSONObject jsonObject = (JSONObject) object;
-//            inputKey = (String) jsonObject.get("marvelKey");
-//            outputKey = (String) jsonObject.get("pastebinKey");
-//
-//        } catch (ParseException | IOException e) {
-//            e.printStackTrace();
-//        }
+        JSONParser parser = new JSONParser();
+        try {
+            Object object = parser.parse(new FileReader(filePath));
+            JSONObject jsonObject = (JSONObject) object;
+            inputKey = (String) jsonObject.get("marvelKey");
+            outputKey = (String) jsonObject.get("pastebinKey");
+
+        } catch (ParseException | IOException e) {
+            e.printStackTrace();
+        }
 
         System.out.println(inputKey + " " + outputKey);
     }

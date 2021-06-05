@@ -14,6 +14,8 @@ public class ModelImpl implements ModelFacade{
      */
     public ModelImpl(InputModel input, OutputModel output, String configFilePath){
         ConfigHandler config = new ConfigHandler(configFilePath);
+        this.input = input;
+        this.output = output;
     }
 
     @Override
@@ -29,6 +31,6 @@ public class ModelImpl implements ModelFacade{
     @Override
     public CharacterInfo getCharacterInfo(String name) {
 
-        return null;
+        return input.getInfoByName(name);
     }
 }

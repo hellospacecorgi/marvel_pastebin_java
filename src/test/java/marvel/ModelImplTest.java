@@ -42,7 +42,7 @@ public class ModelImplTest {
     public void testConfigHandler(){
         ConfigHandler handler = new ConfigHandler("./src/main/resources/marvel/KeyConfig.json");
         assertNotEquals("", handler.getInputKey());
-        assertNotEquals("", handler.getInputKey());
+        assertNotEquals("", handler.getOutputKey());
     }
 
     @Test
