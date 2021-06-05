@@ -52,60 +52,29 @@ The version where this is fully completed and tested in tagged with version `<ve
 
 
 ### Pass set 1
-**RED** 
+**RED** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/34085ddc84013575a8313846ef4f753bdca4a33b">34085ddc84013575a8313846ef4f753bdca4a33b</a>
 
-URL to commit: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/34085ddc84013575a8313846ef4f753bdca4a33b">34085ddc84013575a8313846ef4f753bdca4a33b</a>
+**GREEN** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/62ae76d3050793e2555b3bb024b43f5bfe3f4f7f">62ae76d3050793e2555b3bb024b43f5bfe3f4f7f</a>
 
-**GREEN** 
-
-URL to commit:<a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/62ae76d3050793e2555b3bb024b43f5bfe3f4f7f">62ae76d3050793e2555b3bb024b43f5bfe3f4f7f</a>
-
-**REFACTOR** 
-
-URL to commit: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/f50a188a001db8954dbbf479fb1fc5b0a4fed0f7">f50a188a001db8954dbbf479fb1fc5b0a4fed0f7</a>
+**REFACTOR** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/f50a188a001db8954dbbf479fb1fc5b0a4fed0f7">f50a188a001db8954dbbf479fb1fc5b0a4fed0f7</a>
 
 ---
 ### Pass set 2
-**RED** 
+**RED** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/5eb7094b1fc518177fb8599680991137255ff78e">51a4911b7c30bc9abda1a68a2a6916472e788b07</a>
 
-URL to commit: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/5eb7094b1fc518177fb8599680991137255ff78e">51a4911b7c30bc9abda1a68a2a6916472e788b07</a>
+**GREEN** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/f6a9831731296ced3fe5456f86593b57e2ec0ef3">f6a9831731296ced3fe5456f86593b57e2ec0ef3</a>
 
-**GREEN** 
-
-URL to commit:<a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/f6a9831731296ced3fe5456f86593b57e2ec0ef3">f6a9831731296ced3fe5456f86593b57e2ec0ef3</a>
-
-**REFACTOR** 
-
-URL to commit: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/51a4911b7c30bc9abda1a68a2a6916472e788b07">51a4911b7c30bc9abda1a68a2a6916472e788b07</a>
+**REFACTOR** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/51a4911b7c30bc9abda1a68a2a6916472e788b07">51a4911b7c30bc9abda1a68a2a6916472e788b07</a>
 
 ---
+
 ### Pass set 3
-**RED** 
+**RED** Commit URL: <a href=""></a>
 
+**GREEN** Commit URL: <a href=""></a> 
 
-URL to commit: <a href=""></a>
+**REFACTOR** Commit URL: <a href=""></a>  
 
-Tests: Testing successful Image object creation from request response and handler proccess. testInputModelGetThumbnailImage()
-
-Features: getThumbnailImage()
-
-Test status: Previous tests still Green.
-
-**GREEN** 
-
-URL to commit: <a href=""></a>
-
-Features:
-
-Test status: Previous tests still Green.
-
-**REFACTOR** 
-
-URL to commit: <a href=""></a>
-
-Refactor: 
-
-Test status: Previous tests still Green.
 ---
 
 The RED-GREEN-REFACTOR commits listed above are the major ones closely related to the ModelFacade and ModelImpl.
