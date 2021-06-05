@@ -75,12 +75,12 @@ public class ModelImpl implements ModelFacade{
 
     @Override
     public boolean sendReport(CharacterInfo info) {
-        return false;
+        return output.sendReport(info);
     }
 
     @Override
     public String getReportUrl() {
-        return null;
+        return output.getReportUrl();
     }
 
 

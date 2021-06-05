@@ -8,7 +8,9 @@ import marvel.model.character.Thumbnail;
 import marvel.model.input.InputModel;
 import marvel.model.input.MarvelApiHandler;
 import marvel.model.input.OnlineMarvelModel;
+import marvel.model.output.OnlinePastebinModel;
 import marvel.model.output.OutputModel;
+import marvel.model.output.PastebinApiHandler;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -263,6 +265,18 @@ public class ModelImplTest {
 
         verify(output, times(1)).getReportUrl();
         assertEquals(ret, "dummy.url");
+    }
+
+    @Test
+    public void testOutputModelSendReport(){
+        output = new OnlinePastebinModel();
+        PastebinApiHandler handler = mock(PastebinApiHandler.class);
+        output.setApiHandler(handler);
+    }
+
+    @Test
+    public void testOutputModelGetReportUrl(){
+
     }
 
 }

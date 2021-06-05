@@ -4,6 +4,11 @@ import marvel.model.character.CharacterInfo;
 
 public class OfflinePastebinModel implements OutputModel{
     @Override
+    public void setApiHandler(PastebinApiHandler handler) {
+
+    }
+
+    @Override
     public boolean sendReport(CharacterInfo info) {
         return false;
     }
