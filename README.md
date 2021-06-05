@@ -46,21 +46,32 @@ The version where this is fully completed and tested in tagged with version `<ve
 
 **RED** 
 
-<a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/34085ddc84013575a8313846ef4f753bdca4a33b">34085ddc84013575a8313846ef4f753bdca4a33b</a>
+URL to commit: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/34085ddc84013575a8313846ef4f753bdca4a33b">34085ddc84013575a8313846ef4f753bdca4a33b</a>
 
-Added tests with mocks for ModelImpl, which implements ModelFacade, mocked InputModel and OutputModel, tests for getCharacterInfo() functionality, methods decalred in interface, actual functionality not yet implemented.
+Tests: Added tests with mocks for ModelImpl, which implements ModelFacade, mocked InputModel and OutputModel, added tests for getCharacterInfo() , getInputSubModel(), getOutputSubModel() functionality.
+
+Features: Part of feature set to enable retrieving character information based on searched string.
+
+Test status: Methods declared in ModelFacade interface, actual functionality in not yet implemented, tests do not pass.
 
 **GREEN** 
 
-<a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/62ae76d3050793e2555b3bb024b43f5bfe3f4f7f">62ae76d3050793e2555b3bb024b43f5bfe3f4f7f</a>
+URL to commit:<a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/62ae76d3050793e2555b3bb024b43f5bfe3f4f7f">62ae76d3050793e2555b3bb024b43f5bfe3f4f7f</a>
 
-ModelImpl's getCharacterInfo() implemented, interactions with mocks for valid and invalid character names passed tests.
+Features: ModelImpl's getCharacterInfo() implemented
+
+Test status: Interactions with mocks for valid and invalid character names passed tests.
 
 **REFACTOR** 
 
-<a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/f50a188a001db8954dbbf479fb1fc5b0a4fed0f7">f50a188a001db8954dbbf479fb1fc5b0a4fed0f7</a>
+URL to commit: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/f50a188a001db8954dbbf479fb1fc5b0a4fed0f7">f50a188a001db8954dbbf479fb1fc5b0a4fed0f7</a>
 
-Oranised model package structure, added null and empty string checks in ModelImpl getCharacterInfo(), added setApiKey() to InputModel, implemented OfflineMarvelModel getInfoByName() and getThumbnalImage(). Tests still Green.
+Refactor: Oranised model package structure, added null and empty string checks in ModelImpl getCharacterInfo(), added setApiKey() to InputModel which ModelImpl calls upon initialisation, implemented OfflineMarvelModel getInfoByName() and getThumbnalImage().
+
+Test status: Previous tests still Green.
+
+---
+
 
 ---
 
