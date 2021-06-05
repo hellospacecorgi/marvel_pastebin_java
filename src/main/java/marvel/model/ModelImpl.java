@@ -72,4 +72,16 @@ public class ModelImpl implements ModelFacade{
         }
         return input.getThumbnailImage(info);
     }
+
+    @Override
+    public boolean sendReport(CharacterInfo info) {
+        return false;
+    }
+
+    @Override
+    public String getReportUrl() {
+        return null;
+    }
+
+
 }

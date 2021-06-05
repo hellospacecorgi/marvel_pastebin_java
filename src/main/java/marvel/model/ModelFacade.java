@@ -15,5 +15,6 @@ public interface ModelFacade {
 
     public Image getImageByInfo(CharacterInfo info);
 
-    //public boolean sendReport();
+    public boolean sendReport(CharacterInfo info);
+    public String getReportUrl();
 }

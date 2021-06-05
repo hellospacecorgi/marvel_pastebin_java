@@ -7,4 +7,9 @@ public class OnlinePastebinModel implements OutputModel{
     public boolean sendReport(CharacterInfo info) {
         return false;
     }
+
+    @Override
+    public String getReportUrl() {
+        return null;
+    }
 }

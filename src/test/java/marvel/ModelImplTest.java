@@ -26,6 +26,7 @@ public class ModelImplTest {
     OutputModel output;
     String configFilePath = "./src/main/resources/marvel/KeyConfig.json";
     String imgPath = "./src/main/resources/marvel/dummy.png";
+    CharacterInfo spiderman;
 
     @Before
     public void ModelImplSetUp(){
@@ -41,13 +42,14 @@ public class ModelImplTest {
         urls.add(new ResourceUrl("wiki", "dummy-url.com"));
         urls.add(new ResourceUrl("blog", "another-dummy.com"));
         Thumbnail thb = new Thumbnail("./src/main/resources/marvel/dummy.png", "png");
-        CharacterInfo spiderman = new CharacterInfo(1234, "spiderman","Can jump around buildings", "1999-99-99");
+        spiderman = new CharacterInfo(1234, "spiderman","Can jump around buildings", "1999-99-99");
         spiderman.setUrls(urls);
         spiderman.setThumbnail(new Thumbnail("fake.jpg", "jpg"));
         when(input.getInfoByName("spider-man")).thenReturn(spiderman);
 
         //invalid character name - Not a marvel character
         when(input.getInfoByName("wonder-woman")).thenReturn(null);
+
     }
 
     @Test
@@ -236,6 +238,31 @@ public class ModelImplTest {
         dummy.setThumbnail(new Thumbnail("", ""));
         assertNull(model.getImageByInfo(dummy));
 
+    }
+
+    @Test
+    public void testSendReportFacade(){
+        when(output.sendReport(spiderman)).thenReturn(true);
+        when(output.sendReport(null)).thenReturn(false);
+
+        boolean ret = model.sendReport(spiderman);
+
+        assertTrue(ret);
+        verify(output, times(1)).sendReport(spiderman);
+
+        ret = model.sendReport(null);
+        assertFalse(ret);
+
+    }
+
+    @Test
+    public void testGetReportUrlFacade(){
+        when(output.getReportUrl()).thenReturn("dummy.url");
+
+        String ret = model.getReportUrl();
+
+        verify(output, times(1)).getReportUrl();
+        assertEquals(ret, "dummy.url");
     }
 
 }
