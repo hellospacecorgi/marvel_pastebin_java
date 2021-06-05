@@ -1,6 +1,6 @@
 # README for SOFT3202 Exam Pre Work
 
-## Assigned APIs
+### Assigned APIs
 
 Input: https://developer.marvel.com/
 
@@ -11,6 +11,7 @@ Input: https://developer.marvel.com/
 Output: https://pastebin.com/doc_api
 - Send the report as a saved pastebin and output the url.
 
+---
 
 ### How to run application
 
@@ -31,6 +32,8 @@ will run the application using offline (dummy) input API and live (requests hitt
 `gradle run --args="online offline"`
 
 will run the application using  live (requests hitting the web) input API and offline (dummy) output API.
+
+---
 
 ### PASS requirements feature set
 
@@ -53,6 +56,7 @@ The version where this is fully completed and tested in tagged with version `<ve
 
 <<URL for commit where some of that implementation is refactored but tests still passing>>
 
+---
 
 ### Javadoc location
   
