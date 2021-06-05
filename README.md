@@ -1,6 +1,16 @@
 # README for SOFT3202 Exam Pre Work
 
-### How to run application
+* [How to run application](#how-to-run-application)
+* [Feature claim - PASS](#feature-claim)
+* [RED-GREEN-REFACTOR commits](#red-green-refactor-commits)
+
+## Assigned APIs
+
+Input: https://developer.marvel.com/ Output: https://pastebin.com/doc_api
+
+---
+
+## How to run application
 
 #### Configuration file for API keys
 
@@ -23,28 +33,22 @@ will run the application using offline (dummy) input API and live (requests hitt
 will run the application using  live (requests hitting the web) input API and offline (dummy) output API.
 
 ---
-### Assigned APIs
-
-Input: https://developer.marvel.com/
-
-- **Entity**: Given a specified Marvel character name, information on that character including image. 
-- **Report data**: data on a given character
-- **Database caching**: info on characters (Image paths should be cached, the images themselves do not need to be).
-
-Output: https://pastebin.com/doc_api
-- Send the report as a saved pastebin and output the url.
-
----
-
+## Feature claim
 ### PASS requirements feature set
 
-- Given entity derived from input API, display information about it on GUI in a way that would be useful to a user
-- Produce report related to entity built from input API for ouput API
+- Given specified Marvel character name, display information about it (information on character, including image) on GUI in a way that would be useful to a user
+
+- Produce report related to character information entity built from input Marvel API for output Pastebin API
 
 The version where this is fully completed and tested in tagged with version `<version-no>`.
 
-### RED-GREEN-REFACTOR Commits
+---
 
+## RED-GREEN-REFACTOR Commits
+* [Pass set 1](#pass-set-1) , [Pass set 2](#pass-set-2) , [Pass set 3](#pass-set-3)
+* [Credit set](#credit-set)
+
+### Pass set 1
 **RED** 
 
 URL to commit: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/34085ddc84013575a8313846ef4f753bdca4a33b">34085ddc84013575a8313846ef4f753bdca4a33b</a>
@@ -82,6 +86,7 @@ Refactor: Oranised model package structure, added null and empty string checks i
 Test status: Previous tests still Green.
 
 ---
+### Pass set 2
 **RED** 
 
 URL to commit: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/5eb7094b1fc518177fb8599680991137255ff78e">51a4911b7c30bc9abda1a68a2a6916472e788b07</a>
@@ -132,7 +137,7 @@ Refactor (InputModel methods):
 Test status: Previous tests still Green.
 
 ---
-
+### Pass set 3
 **RED** 
 
 
