@@ -6,6 +6,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import marvel.model.*;
 import marvel.model.input.InputModel;
+import marvel.model.MarvelApiHandler;
 import marvel.model.input.OfflineMarvelModel;
 import marvel.model.input.OnlineMarvelModel;
 
@@ -72,6 +73,7 @@ public class App extends Application {
 
 
         model = new ModelImpl(input, output, configFilePath);
+
 
         ViewSwitcher.setModel(model);
         ViewSwitcher.setScene(scene);

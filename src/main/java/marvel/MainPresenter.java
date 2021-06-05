@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import marvel.model.character.CharacterInfo;
 import marvel.model.ModelFacade;
@@ -76,9 +77,9 @@ public class MainPresenter {
         result = result.concat("\nName: ").concat(info.getName());
         result = result.concat("\nDescription: ").concat(info.getDescription());
         message.setText(result);
-
+        //Image img = model.getInputSubModel().getThumbnailImage(info.getThumbnail().getPath());
         //Update view with response
-        thumbnail.setImage(model.getInputSubModel().getThumbnailImage(info.getThumbnail()));
+        //thumbnail.setImage(img);
 
     }
 }

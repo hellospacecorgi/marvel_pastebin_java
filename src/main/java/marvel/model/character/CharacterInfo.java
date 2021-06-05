@@ -8,18 +8,25 @@ public class CharacterInfo {
     private String name;
     private String description;
     private String modified;
-    private List<String> urls;
-    private String thumbnail;
+    private List<ResourceUrl> urls;
+    private Thumbnail thumbnail;
+    private int nComics = 0;
+    private int nStories = 0;
+    private int nEvents = 0;
+    private int nSeries = 0;
     private List<Comic> comicList = new ArrayList<>();
     private List<Story> storyList = new ArrayList<>();
+    private List<Event> eventList = new ArrayList<>();
     private List<Series> seriesList = new ArrayList<>();
 
-    public CharacterInfo(int id, String name, String description, String modified, List<String> urls, String thumbnail) {
+    public CharacterInfo(int id, String name, String description, String modified) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.modified = modified;
-        this.urls = urls;
+    }
+
+    public void setThumbnail(Thumbnail thumbnail){
         this.thumbnail = thumbnail;
     }
 
@@ -31,8 +38,16 @@ public class CharacterInfo {
         this.storyList = storyList;
     }
 
+    public void setEventList(List<Event> eventList) {
+        this.eventList = eventList;
+    }
+
     public void setSeriesList(List<Series> seriesList) {
         this.seriesList = seriesList;
+    }
+
+    public void setUrls(List<ResourceUrl> urlList){
+        this.urls = urlList;
     }
 
     public int getId() {
@@ -51,11 +66,11 @@ public class CharacterInfo {
         return modified;
     }
 
-    public List<String> getUrls() {
+    public List<ResourceUrl> getUrls() {
         return urls;
     }
 
-    public String getThumbnail() {
+    public Thumbnail getThumbnail() {
         return thumbnail;
     }
 
@@ -67,7 +82,43 @@ public class CharacterInfo {
         return storyList;
     }
 
+    public List<Event> getEventList() {
+        return eventList;
+    }
+
     public List<Series> getSeriesList() {
         return seriesList;
+    }
+
+    public int getNComics() {
+        return nComics;
+    }
+
+    public void setNComics(int nComics) {
+        this.nComics = nComics;
+    }
+
+    public int getNStories() {
+        return nStories;
+    }
+
+    public void setNStories(int nStories) {
+        this.nStories = nStories;
+    }
+
+    public int getNEvents() {
+        return nEvents;
+    }
+
+    public void setNEvents(int nEvents) {
+        this.nEvents = nEvents;
+    }
+
+    public int getNSeries() {
+        return nSeries;
+    }
+
+    public void setNSeries(int nSeries) {
+        this.nSeries = nSeries;
     }
 }

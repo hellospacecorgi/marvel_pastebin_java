@@ -1,6 +1,7 @@
 package marvel.model.input;
 
 import javafx.scene.image.Image;
+import marvel.model.MarvelApiHandler;
 import marvel.model.character.CharacterInfo;
 
 import java.io.FileInputStream;
@@ -18,11 +19,15 @@ public class OfflineMarvelModel implements InputModel{
     public void setApiHandlerKey(String apiKey) { }
 
     @Override
+    public void setApiHandler(MarvelApiHandler handler) {
+    }
+
+    @Override
     public CharacterInfo getInfoByName(String name) {
         List<String> urls = new ArrayList<>();
         urls.add("dummy-url.com");
         urls.add("another-dummy-url.com");
-        CharacterInfo dummy = new CharacterInfo(2222, name, "A hero that is created for the sake of dummy version.", "1999-999-9999", urls, "./src/main/resources/marvel/dummy.png");
+        CharacterInfo dummy = new CharacterInfo(2222, name, "A hero that is created for the sake of dummy version.", "1999-999-9999");
         return dummy;
     }
 

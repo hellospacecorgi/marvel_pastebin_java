@@ -1,5 +1,7 @@
 package marvel.model;
 
+import marvel.model.character.CharacterInfo;
+import marvel.model.input.ResponseHandler;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import java.io.IOException;
@@ -7,12 +9,11 @@ import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpClient;
 import java.net.http.HttpResponse;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 public class MarvelApiHandler {
     private String apiKey;
     private HttpClient client = HttpClient.newHttpClient();
+    private ResponseHandler handler = new ResponseHandler();
     public MarvelApiHandler(){
 
     }
@@ -40,7 +41,7 @@ public class MarvelApiHandler {
         this.apiKey = apiKey;
     }
 
-    public String getCharacterInfoByName(String name){
+    public CharacterInfo getCharacterInfoByName(String name){
         try{
             HttpRequest request = HttpRequest.newBuilder()
                     .GET()
@@ -54,10 +55,10 @@ public class MarvelApiHandler {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             if(response.statusCode() > 400){
                 System.out.println("Error searching for character info\n");
-                return response.body();
+                return null;
 
             } else if(response.statusCode() == 200){
-                return response.body();
+                return handler.parseCharacterInfo(response.body());
             }
         } catch (IOException | InterruptedException e){
             e.printStackTrace();

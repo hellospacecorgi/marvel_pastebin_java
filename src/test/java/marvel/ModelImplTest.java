@@ -2,7 +2,11 @@ package marvel;
 
 import marvel.model.*;
 import marvel.model.character.CharacterInfo;
+import marvel.model.character.ResourceUrl;
+import marvel.model.character.Thumbnail;
 import marvel.model.input.InputModel;
+import marvel.model.MarvelApiHandler;
+import marvel.model.input.OnlineMarvelModel;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -28,10 +32,13 @@ public class ModelImplTest {
         model = new ModelImpl(input, output, configFilePath);
 
         //valid character name
-        List<String> urls = new ArrayList<>();
-        urls.add("dummy url string");
-        urls.add("another dummy url");
-        CharacterInfo spiderman = new CharacterInfo(1234, "spiderman","Can jump around buildings", "1999-99-99", urls, "fake.jpg");
+        List<ResourceUrl> urls = new ArrayList<>();
+        urls.add(new ResourceUrl("wiki", "dummy-url.com"));
+        urls.add(new ResourceUrl("blog", "another-dummy.com"));
+        Thumbnail thb = new Thumbnail("./src/main/resources/marvel/dummy.png", "png");
+        CharacterInfo spiderman = new CharacterInfo(1234, "spiderman","Can jump around buildings", "1999-99-99");
+        spiderman.setUrls(urls);
+        spiderman.setThumbnail(new Thumbnail("fake.jpg", "jpg"));
         when(input.getInfoByName("spider-man")).thenReturn(spiderman);
 
         //invalid character name - Not a marvel character
@@ -42,6 +49,7 @@ public class ModelImplTest {
     public void testConfigHandler(){
         ConfigHandler handler = new ConfigHandler("./src/main/resources/marvel/KeyConfig.json");
         assertNotEquals("", handler.getInputKey());
+        //assertNotEquals("", handler.getInputPrivateKey());
         assertNotEquals("", handler.getOutputKey());
     }
 
@@ -59,11 +67,13 @@ public class ModelImplTest {
 
         assertEquals(1234, info.getId());
         assertEquals("spiderman", info.getName());
-        assertEquals("fake.jpg", info.getThumbnail());
-        List<String> urls = info.getUrls();
+        assertEquals("fake.jpg", info.getThumbnail().getPath());
+        List<ResourceUrl> urls = info.getUrls();
         assertEquals(2, urls.size());
-        assertEquals("dummy url string", urls.get(0));
-        assertEquals("another dummy url", urls.get(1));
+        assertEquals("dummy-url.com", urls.get(0).getUrl());
+        assertEquals("wiki", urls.get(0).getType());
+        assertEquals("another-dummy.com", urls.get(1).getUrl());
+        assertEquals("blog", urls.get(1).getType());
 
     }
 
@@ -74,6 +84,90 @@ public class ModelImplTest {
         verify(input, times(1)).getInfoByName("wonder-woman");
 
         assertNull(info);
+    }
+
+    @Test
+    public void testInputModelGetInfoByNameValid(){
+        //mock marvelApiHandler
+        input = new OnlineMarvelModel();
+        MarvelApiHandler handler = mock(MarvelApiHandler.class);
+
+        model = new ModelImpl(input, output, configFilePath);
+        model.getInputSubModel().setApiHandler(handler);
+
+        List<ResourceUrl> urls = new ArrayList<>();
+        urls.add(new ResourceUrl("wiki", "dummy-url.com"));
+        urls.add(new ResourceUrl("blog", "another-dummy.com"));
+        Thumbnail thb = new Thumbnail("./src/main/resources/marvel/dummy.png", "png");
+        CharacterInfo spiderman = new CharacterInfo(1234, "spiderman","Can jump around buildings", "1999-99-99");
+        spiderman.setUrls(urls);
+        spiderman.setThumbnail(new Thumbnail("fake.jpg", "jpg"));
+
+        when(handler.getCharacterInfoByName("spider-man")).thenReturn(spiderman);
+
+        CharacterInfo info = model.getCharacterInfo("spider-man");
+
+        verify(handler, times(1)).getCharacterInfoByName("spider-man");
+
+        assertNotNull(input.getInfoByName("spider-man"));
+
+        assertEquals(spiderman.getName(), info.getName());
+        assertEquals(spiderman.getDescription(), info.getDescription());
+        assertEquals(spiderman.getModified(), info.getModified());
+
+    }
+
+    @Test
+    public void testInputModelGetInfoByNameInvalid(){
+        //mock marvelApiHandler
+        input = new OnlineMarvelModel();
+        MarvelApiHandler handler = mock(MarvelApiHandler.class);
+
+        model = new ModelImpl(input, output, configFilePath);
+        model.getInputSubModel().setApiHandler(handler);
+
+        when(handler.getCharacterInfoByName("invalid")).thenReturn(null);
+
+        CharacterInfo info = model.getCharacterInfo("invalid");
+
+        verify(handler, times(1)).getCharacterInfoByName("invalid");
+        assertNull(info);
+
+    }
+
+    @Test
+    public void testInputModelGetInfoNullList(){
+        //mock marvelApiHandler
+        input = new OnlineMarvelModel();
+        MarvelApiHandler handler = mock(MarvelApiHandler.class);
+
+        model = new ModelImpl(input, output, configFilePath);
+        model.getInputSubModel().setApiHandler(handler);
+
+        CharacterInfo spiderman = new CharacterInfo(1234, "spiderman","Can jump around buildings", "1999-99-99");
+        spiderman.setThumbnail(null);
+        spiderman.setStoryList(null);
+
+        when(handler.getCharacterInfoByName("spider-man")).thenReturn(spiderman);
+
+        CharacterInfo info = model.getCharacterInfo("spider-man");
+
+        verify(handler, times(1)).getCharacterInfoByName("spider-man");
+
+        assertNotNull(input.getInfoByName("spider-man"));
+
+        assertEquals(spiderman.getName(), info.getName());
+        assertEquals(spiderman.getDescription(), info.getDescription());
+        assertEquals(spiderman.getModified(), info.getModified());
+        assertNull(info.getThumbnail());
+        assertNull(info.getStoryList());
+    }
+
+
+
+    @Test
+    public void testInputModelGetThumbnailImage(){
+
     }
 
 }

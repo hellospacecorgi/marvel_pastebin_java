@@ -14,16 +14,18 @@ public class OnlineMarvelModel implements InputModel{
 
     }
 
+
+    @Override
+    public void setApiHandler(MarvelApiHandler handler) {
+    }
+
     @Override
     public void setApiHandlerKey(String apiKey) {
-        this.apiHandler.setKey(apiKey);
     }
 
     @Override
     public CharacterInfo getInfoByName(String name) {
-        String result = apiHandler.getCharacterInfoByName(name);
-        CharacterInfo info = responseHandler.parseResponseBody(result);
-        return info;
+        return null;
     }
 
     @Override

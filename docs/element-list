@@ -1,3 +1,4 @@
 marvel
 marvel.model
-marvel.view
+marvel.model.character
+marvel.model.input
