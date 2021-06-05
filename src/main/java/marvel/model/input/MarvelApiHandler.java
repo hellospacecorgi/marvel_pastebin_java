@@ -1,7 +1,6 @@
-package marvel.model;
+package marvel.model.input;
 
 import marvel.model.character.CharacterInfo;
-import marvel.model.input.ResponseHandler;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import java.io.IOException;
@@ -11,17 +10,26 @@ import java.net.http.HttpClient;
 import java.net.http.HttpResponse;
 
 public class MarvelApiHandler {
-    private String apiKey;
-    private HttpClient client = HttpClient.newHttpClient();
-    private ResponseHandler handler = new ResponseHandler();
-    public MarvelApiHandler(){
+    private ResponseHandler responseHandler;
+    private String publicKey = "9809e50b4e4428f620e48572801b007f";
+    private String privateKey = "6480971221bbbb81b20b3ae5a50d3093b463c62f";
+    private HttpClient client;
 
+    public MarvelApiHandler(){
+        client = HttpClient.newHttpClient();
+        responseHandler = new ResponseHandler();
     }
 
+    public void setKeys(String publicKey, String privateKey){
+        this.publicKey = publicKey;
+        this.privateKey = privateKey;
+    }
+
+
     public String generateHash(){
-        if(apiKey != null){
+        if(publicKey != null && privateKey != null){
             String ts = "1359";
-            String combined = ts.concat("6480971221bbbb81b20b3ae5a50d3093b463c62f").concat(apiKey);
+            String combined = ts.concat(privateKey).concat(publicKey);
 
             String hashValue = DigestUtils.md5Hex(combined);
             System.out.println(hashValue);
@@ -30,35 +38,39 @@ public class MarvelApiHandler {
         return null;
     }
 
-    public void setKey(String apiKey) {
-        if(apiKey == null){
-            throw new NullPointerException();
-        }
-        if(apiKey.isEmpty()){
-            System.out.println("Input API key is empty - check config file");
-            throw new IllegalArgumentException();
-        }
-        this.apiKey = apiKey;
-    }
-
+    /**
+     * Sends GET request to Marvel API to retrieve live result for searching character information by name String.
+     *
+     * @param name
+     * @return
+     */
     public CharacterInfo getCharacterInfoByName(String name){
+        if(publicKey == null || privateKey == null){
+            return null;
+        }
+
+        if(publicKey.equals("") || publicKey.isEmpty() || privateKey.equals("") || privateKey.isEmpty()){
+            return null;
+        }
+
         try{
             HttpRequest request = HttpRequest.newBuilder()
                     .GET()
                     .headers("accept", "application/json")
                     .uri(URI.create("https://gateway.marvel.com/v1/public/characters".concat("?name=").concat(name)
                             .concat("&ts=1359")
-                            .concat("&apikey=").concat(this.apiKey)
+                            .concat("&apikey=").concat(this.publicKey)
                             .concat("&hash=").concat(generateHash())))
                     .build();
 
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             if(response.statusCode() > 400){
                 System.out.println("Error searching for character info\n");
-                return null;
+                ;
+                return responseHandler.parseResponseBody(response.body());
 
             } else if(response.statusCode() == 200){
-                return handler.parseCharacterInfo(response.body());
+                return responseHandler.parseResponseBody(response.body());
             }
         } catch (IOException | InterruptedException e){
             e.printStackTrace();

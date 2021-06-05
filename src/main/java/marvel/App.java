@@ -6,7 +6,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import marvel.model.*;
 import marvel.model.input.InputModel;
-import marvel.model.MarvelApiHandler;
+import marvel.model.input.MarvelApiHandler;
 import marvel.model.input.OfflineMarvelModel;
 import marvel.model.input.OnlineMarvelModel;
 

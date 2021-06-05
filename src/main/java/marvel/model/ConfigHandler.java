@@ -13,7 +13,8 @@ import java.io.InputStream;
  *  Reads and stores API key as configured inside KeyConfig.json file.
  */
 public class ConfigHandler {
-    private String inputKey = "";
+    private String inputPublicKey = "";
+    private String inputPrivateKey = "";
     private String outputKey = "";
 
     public ConfigHandler(String filePath){
@@ -21,18 +22,21 @@ public class ConfigHandler {
         try {
             Object object = parser.parse(new FileReader(filePath));
             JSONObject jsonObject = (JSONObject) object;
-            inputKey = (String) jsonObject.get("marvelKey");
+            inputPublicKey = (String) jsonObject.get("marvelKey");
+            inputPrivateKey = (String) jsonObject.get("marvelPrivateKey");
             outputKey = (String) jsonObject.get("pastebinKey");
 
         } catch (ParseException | IOException e) {
             e.printStackTrace();
         }
-
-        System.out.println(inputKey + " " + outputKey);
     }
 
-    public String getInputKey() {
-        return inputKey;
+    public String getInputPublicKey() {
+        return inputPublicKey;
+    }
+
+    public String getInputPrivateKey() {
+        return inputPrivateKey;
     }
 
     public String getOutputKey() {

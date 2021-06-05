@@ -5,7 +5,7 @@ import marvel.model.character.CharacterInfo;
 import marvel.model.character.ResourceUrl;
 import marvel.model.character.Thumbnail;
 import marvel.model.input.InputModel;
-import marvel.model.MarvelApiHandler;
+import marvel.model.input.MarvelApiHandler;
 import marvel.model.input.OnlineMarvelModel;
 import org.junit.Before;
 import org.junit.Test;
@@ -48,8 +48,8 @@ public class ModelImplTest {
     @Test
     public void testConfigHandler(){
         ConfigHandler handler = new ConfigHandler("./src/main/resources/marvel/KeyConfig.json");
-        assertNotEquals("", handler.getInputKey());
-        //assertNotEquals("", handler.getInputPrivateKey());
+        assertNotEquals("", handler.getInputPublicKey());
+        assertNotEquals("", handler.getInputPrivateKey());
         assertNotEquals("", handler.getOutputKey());
     }
 
