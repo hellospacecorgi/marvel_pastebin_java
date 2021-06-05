@@ -1,10 +1,10 @@
-package marvel.model;
+package marvel.model.character;
 
-public class Comic {
+public class Event {
     private String name;
     private String resourcePath;
 
-    public Comic( String name, String resourcePath) {
+    public Event(String name, String resourcePath) {
         this.resourcePath = resourcePath;
         this.name = name;
     }

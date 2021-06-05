@@ -25,15 +25,19 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.json/json
     implementation group: 'org.json', name: 'json', version: '20090211'
+    // https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
+    implementation 'com.googlecode.json-simple:json-simple:1.1.1'
 
-    // Use JUnit test framework
+    // Use JUnit test framework and Mockito
     testImplementation group: 'junit', name: 'junit', version: '4.13.2'
     testImplementation 'org.hamcrest:hamcrest:2.2'
     testImplementation "org.mockito:mockito-core:3.+"
 
-    // https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
-    implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+   // implementation group: 'jakarta.xml.bind', name: 'jakarta.xml.bind-api-parent', version: '3.0.0', ext: 'pom'
+    // https://mvnrepository.com/artifact/commons-codec/commons-codec
+    implementation group: 'commons-codec', name: 'commons-codec', version: '1.4'
 
+    // database
     compile group:'org.xerial', name:'sqlite-jdbc', version:'3.32.3.2'
 }
 

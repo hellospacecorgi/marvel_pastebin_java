@@ -4,6 +4,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import marvel.model.character.CharacterInfo;
 import marvel.model.ModelFacade;
 
 import java.io.IOException;
@@ -37,6 +39,9 @@ public class MainPresenter {
     @FXML
     TableView centerTable;
 
+    @FXML
+    ImageView thumbnail;
+
     ModelFacade model;
 
     public MainPresenter(ModelFacade model){
@@ -55,6 +60,25 @@ public class MainPresenter {
      */
     @FXML
     public void onSearch() throws IOException {
-        model.getCharacterInfo(characterName.getText());
+        if(characterName.getText().equals("") || characterName.getText().isEmpty()){
+            message.setText("Input field is empty - enter name for searching.");
+            return;
+        }
+
+        //Retrieve response from model
+        CharacterInfo info = model.getCharacterInfo(characterName.getText());
+        if(info == null){
+            message.setText("Search returned no character information with provided name.");
+            return;
+        }
+        String result = "Character Summary \n";
+        result = result.concat("ID: ").concat(String.valueOf(info.getId()));
+        result = result.concat("\nName: ").concat(info.getName());
+        result = result.concat("\nDescription: ").concat(info.getDescription());
+        message.setText(result);
+
+        //Update view with response
+        thumbnail.setImage(model.getInputSubModel().getThumbnailImage(info.getThumbnail()));
+
     }
 }

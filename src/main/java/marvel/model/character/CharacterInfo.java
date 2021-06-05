@@ -1,21 +1,24 @@
-package marvel.model;
+package marvel.model.character;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CharacterInfo {
     private int id;
     private String name;
     private String description;
+    private String modified;
     private List<String> urls;
     private String thumbnail;
-    private List<Comic> comicList;
-    private List<Story> storyList;
-    private List<Series> seriesList;
+    private List<Comic> comicList = new ArrayList<>();
+    private List<Story> storyList = new ArrayList<>();
+    private List<Series> seriesList = new ArrayList<>();
 
-    public CharacterInfo(int id, String name, String description, List<String> urls, String thumbnail) {
+    public CharacterInfo(int id, String name, String description, String modified, List<String> urls, String thumbnail) {
         this.id = id;
         this.name = name;
         this.description = description;
+        this.modified = modified;
         this.urls = urls;
         this.thumbnail = thumbnail;
     }
@@ -42,6 +45,10 @@ public class CharacterInfo {
 
     public String getDescription() {
         return description;
+    }
+
+    public String getModified() {
+        return modified;
     }
 
     public List<String> getUrls() {

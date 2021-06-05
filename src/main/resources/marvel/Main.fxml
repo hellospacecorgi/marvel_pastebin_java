@@ -71,7 +71,7 @@
    <right>
       <VBox prefHeight="313.0" prefWidth="237.0" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fitHeight="174.0" fitWidth="235.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="thumbnail" fitHeight="174.0" fitWidth="235.0" pickOnBounds="true" preserveRatio="true">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>

@@ -1,5 +1,8 @@
 package marvel.model;
 
+import marvel.model.character.CharacterInfo;
+import marvel.model.input.InputModel;
+
 /**
  * @see ModelFacade
  */
@@ -14,6 +17,7 @@ public class ModelImpl implements ModelFacade{
      */
     public ModelImpl(InputModel input, OutputModel output, String configFilePath){
         ConfigHandler config = new ConfigHandler(configFilePath);
+        input.setApiHandlerKey(config.getInputKey());
         this.input = input;
         this.output = output;
     }
@@ -30,7 +34,12 @@ public class ModelImpl implements ModelFacade{
 
     @Override
     public CharacterInfo getCharacterInfo(String name) {
-
+        if(name == null){
+            throw new NullPointerException();
+        }
+        if(name.isEmpty() || name.isBlank()){
+            throw new IllegalArgumentException();
+        }
         return input.getInfoByName(name);
     }
 }

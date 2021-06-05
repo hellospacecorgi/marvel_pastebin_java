@@ -1,4 +1,4 @@
-package marvel.model;
+package marvel.model.character;
 
 public class Series {
     private String name;

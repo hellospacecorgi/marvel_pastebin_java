@@ -1,11 +1,11 @@
 package marvel;
 
 import marvel.model.*;
-import org.checkerframework.common.value.qual.StaticallyExecutable;
+import marvel.model.character.CharacterInfo;
+import marvel.model.input.InputModel;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +31,7 @@ public class ModelImplTest {
         List<String> urls = new ArrayList<>();
         urls.add("dummy url string");
         urls.add("another dummy url");
-        CharacterInfo spiderman = new CharacterInfo(1234, "spiderman","Can jump around buildings", urls, "fake.jpg");
+        CharacterInfo spiderman = new CharacterInfo(1234, "spiderman","Can jump around buildings", "1999-99-99", urls, "fake.jpg");
         when(input.getInfoByName("spider-man")).thenReturn(spiderman);
 
         //invalid character name - Not a marvel character

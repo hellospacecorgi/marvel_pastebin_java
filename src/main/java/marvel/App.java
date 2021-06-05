@@ -5,6 +5,9 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import marvel.model.*;
+import marvel.model.input.InputModel;
+import marvel.model.input.OfflineMarvelModel;
+import marvel.model.input.OnlineMarvelModel;
 
 /**
  * First class called when application starts.
@@ -24,6 +27,7 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
+
         System.out.println(new App().getGreeting());
         if(args.length < 1){
             System.out.println("Give --args=\"offline\" to switch to offline mode. \nRunning online mode by default.");
@@ -65,6 +69,7 @@ public class App extends Application {
         } else {
             output = new OnlinePastebinModel();
         }
+
 
         model = new ModelImpl(input, output, configFilePath);
 

@@ -1,22 +1,16 @@
-package marvel.model;
+package marvel.model.character;
 
-public class Story {
+public class Comic {
     private String name;
-    private String type;
     private String resourcePath;
 
-    public Story( String name, String type, String resourcePath) {
+    public Comic( String name, String resourcePath) {
         this.resourcePath = resourcePath;
         this.name = name;
-        this.type = type;
     }
 
     public String getName() {
         return name;
-    }
-
-    public String getType() {
-        return type;
     }
 
     public String getResourcePath() {
