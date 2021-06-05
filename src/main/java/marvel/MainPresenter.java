@@ -89,40 +89,7 @@ public class MainPresenter {
         //Update view with response
         updateCenterComics(); //show list of comics by default
 
-        //Image img = model.getInputSubModel().getThumbnailImage(info.getThumbnail().getPath());
-        //thumbnail.setImage(img);
-
         thumbnail.setImage(model.getImageByInfo(info));
-
-       // tryImage();
-
-    }
-
-    public void tryImage(){
-        thumbnail.setImage(new Image("http://i.annihil.us/u/prod/marvel/i/mg/3/10/526033c8b474a/standard_large.jpg"));
-        /*
-        try {
-            //http://i.annihil.us/u/prod/marvel/i/mg/3/10/526033c8b474a/portrait_small.jpg
-           // URL url = new URL("http://i.annihil.us/u/prod/marvel/i/mg/3/10/526033c8b474a/portrait_small.jpg");
-
-            BufferedImage bufferedImg = ImageIO.read(url);
-            if(bufferedImg != null){
-                WritableImage wr = new WritableImage(bufferedImg.getWidth(), bufferedImg.getHeight());
-                PixelWriter pw = wr.getPixelWriter();
-                for(int x = 0 ; x < bufferedImg.getWidth() ; x ++){
-                    for(int y = 0; y < bufferedImg.getHeight() ; y++){
-                        pw.setArgb(x, y, bufferedImg.getRGB(x, y));
-                    }
-                }
-
-                thumbnail.setImage(new ImageView(wr).getImage());
-            }
-
-        } catch(IOException e){
-            e.printStackTrace();
-        }
-*/
-
 
     }
 

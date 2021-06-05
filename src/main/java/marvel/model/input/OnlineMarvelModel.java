@@ -22,7 +22,10 @@ public class OnlineMarvelModel implements InputModel{
     }
 
     @Override
-    public Image getThumbnailImage(CharacterInfo character) {
-        return null;
+    public Image getThumbnailImage(CharacterInfo info) {
+        String path = info.getThumbnail().getPath();
+        path = path.concat("/standard_large.");
+        path = path.concat(info.getThumbnail().getExtension());
+        return apiHandler.getImageByUrl(path);
     }
 }

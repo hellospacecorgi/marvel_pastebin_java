@@ -83,6 +83,6 @@ public class MarvelApiHandler {
     }
 
     public Image getImageByUrl(String path){
-        return null;
+        return new Image(path);
     }
 }

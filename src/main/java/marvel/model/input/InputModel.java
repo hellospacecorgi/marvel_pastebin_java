@@ -9,5 +9,5 @@ public interface InputModel {
 
     public CharacterInfo getInfoByName(String name);
 
-    public Image getThumbnailImage(CharacterInfo character);
+    public Image getThumbnailImage(CharacterInfo info);
 }
