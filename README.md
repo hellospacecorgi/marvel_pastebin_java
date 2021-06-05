@@ -1,23 +1,12 @@
 # README for SOFT3202 Exam Pre Work
 
-### Assigned APIs
-
-Input: https://developer.marvel.com/
-
-- **Entity**: Given a specified Marvel character name, information on that character including image. 
-- **Report data**: data on a given character
-- **Database caching**: info on characters (Image paths should be cached, the images themselves do not need to be).
-
-Output: https://pastebin.com/doc_api
-- Send the report as a saved pastebin and output the url.
-
----
-
 ### How to run application
 
 #### Configuration file for API keys
 
-Marker's own API keys for both input and output APIs should be placed in the configuration JSON file `<file-name>` in order for the live versions to run.
+Marker's own API keys for both input and output APIs should be placed in the configuration JSON file `KeyConfig.json` under `src/main/resources/marvel` in order for the live versions to run.
+
+NOTE: For Marvel API, both public and private keys need to be provided.
 
 #### Gradle command
 
@@ -32,6 +21,18 @@ will run the application using offline (dummy) input API and live (requests hitt
 `gradle run --args="online offline"`
 
 will run the application using  live (requests hitting the web) input API and offline (dummy) output API.
+
+---
+### Assigned APIs
+
+Input: https://developer.marvel.com/
+
+- **Entity**: Given a specified Marvel character name, information on that character including image. 
+- **Report data**: data on a given character
+- **Database caching**: info on characters (Image paths should be cached, the images themselves do not need to be).
+
+Output: https://pastebin.com/doc_api
+- Send the report as a saved pastebin and output the url.
 
 ---
 
