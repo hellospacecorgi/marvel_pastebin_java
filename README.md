@@ -62,3 +62,6 @@ The version where this is fully completed and tested in tagged with version `<ve
   
 ### Citations for code in previous unit
 
+
+Dummy version thumbnail image made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+
