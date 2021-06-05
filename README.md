@@ -1,4 +1,4 @@
-# README for SOFT3202 Exam Pre Work
+# SOFT3202 Exam Pre-work README
 
 * [How to run application](#how-to-run-application)
 * [Feature claim - PASS](#feature-claim)
@@ -60,7 +60,7 @@ The version where this is fully completed and tested in tagged with version `<ve
 
 ---
 ### Pass set 2
-**RED** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/5eb7094b1fc518177fb8599680991137255ff78e">51a4911b7c30bc9abda1a68a2a6916472e788b07</a>
+**RED** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/5eb7094b1fc518177fb8599680991137255ff78e">5eb7094b1fc518177fb8599680991137255ff78e</a>
 
 **GREEN** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/f6a9831731296ced3fe5456f86593b57e2ec0ef3">f6a9831731296ced3fe5456f86593b57e2ec0ef3</a>
 
