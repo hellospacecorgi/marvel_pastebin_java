@@ -38,7 +38,7 @@ public class PastebinApiHandler {
         Map<Object, Object> bodyData = new HashMap<>();
         bodyData.put("api_dev_key", this.publicKey);
         bodyData.put("api_option", "paste");
-        bodyData.put("api_paste_name", name);
+        bodyData.put("api_paste_name", name.concat(" Report"));
         bodyData.put("api_paste_code", report);
 
         StringBuilder sb = new StringBuilder();
