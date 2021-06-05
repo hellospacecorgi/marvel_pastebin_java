@@ -8,6 +8,7 @@ import marvel.model.character.Thumbnail;
 import marvel.model.input.InputModel;
 import marvel.model.input.MarvelApiHandler;
 import marvel.model.input.OnlineMarvelModel;
+import marvel.model.output.OfflinePastebinModel;
 import marvel.model.output.OnlinePastebinModel;
 import marvel.model.output.OutputModel;
 import marvel.model.output.PastebinApiHandler;
@@ -260,9 +261,7 @@ public class ModelImplTest {
     @Test
     public void testGetReportUrlFacade(){
         when(output.getReportUrl()).thenReturn("dummy.url");
-
         String ret = model.getReportUrl();
-
         verify(output, times(1)).getReportUrl();
         assertEquals(ret, "dummy.url");
     }
@@ -272,10 +271,28 @@ public class ModelImplTest {
         output = new OnlinePastebinModel();
         PastebinApiHandler handler = mock(PastebinApiHandler.class);
         output.setApiHandler(handler);
+        when(handler.sendReport(anyString())).thenReturn(true);
+
+        model = new ModelImpl(input, output, configFilePath);
+        model.getOutputSubModel().setApiHandler(handler);
+
+        boolean ret = model.sendReport(spiderman);
+
+        verify(handler, times(1)).sendReport(anyString());
+
     }
 
     @Test
     public void testOutputModelGetReportUrl(){
+        when(output.getReportUrl()).thenReturn("dummy-report-url");
+
+        String ret = model.getReportUrl();
+
+        verify(output, times(1)).getReportUrl();
+        assertEquals("dummy-report-url", ret);
+
+        output = new OfflinePastebinModel();
+        assertEquals("dummy-report-output-url", model.getReportUrl());
 
     }
 

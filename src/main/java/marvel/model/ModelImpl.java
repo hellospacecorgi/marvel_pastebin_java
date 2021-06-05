@@ -5,6 +5,7 @@ import marvel.model.character.CharacterInfo;
 import marvel.model.input.InputModel;
 import marvel.model.input.MarvelApiHandler;
 import marvel.model.output.OutputModel;
+import marvel.model.output.PastebinApiHandler;
 
 /**
  * Provides methods for clients to make mutable and accessor calls to APIs.
@@ -29,7 +30,7 @@ public class ModelImpl implements ModelFacade{
 
         ConfigHandler config = new ConfigHandler(configFilePath);
         this.input.setApiHandler(new MarvelApiHandler(config.getInputPublicKey(), config.getInputPrivateKey()));
-
+        this.output.setApiHandler(new PastebinApiHandler(config.getOutputKey()));
     }
 
     @Override
