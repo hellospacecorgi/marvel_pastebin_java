@@ -21,6 +21,7 @@ public class ModelImplTest {
     InputModel input;
     OutputModel output;
     String configFilePath = "./src/main/resources/marvel/KeyConfig.json";
+    String imgPath = "./src/main/resources/marvel/dummy.png";
 
     @Before
     public void ModelImplSetUp(){
