@@ -1,4 +1,4 @@
-package marvel.model;
+package marvel.model.output;
 
 import marvel.model.character.CharacterInfo;
 

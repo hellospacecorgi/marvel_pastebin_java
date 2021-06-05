@@ -83,6 +83,12 @@ public class MarvelApiHandler {
     }
 
     public Image getImageByUrl(String path){
+        if(path == null){
+            return null;
+        }
+        if(path.isEmpty() || path.equals("")){
+            return null;
+        }
         return new Image(path);
     }
 }

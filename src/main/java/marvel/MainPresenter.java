@@ -84,6 +84,7 @@ public class MainPresenter {
         result = result.concat("\nNumber of Stories: ").concat(String.valueOf(info.getNStories()));
         result = result.concat("\nNumber of Events: ").concat(String.valueOf(info.getNEvents()));
         result = result.concat("\nNumber of Series: ").concat(String.valueOf(info.getNSeries()));
+        result = result.concat("\nLast modified: ").concat(info.getModified());
         message.setText(result);
 
         //Update view with response

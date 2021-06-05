@@ -4,6 +4,7 @@ import javafx.scene.image.Image;
 import marvel.model.character.CharacterInfo;
 import marvel.model.input.InputModel;
 import marvel.model.input.MarvelApiHandler;
+import marvel.model.output.OutputModel;
 
 /**
  * Provides methods for clients to make mutable and accessor calls to APIs.
@@ -66,6 +67,9 @@ public class ModelImpl implements ModelFacade{
 
     @Override
     public Image getImageByInfo(CharacterInfo info){
+        if(info == null){
+            throw new NullPointerException();
+        }
         return input.getThumbnailImage(info);
     }
 }

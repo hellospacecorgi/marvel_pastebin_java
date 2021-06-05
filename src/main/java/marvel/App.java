@@ -6,9 +6,11 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import marvel.model.*;
 import marvel.model.input.InputModel;
-import marvel.model.input.MarvelApiHandler;
 import marvel.model.input.OfflineMarvelModel;
 import marvel.model.input.OnlineMarvelModel;
+import marvel.model.output.OfflinePastebinModel;
+import marvel.model.output.OnlinePastebinModel;
+import marvel.model.output.OutputModel;
 
 /**
  * First class called when application starts.

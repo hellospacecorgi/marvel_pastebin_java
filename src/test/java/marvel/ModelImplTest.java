@@ -8,6 +8,7 @@ import marvel.model.character.Thumbnail;
 import marvel.model.input.InputModel;
 import marvel.model.input.MarvelApiHandler;
 import marvel.model.input.OnlineMarvelModel;
+import marvel.model.output.OutputModel;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -223,6 +224,17 @@ public class ModelImplTest {
         } catch (FileNotFoundException e){
             e.printStackTrace();
         }
+
+    }
+
+    @Test
+    public void testNullThumbnailCharacter(){
+        CharacterInfo dummy = new CharacterInfo(2222, "dummy","Some dummy hero", "199-23-23");
+        dummy.setThumbnail(null);
+        assertNull(model.getImageByInfo(dummy));
+
+        dummy.setThumbnail(new Thumbnail("", ""));
+        assertNull(model.getImageByInfo(dummy));
 
     }
 

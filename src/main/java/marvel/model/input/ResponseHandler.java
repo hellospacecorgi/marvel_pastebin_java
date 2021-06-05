@@ -13,7 +13,6 @@ public class ResponseHandler {
     public CharacterInfo parseResponseBody(String body){
         try{
             JSONObject response = new JSONObject(body);
-            System.out.println(response.toString());
             if(response.getDouble("code") == 409){
                 System.out.println("Error code 409" + parseError409(body));
                 return null;
