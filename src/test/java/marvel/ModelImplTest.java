@@ -207,15 +207,15 @@ public class ModelImplTest {
         CharacterInfo info = model.getCharacterInfo("spider-man");
         verify(handler, times(1)).getCharacterInfoByName("spider-man");
 
-        spiderman.setThumbnail(new Thumbnail("fake.jpg", "jpg"));
+        spiderman.setThumbnail(new Thumbnail("fake", "jpg"));
 
         Image spiderImg = null;
         try{
             spiderImg = new Image(new FileInputStream(imgPath));
-            when(handler.getImageByUrl("fake.jpg")).thenReturn(spiderImg);
+            when(handler.getImageByUrl("fake/standard_large.jpg")).thenReturn(spiderImg);
             Image img = model.getImageByInfo(info);
 
-            verify(handler, times(1)).getImageByUrl("fake.jpg");
+            verify(handler, times(1)).getImageByUrl("fake/standard_large.jpg");
 
             assertNotNull(img);
             assertEquals(spiderImg, img);
