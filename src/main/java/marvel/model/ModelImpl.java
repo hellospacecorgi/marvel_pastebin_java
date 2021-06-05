@@ -84,5 +84,15 @@ public class ModelImpl implements ModelFacade{
         return output.getReportUrl();
     }
 
+    @Override
+    public void addObserver(ModelObserver obs) {
+
+    }
+
+    @Override
+    public void notifyObservers() {
+
+    }
+
 
 }

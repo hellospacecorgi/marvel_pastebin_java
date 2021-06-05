@@ -13,6 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
+import marvel.model.ModelObserver;
 import marvel.model.character.*;
 import marvel.model.ModelFacade;
 
@@ -30,7 +31,7 @@ import java.net.URL;
  * @see View
  * @see ViewSwitcher
  */
-public class MainPresenter {
+public class MainPresenter implements ModelObserver {
     /**
      *  Takes in user input to generate search enquiry for character information.
      *  Expects string input.
@@ -189,6 +190,14 @@ public class MainPresenter {
         } else {
             message.setText("Failed sending report - check if loaded one character information already?");
         }
+
+    }
+
+    /**
+     * Triggered by ModelFacade's notifyObservers()
+     */
+    @Override
+    public void update(){
 
     }
 }

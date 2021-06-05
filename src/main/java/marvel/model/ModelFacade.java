@@ -17,4 +17,7 @@ public interface ModelFacade {
 
     public boolean sendReport(CharacterInfo info);
     public String getReportUrl();
+
+    public void addObserver(ModelObserver obs);
+    public void notifyObservers();
 }
