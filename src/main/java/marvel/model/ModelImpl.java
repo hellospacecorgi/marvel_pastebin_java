@@ -66,6 +66,6 @@ public class ModelImpl implements ModelFacade{
 
     @Override
     public Image getImageByInfo(CharacterInfo info){
-        return null;
+        return input.getThumbnailImage(info);
     }
 }

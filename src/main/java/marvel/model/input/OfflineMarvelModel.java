@@ -32,6 +32,12 @@ public class OfflineMarvelModel implements InputModel{
 
     @Override
     public Image getThumbnailImage(CharacterInfo character) {
+        try{
+            Image img = new Image(new FileInputStream("./src/main/resources/marvel/dummy.png"));
+            return img;
+        } catch(FileNotFoundException e){
+            e.printStackTrace();
+        }
         return null;
     }
 

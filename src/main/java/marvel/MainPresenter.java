@@ -92,6 +92,8 @@ public class MainPresenter {
         //Image img = model.getInputSubModel().getThumbnailImage(info.getThumbnail().getPath());
         //thumbnail.setImage(img);
 
+        thumbnail.setImage(model.getImageByInfo(info));
+
        // tryImage();
 
     }
