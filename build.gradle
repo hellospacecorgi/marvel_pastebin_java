@@ -39,10 +39,14 @@ dependencies {
 
     // database
     compile group:'org.xerial', name:'sqlite-jdbc', version:'3.32.3.2'
+
+    // https://mvnrepository.com/artifact/org.openjfx/javafx-swing
+    implementation group: 'org.openjfx', name: 'javafx-swing', version: '11-ea+24'
+
 }
 
 javafx{
-    modules = ['javafx.controls', 'javafx.fxml']
+    modules = ['javafx.controls', 'javafx.fxml', 'javafx.swing']
     version = '16'
 }
 

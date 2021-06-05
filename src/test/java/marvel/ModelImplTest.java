@@ -1,5 +1,6 @@
 package marvel;
 
+import javafx.scene.image.Image;
 import marvel.model.*;
 import marvel.model.character.CharacterInfo;
 import marvel.model.character.ResourceUrl;
@@ -10,6 +11,8 @@ import marvel.model.input.OnlineMarvelModel;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -164,10 +167,62 @@ public class ModelImplTest {
         assertNull(info.getStoryList());
     }
 
+    @Test
+    public void testGetImageViaModelFacade(){
+        //uses mock InputModel
+        CharacterInfo info = model.getCharacterInfo("spider-man");
+        assertEquals(info.getThumbnail().getPath(), "fake.jpg");
+        assertEquals(info.getThumbnail().getExtension(), "jpg");
 
+        //mock behavior
+        Image spiderImg = null;
+        try{
+            spiderImg = new Image(new FileInputStream(imgPath));
+            when(input.getThumbnailImage(info)).thenReturn(spiderImg);
+            Image img = model.getImageByInfo(info);
+
+            verify(input, times(1)).getThumbnailImage(info);
+
+            assertNotNull(img);
+            assertEquals(spiderImg, img);
+
+        } catch (FileNotFoundException e){
+            e.printStackTrace();
+        }
+    }
 
     @Test
     public void testInputModelGetThumbnailImage(){
+        //uses concrete model
+        input = new OnlineMarvelModel();
+        MarvelApiHandler handler = mock(MarvelApiHandler.class);
+
+        model = new ModelImpl(input, output, configFilePath);
+        model.getInputSubModel().setApiHandler(handler);
+
+        CharacterInfo spiderman = new CharacterInfo(1234, "spiderman","Can jump around buildings", "1999-99-99");
+        spiderman.setStoryList(null);
+
+        when(handler.getCharacterInfoByName("spider-man")).thenReturn(spiderman);
+        CharacterInfo info = model.getCharacterInfo("spider-man");
+        verify(handler, times(1)).getCharacterInfoByName("spider-man");
+
+        spiderman.setThumbnail(new Thumbnail("fake.jpg", "jpg"));
+
+        Image spiderImg = null;
+        try{
+            spiderImg = new Image(new FileInputStream(imgPath));
+            when(handler.getImageByUrl("fake.jpg")).thenReturn(spiderImg);
+            Image img = model.getImageByInfo(info);
+
+            verify(handler, times(1)).getImageByUrl("fake.jpg");
+
+            assertNotNull(img);
+            assertEquals(spiderImg, img);
+
+        } catch (FileNotFoundException e){
+            e.printStackTrace();
+        }
 
     }
 

@@ -1,5 +1,6 @@
 package marvel.model;
 
+import javafx.scene.image.Image;
 import marvel.model.character.CharacterInfo;
 import marvel.model.input.InputModel;
 import marvel.model.input.MarvelApiHandler;
@@ -61,5 +62,10 @@ public class ModelImpl implements ModelFacade{
     @Override
     public CharacterInfo getCurrentCharacter() {
         return currentCharacter;
+    }
+
+    @Override
+    public Image getImageByInfo(CharacterInfo info){
+        return null;
     }
 }

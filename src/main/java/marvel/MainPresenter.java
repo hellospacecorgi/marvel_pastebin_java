@@ -2,6 +2,7 @@ package marvel;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -10,10 +11,15 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.PixelWriter;
+import javafx.scene.image.WritableImage;
 import marvel.model.character.*;
 import marvel.model.ModelFacade;
 
-import java.io.IOException;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.net.URL;
 
 /**
  * MainPresenter class observes the main view (Main.fxml),
@@ -39,9 +45,6 @@ public class MainPresenter {
     TextArea message;
 
     @FXML
-    TableView urlTable;
-
-    @FXML
     TableView centerTable;
 
     @FXML
@@ -50,7 +53,9 @@ public class MainPresenter {
     ModelFacade model;
 
     public MainPresenter(ModelFacade model){
+
         this.model = model;
+
     }
 
     /**
@@ -86,6 +91,36 @@ public class MainPresenter {
 
         //Image img = model.getInputSubModel().getThumbnailImage(info.getThumbnail().getPath());
         //thumbnail.setImage(img);
+
+       // tryImage();
+
+    }
+
+    public void tryImage(){
+        thumbnail.setImage(new Image("http://i.annihil.us/u/prod/marvel/i/mg/3/10/526033c8b474a/standard_large.jpg"));
+        /*
+        try {
+            //http://i.annihil.us/u/prod/marvel/i/mg/3/10/526033c8b474a/portrait_small.jpg
+           // URL url = new URL("http://i.annihil.us/u/prod/marvel/i/mg/3/10/526033c8b474a/portrait_small.jpg");
+
+            BufferedImage bufferedImg = ImageIO.read(url);
+            if(bufferedImg != null){
+                WritableImage wr = new WritableImage(bufferedImg.getWidth(), bufferedImg.getHeight());
+                PixelWriter pw = wr.getPixelWriter();
+                for(int x = 0 ; x < bufferedImg.getWidth() ; x ++){
+                    for(int y = 0; y < bufferedImg.getHeight() ; y++){
+                        pw.setArgb(x, y, bufferedImg.getRGB(x, y));
+                    }
+                }
+
+                thumbnail.setImage(new ImageView(wr).getImage());
+            }
+
+        } catch(IOException e){
+            e.printStackTrace();
+        }
+*/
+
 
     }
 

@@ -1,5 +1,6 @@
 package marvel.model.input;
 
+import javafx.scene.image.Image;
 import marvel.model.character.CharacterInfo;
 import org.apache.commons.codec.digest.DigestUtils;
 
@@ -78,6 +79,10 @@ public class MarvelApiHandler {
         } catch (IOException | InterruptedException e){
             e.printStackTrace();
         }
+        return null;
+    }
+
+    public Image getImageByUrl(String path){
         return null;
     }
 }
