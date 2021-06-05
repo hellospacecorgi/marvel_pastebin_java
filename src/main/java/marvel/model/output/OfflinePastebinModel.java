@@ -8,12 +8,15 @@ public class OfflinePastebinModel implements OutputModel{
 
     @Override
     public boolean sendReport(CharacterInfo info) {
-        return false;
+        if(info == null){
+            return false;
+        }
+        return true;
     }
 
     @Override
     public String getReportUrl() {
-        return null;
+        return "dummy-report-output-url";
     }
 
 

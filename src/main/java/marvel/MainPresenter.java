@@ -180,4 +180,15 @@ public class MainPresenter {
         centerTable.setItems(clist);
         centerTable.getColumns().addAll(name, path);
     }
+
+    @FXML
+    public void onSendReport(){
+        boolean status = model.sendReport(model.getCurrentCharacter());
+        if(status == true){
+            message.setText("Output Report URL: " + model.getReportUrl());
+        } else {
+            message.setText("Failed sending report - check if loaded one character information already?");
+        }
+
+    }
 }

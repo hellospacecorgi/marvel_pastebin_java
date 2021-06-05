@@ -271,14 +271,14 @@ public class ModelImplTest {
         output = new OnlinePastebinModel();
         PastebinApiHandler handler = mock(PastebinApiHandler.class);
         output.setApiHandler(handler);
-        when(handler.sendReport(anyString())).thenReturn(true);
+        when(handler.sendReport(anyString(), anyString())).thenReturn(true);
 
         model = new ModelImpl(input, output, configFilePath);
         model.getOutputSubModel().setApiHandler(handler);
 
         boolean ret = model.sendReport(spiderman);
 
-        verify(handler, times(1)).sendReport(anyString());
+        verify(handler, times(1)).sendReport(anyString(), anyString());
 
     }
 
@@ -292,6 +292,7 @@ public class ModelImplTest {
         assertEquals("dummy-report-url", ret);
 
         output = new OfflinePastebinModel();
+        model = new ModelImpl(input, output, configFilePath);
         assertEquals("dummy-report-output-url", model.getReportUrl());
 
     }

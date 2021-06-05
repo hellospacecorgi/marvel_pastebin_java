@@ -69,13 +69,18 @@
       </VBox>
    </bottom>
    <right>
-      <VBox prefHeight="413.0" prefWidth="238.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="413.0" prefWidth="238.0" BorderPane.alignment="CENTER">
          <children>
             <ImageView fx:id="thumbnail" fitHeight="222.0" fitWidth="235.0" pickOnBounds="true" preserveRatio="true">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
             </ImageView>
+            <Button alignment="CENTER" onAction="#onSendReport" style="-fx-background-color: #4B2652#4B2652;" text="Send Report">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </Button>
          </children>
       </VBox>
    </right>
@@ -110,7 +115,7 @@
                      </HBox.margin>
                   </Button>
                   <Region prefHeight="31.0" prefWidth="30.0" HBox.hgrow="ALWAYS" />
-                  <Button mnemonicParsing="false" text="Load from cache">
+                  <Button mnemonicParsing="false" style="-fx-background-color: #369F4D#369F4D;" text="Load from cache">
                      <HBox.margin>
                         <Insets bottom="5.0" left="5.0" top="5.0" />
                      </HBox.margin>
