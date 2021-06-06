@@ -64,6 +64,8 @@ public class ModelImpl implements ModelFacade{
             throw new IllegalArgumentException();
         }
         currentCharacter = input.getInfoByName(name);
+
+        notifyObserversGetInfoComplete();
     }
 
     @Override
@@ -82,6 +84,7 @@ public class ModelImpl implements ModelFacade{
     @Override
     public void sendReport(CharacterInfo info) {
         output.sendReport(info);
+        notifyObserversSendReportComplete();
     }
 
     @Override
@@ -103,7 +106,9 @@ public class ModelImpl implements ModelFacade{
 
     @Override
     public void notifyObserversSendReportComplete(){
-
+        for(int i = 0 ; i < observers.size() ; i++){
+            observers.get(i).updateReportUrl();
+        }
     }
 
 

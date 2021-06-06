@@ -282,8 +282,9 @@ public class ModelImplTest {
 
         //WHEN
         String path = model.getImagePathByInfo(model.getCurrentCharacter());
+
         //THEN
-        assertEquals("./src/main/resources/marvel/dummy.png", path);
+        assertNull(path);
 
     }
 
