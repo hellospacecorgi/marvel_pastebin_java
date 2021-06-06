@@ -59,6 +59,8 @@ public class MainPresenter implements ModelObserver {
 
     public MainPresenter(ModelFacade model){
         this.model = model;
+        //adds itself to be an observer
+        model.addObserver(this);
     }
 
     /**
@@ -73,39 +75,9 @@ public class MainPresenter implements ModelObserver {
             return;
         }
 
-        //Retrieve response from model
+        //Ask model to process request
         model.getCharacterInfo(characterName.getText());
-        CharacterInfo info = model.getCurrentCharacter();
-        if(info == null){
-            message.setText("Search returned no character information with provided name.");
-            return;
-        }
-        String result = "Character Summary \n";
-        result = result.concat("ID: ").concat(String.valueOf(info.getId()));
-        result = result.concat("\nName: ").concat(info.getName());
-        result = result.concat("\nDescription: ").concat(info.getDescription());
-        result = result.concat("\nNumber of Comics: ").concat(String.valueOf(info.getNComics()));
-        result = result.concat("\nNumber of Stories: ").concat(String.valueOf(info.getNStories()));
-        result = result.concat("\nNumber of Events: ").concat(String.valueOf(info.getNEvents()));
-        result = result.concat("\nNumber of Series: ").concat(String.valueOf(info.getNSeries()));
-        result = result.concat("\nLast modified: ").concat(info.getModified());
-        message.setText(result);
 
-        //Update view with response
-        updateCenterComics(); //show list of comics by default
-
-        Image img = null;
-        if(model.getImagePathByInfo(info) != null){
-            img = new Image(model.getImagePathByInfo(info));
-            thumbnail.setImage(img);
-        } else {
-            try{
-                img = new Image(new FileInputStream("./src/main/resources/marvel/dummy.png"));
-                thumbnail.setImage(img);
-            } catch(FileNotFoundException e) {
-                e.printStackTrace();
-            }
-        }
 
     }
 
@@ -199,22 +171,55 @@ public class MainPresenter implements ModelObserver {
     @FXML
     public void onSendReport(){
         model.sendReport(model.getCurrentCharacter());
-        String url = model.getReportUrl();
-        if(url != null){
-            message.setText("Output Report URL: " + model.getReportUrl());
-        } else {
-            message.setText("Failed sending report - check if loaded one character information already?");
-        }
+
 
     }
 
     @Override
     public void updateCharacterInfo() {
 
+        //Retrieve updated data in CharacterInfo
+        CharacterInfo info = model.getCurrentCharacter();
+        if(info == null){
+            message.setText("Search returned no character information with provided name.");
+            return;
+        }
+        String result = "Character Summary \n";
+        result = result.concat("ID: ").concat(String.valueOf(info.getId()));
+        result = result.concat("\nName: ").concat(info.getName());
+        result = result.concat("\nDescription: ").concat(info.getDescription());
+        result = result.concat("\nNumber of Comics: ").concat(String.valueOf(info.getNComics()));
+        result = result.concat("\nNumber of Stories: ").concat(String.valueOf(info.getNStories()));
+        result = result.concat("\nNumber of Events: ").concat(String.valueOf(info.getNEvents()));
+        result = result.concat("\nNumber of Series: ").concat(String.valueOf(info.getNSeries()));
+        result = result.concat("\nLast modified: ").concat(info.getModified());
+        message.setText(result);
+
+        //Update view with response
+        updateCenterComics(); //show list of comics by default
+
+        //Update thumbnail view
+        Image img = null;
+        if(model.getImagePathByInfo(info) != null){
+            img = new Image(model.getImagePathByInfo(info));
+            thumbnail.setImage(img);
+        } else {
+            try{
+                img = new Image(new FileInputStream("./src/main/resources/marvel/dummy.png"));
+                thumbnail.setImage(img);
+            } catch(FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
     public void updateReportUrl() {
-
+        String url = model.getReportUrl();
+        if(url != null){
+            message.setText("Output Report URL: " + model.getReportUrl());
+        } else {
+            message.setText("Failed sending report - check if last search is valid and loaded results.");
+        }
     }
 }

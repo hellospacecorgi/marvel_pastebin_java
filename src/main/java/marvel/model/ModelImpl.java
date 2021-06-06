@@ -64,7 +64,6 @@ public class ModelImpl implements ModelFacade{
             throw new IllegalArgumentException();
         }
         currentCharacter = input.getInfoByName(name);
-
         notifyObserversGetInfoComplete();
     }
 
