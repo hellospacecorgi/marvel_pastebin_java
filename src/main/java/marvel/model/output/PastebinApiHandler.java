@@ -66,7 +66,7 @@ public class PastebinApiHandler {
                 return true;
             }
             System.out.println(response.statusCode() + " " + response.body());
-            this.lastOutputUrl = response.body();
+            this.lastOutputUrl = null;
             return false;
         } catch(IOException | InterruptedException e){
             e.printStackTrace();

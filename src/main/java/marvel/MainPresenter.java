@@ -14,6 +14,9 @@ import marvel.model.ModelObserver;
 import marvel.model.character.*;
 import marvel.model.ModelFacade;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 /**
  * MainPresenter class observes the main view (Main.fxml),
  * triggers Model operations upon user events,
@@ -71,7 +74,8 @@ public class MainPresenter implements ModelObserver {
         }
 
         //Retrieve response from model
-        CharacterInfo info = model.getCharacterInfo(characterName.getText());
+        model.getCharacterInfo(characterName.getText());
+        CharacterInfo info = model.getCurrentCharacter();
         if(info == null){
             message.setText("Search returned no character information with provided name.");
             return;
@@ -90,14 +94,19 @@ public class MainPresenter implements ModelObserver {
         //Update view with response
         updateCenterComics(); //show list of comics by default
 
-
         Image img = null;
         if(model.getImagePathByInfo(info) != null){
             img = new Image(model.getImagePathByInfo(info));
-        }
-        if(img != null){
             thumbnail.setImage(img);
+        } else {
+            try{
+                img = new Image(new FileInputStream("./src/main/resources/marvel/dummy.png"));
+                thumbnail.setImage(img);
+            } catch(FileNotFoundException e) {
+                e.printStackTrace();
+            }
         }
+
     }
 
     @FXML
@@ -189,8 +198,9 @@ public class MainPresenter implements ModelObserver {
 
     @FXML
     public void onSendReport(){
-        boolean status = model.sendReport(model.getCurrentCharacter());
-        if(status == true){
+        model.sendReport(model.getCurrentCharacter());
+        String url = model.getReportUrl();
+        if(url != null){
             message.setText("Output Report URL: " + model.getReportUrl());
         } else {
             message.setText("Failed sending report - check if loaded one character information already?");

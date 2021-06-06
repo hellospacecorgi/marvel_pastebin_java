@@ -29,6 +29,7 @@ public class ModelImplTest {
     ModelFacade model;
     InputModel input;
     OutputModel output;
+    ModelObserver observer;
     String configFilePath = "./src/main/resources/marvel/KeyConfig.json";
     String imgPath = "./src/main/resources/marvel/dummy.png";
     CharacterInfo spiderman;
@@ -95,16 +96,20 @@ public class ModelImplTest {
     public void testValidCharacterName(){
 
         //WHEN - searching valid character name
-        CharacterInfo info = model.getCharacterInfo("spider-man");
+        model.getCharacterInfo("spider-man");
 
         //THEN - expect input model's getInfoByName will be triggered
         verify(input, times(1)).getInfoByName("spider-man");
 
         //THEN - expect returned CharacterInfo object matches expected valid object
-        assertEquals(1234, info.getId());
-        assertEquals("spiderman", info.getName());
-        assertEquals("fakepath", info.getThumbnail().getPath());
-        List<ResourceUrl> urls = info.getUrls();
+
+        /*
+         * Refactored test from info to model.getCurrentCharacter
+         */
+        assertEquals(1234, model.getCurrentCharacter().getId());
+        assertEquals("spiderman", model.getCurrentCharacter().getName());
+        assertEquals("fakepath", model.getCurrentCharacter().getThumbnail().getPath());
+        List<ResourceUrl> urls = model.getCurrentCharacter().getUrls();
         assertEquals(2, urls.size());
         assertEquals("dummy-url.com", urls.get(0).getUrl());
         assertEquals("wiki", urls.get(0).getType());
@@ -121,13 +126,13 @@ public class ModelImplTest {
     public void testInvalidCharacterName(){
 
         //WHEN - searching for invalid character name
-        CharacterInfo info = model.getCharacterInfo("wonder-woman");
+        model.getCharacterInfo("wonder-woman");
 
         //THEN - expect InputModel method to be triggered
         verify(input, times(1)).getInfoByName("wonder-woman");
 
-        //THEN - expect null return returned
-        assertNull(info);
+//        //THEN - expect null return returned
+//        assertNull(info);
     }
 
     /**
@@ -159,16 +164,18 @@ public class ModelImplTest {
         when(handler.getCharacterInfoByName("spider-man")).thenReturn(spiderman);
 
         //WHEN
-        CharacterInfo info = model.getCharacterInfo("spider-man");
+        model.getCharacterInfo("spider-man");
 
         //THEN
         verify(handler, times(1)).getCharacterInfoByName("spider-man");
 
-        assertNotNull(input.getInfoByName("spider-man"));
-
-        assertEquals(spiderman.getName(), info.getName());
-        assertEquals(spiderman.getDescription(), info.getDescription());
-        assertEquals(spiderman.getModified(), info.getModified());
+        /*
+         * Refactored to use model.getCurrentCharacter() after refactoring return value of getCharacterInfo to void
+         * to prepare for observer pattern refactoring
+         */
+        assertEquals(spiderman.getName(), model.getCurrentCharacter().getName());
+        assertEquals(spiderman.getDescription(), model.getCurrentCharacter().getDescription());
+        assertEquals(spiderman.getModified(), model.getCurrentCharacter().getModified());
 
     }
 
@@ -193,11 +200,10 @@ public class ModelImplTest {
         when(handler.getCharacterInfoByName("invalid")).thenReturn(null);
 
         //WHEN
-        CharacterInfo info = model.getCharacterInfo("invalid");
+        model.getCharacterInfo("invalid");
 
         //THEN
         verify(handler, times(1)).getCharacterInfoByName("invalid");
-        assertNull(info);
 
     }
 
@@ -223,18 +229,20 @@ public class ModelImplTest {
         when(handler.getCharacterInfoByName("spider-man")).thenReturn(spiderman);
 
         //WHEN
-        CharacterInfo info = model.getCharacterInfo("spider-man");
+        model.getCharacterInfo("spider-man");
 
         //THEN
         verify(handler, times(1)).getCharacterInfoByName("spider-man");
-
-        assertNotNull(input.getInfoByName("spider-man"));
-
-        assertEquals(spiderman.getName(), info.getName());
-        assertEquals(spiderman.getDescription(), info.getDescription());
-        assertEquals(spiderman.getModified(), info.getModified());
-        assertNull(info.getThumbnail());
-        assertNull(info.getStoryList());
+        /*
+         * Refactored test to use model.getCurrentCharacter()
+         *  after refactoring return value of getCharacterInfo to void
+         * to prepare for observer pattern refactoring
+         */
+        assertEquals(spiderman.getName(), model.getCurrentCharacter().getName());
+        assertEquals(spiderman.getDescription(), model.getCurrentCharacter().getDescription());
+        assertEquals(spiderman.getModified(), model.getCurrentCharacter().getModified());
+        assertNull(model.getCurrentCharacter().getThumbnail());
+        assertNull(model.getCurrentCharacter().getStoryList());
     }
 
     /**
@@ -270,13 +278,10 @@ public class ModelImplTest {
         model = new ModelImpl(input, output, configFilePath);
 
         //WHEN
-        CharacterInfo info = model.getCharacterInfo("spider-man");
-        //THEN
-        assertNotNull(info);
-        assertEquals(2222, info.getId());
+        model.getCharacterInfo("spider-man");
 
         //WHEN
-        String path = model.getImagePathByInfo(info);
+        String path = model.getImagePathByInfo(model.getCurrentCharacter());
         //THEN
         assertEquals("./src/main/resources/marvel/dummy.png", path);
 
@@ -305,18 +310,16 @@ public class ModelImplTest {
      */
     @Test
     public void testSendReportFacade(){
-        //GIVEN
-        when(output.sendReport(spiderman)).thenReturn(true);
-        when(output.sendReport(null)).thenReturn(false);
         //WHEN
-        boolean ret = model.sendReport(spiderman);
+        model.sendReport(spiderman);
+
         //THEN
-        assertTrue(ret);
         verify(output, times(1)).sendReport(spiderman);
+
         //WHEN
-        ret = model.sendReport(null);
+        model.sendReport(null);
         //THEN
-        assertFalse(ret);
+        verify(output, times(1)).sendReport(spiderman);
 
     }
 
@@ -352,7 +355,7 @@ public class ModelImplTest {
         model = new ModelImpl(input, output, configFilePath);
         model.getOutputSubModel().setApiHandler(handler);
         //WHEN
-        boolean ret = model.sendReport(spiderman);
+        model.sendReport(spiderman);
         //THEN
         verify(handler, times(1)).sendReport(anyString(), anyString());
 
@@ -393,11 +396,38 @@ public class ModelImplTest {
      */
     @Test
     public void testRefactoredObserverUpdateGetCharacterInfoComplete(){
+        //GIVEN
+        observer = mock(ModelObserver.class);
+        model.addObserver(observer);
+        ModelObserver obs2 = mock(ModelObserver.class);
+        model.addObserver(obs2);
 
+        //WHEN
+        model.getCharacterInfo("spider-man");
+
+        //THEN
+        verify(observer, times(1)).updateCharacterInfo();
+        verify(obs2, times(1)).updateCharacterInfo();
     }
 
     @Test
     public void testRefactoredObserverUpdateSendReportComplete(){
+        //GIVEN
+        observer = mock(ModelObserver.class);
+        model.addObserver(observer);
+        ModelObserver obs2 = mock(ModelObserver.class);
+        model.addObserver(obs2);
+
+        //WHEN
+        model.getCharacterInfo("spider-man");
+        //THEN
+        verify(observer, times(1)).updateCharacterInfo();
+        verify(obs2, times(1)).updateCharacterInfo();
+        //WHEN
+        model.sendReport(model.getCurrentCharacter());
+        //THEN
+        verify(observer, times(1)).updateReportUrl();
+        verify(obs2, times(1)).updateReportUrl();
 
     }
 

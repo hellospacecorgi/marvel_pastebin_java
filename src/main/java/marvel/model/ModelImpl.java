@@ -56,7 +56,7 @@ public class ModelImpl implements ModelFacade{
      * @return CharacterInfo object that stores information and links to resources related to character of `name` name.
      */
     @Override
-    public CharacterInfo getCharacterInfo(String name) {
+    public void getCharacterInfo(String name) {
         if(name == null){
             throw new NullPointerException();
         }
@@ -64,7 +64,6 @@ public class ModelImpl implements ModelFacade{
             throw new IllegalArgumentException();
         }
         currentCharacter = input.getInfoByName(name);
-        return currentCharacter;
     }
 
     @Override
@@ -75,14 +74,14 @@ public class ModelImpl implements ModelFacade{
     @Override
     public String getImagePathByInfo(CharacterInfo info){
         if(info == null){
-            throw new NullPointerException();
+            return null;
         }
         return input.getThumbnailFullPath(info);
     }
 
     @Override
-    public boolean sendReport(CharacterInfo info) {
-        return output.sendReport(info);
+    public void sendReport(CharacterInfo info) {
+        output.sendReport(info);
     }
 
     @Override

@@ -44,15 +44,14 @@ public class OfflineMarvelModel implements InputModel{
         dummy.setNStories(144);
         dummy.setNComics(0);
         dummy.setNSeries(53);
+
         return dummy;
+
     }
 
     @Override
     public String getThumbnailFullPath(CharacterInfo info) {
-       if(info == null) {
-           return null;
-       }
-       return "./src/main/resources/marvel/dummy.png";
+        return null;
     }
 
 }
