@@ -2,7 +2,6 @@ package marvel;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -14,11 +13,6 @@ import javafx.scene.image.ImageView;
 import marvel.model.ModelObserver;
 import marvel.model.character.*;
 import marvel.model.ModelFacade;
-
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.*;
-import java.net.URL;
 
 /**
  * MainPresenter class observes the main view (Main.fxml),
@@ -96,8 +90,14 @@ public class MainPresenter implements ModelObserver {
         //Update view with response
         updateCenterComics(); //show list of comics by default
 
-        thumbnail.setImage(model.getImageByInfo(info));
 
+        Image img = null;
+        if(model.getImagePathByInfo(info) != null){
+            img = new Image(model.getImagePathByInfo(info));
+        }
+        if(img != null){
+            thumbnail.setImage(img);
+        }
     }
 
     @FXML

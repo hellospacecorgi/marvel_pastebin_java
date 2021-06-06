@@ -1,5 +1,6 @@
 package marvel;
 
+import javafx.beans.binding.When;
 import javafx.scene.image.Image;
 import marvel.model.*;
 import marvel.model.character.CharacterInfo;
@@ -7,6 +8,7 @@ import marvel.model.character.ResourceUrl;
 import marvel.model.character.Thumbnail;
 import marvel.model.input.InputModel;
 import marvel.model.input.MarvelApiHandler;
+import marvel.model.input.OfflineMarvelModel;
 import marvel.model.input.OnlineMarvelModel;
 import marvel.model.output.OfflinePastebinModel;
 import marvel.model.output.OnlinePastebinModel;
@@ -50,7 +52,7 @@ public class ModelImplTest {
         Thumbnail thb = new Thumbnail("./src/main/resources/marvel/dummy.png", "png");
         spiderman = new CharacterInfo(1234, "spiderman","Can jump around buildings", "1999-99-99");
         spiderman.setUrls(urls);
-        spiderman.setThumbnail(new Thumbnail("fake.jpg", "jpg"));
+        spiderman.setThumbnail(new Thumbnail("fakepath", "jpg"));
 
         //GIVEN searching for valid character name search triggered will return valid CharacterInfo built from data
         when(input.getInfoByName("spider-man")).thenReturn(spiderman);
@@ -101,7 +103,7 @@ public class ModelImplTest {
         //THEN - expect returned CharacterInfo object matches expected valid object
         assertEquals(1234, info.getId());
         assertEquals("spiderman", info.getName());
-        assertEquals("fake.jpg", info.getThumbnail().getPath());
+        assertEquals("fakepath", info.getThumbnail().getPath());
         List<ResourceUrl> urls = info.getUrls();
         assertEquals(2, urls.size());
         assertEquals("dummy-url.com", urls.get(0).getUrl());
@@ -151,7 +153,7 @@ public class ModelImplTest {
         Thumbnail thb = new Thumbnail("./src/main/resources/marvel/dummy.png", "png");
         CharacterInfo spiderman = new CharacterInfo(1234, "spiderman","Can jump around buildings", "1999-99-99");
         spiderman.setUrls(urls);
-        spiderman.setThumbnail(new Thumbnail("fake.jpg", "jpg"));
+        spiderman.setThumbnail(new Thumbnail("fakepath", "jpg"));
 
         //GIVEN
         when(handler.getCharacterInfoByName("spider-man")).thenReturn(spiderman);
@@ -241,78 +243,42 @@ public class ModelImplTest {
      * Test using mocked InputModel, testing behviour between ModelFacade and InputModel
      */
     @Test
-    public void testGetImageViaModelFacade(){
+    public void testGetImagePathViaModelFacade(){
         //uses mock InputModel
-        CharacterInfo info = model.getCharacterInfo("spider-man");
-        assertEquals(info.getThumbnail().getPath(), "fake.jpg");
-        assertEquals(info.getThumbnail().getExtension(), "jpg");
+        //GIVEN
+        when(input.getThumbnailFullPath(spiderman)).thenReturn("./src/main/resources/marvel/dummy.png");
 
-        //mock behavior
-        Image spiderImg = null;
-        try{
-            //GIVEN
-            spiderImg = new Image(new FileInputStream(imgPath));
-            when(input.getThumbnailImage(info)).thenReturn(spiderImg);
+        //WHEN
+        String path = model.getImagePathByInfo(spiderman);
 
-            //WHEN
-            Image img = model.getImageByInfo(info);
+        //THEN
+        verify(input, times(1)).getThumbnailFullPath(spiderman);
+        assertEquals("./src/main/resources/marvel/dummy.png", path);
 
-            //THEN
-            verify(input, times(1)).getThumbnailImage(info);
-            assertNotNull(img);
-            assertEquals(spiderImg, img);
-
-        } catch (FileNotFoundException e){
-            e.printStackTrace();
-        }
     }
 
     /**
-     * Testing Image object for thumbnail display created from provided CharacterInfo object.
+     * Testing image path for dummy intput API model for thumbnail display created from provided CharacterInfo object.
      *
-     * Test using mocked MarvelApiHandler with instance of OnlineMarvelModel,
-     * testing behviour between InputModel and MarvelApiHandler
      */
     @Test
-    public void testInputModelGetThumbnailImage(){
+    public void testInputModelGetThumbnailFullPath(){
         //uses concrete model
-        input = new OnlineMarvelModel();
-        MarvelApiHandler handler = mock(MarvelApiHandler.class);
+        input = new OfflineMarvelModel();
 
         //GIVEN
         model = new ModelImpl(input, output, configFilePath);
-        model.getInputSubModel().setApiHandler(handler);
-
-        //GIVEN
-        CharacterInfo spiderman = new CharacterInfo(1234, "spiderman","Can jump around buildings", "1999-99-99");
-        spiderman.setStoryList(null);
-        when(handler.getCharacterInfoByName("spider-man")).thenReturn(spiderman);
 
         //WHEN
         CharacterInfo info = model.getCharacterInfo("spider-man");
-
         //THEN
-        verify(handler, times(1)).getCharacterInfoByName("spider-man");
+        assertNotNull(info);
+        assertEquals(2222, info.getId());
 
-        //GIVEN
-        spiderman.setThumbnail(new Thumbnail("fake", "jpg"));
-
-        Image spiderImg = null;
-        try{
-            spiderImg = new Image(new FileInputStream(imgPath));
-            when(handler.getImageByUrl("fake/standard_large.jpg")).thenReturn(spiderImg);
-
-            //WHEN
-            Image img = model.getImageByInfo(info);
-
-            //THEN
-            verify(handler, times(1)).getImageByUrl("fake/standard_large.jpg");
-            assertNotNull(img);
-            assertEquals(spiderImg, img);
-
-        } catch (FileNotFoundException e){
-            e.printStackTrace();
-        }
+        //WHEN
+        String path = model.getImagePathByInfo(info);
+        //THEN
+        assertEquals("./src/main/resources/marvel/dummy.png", path);
 
     }
 
@@ -325,12 +291,12 @@ public class ModelImplTest {
         CharacterInfo dummy = new CharacterInfo(2222, "dummy","Some dummy hero", "199-23-23");
         dummy.setThumbnail(null);
         //WHEN-THEN
-        assertNull(model.getImageByInfo(dummy));
+        assertNull(model.getImagePathByInfo(dummy));
 
         //GIVEN
         dummy.setThumbnail(new Thumbnail("", ""));
         //WHEN-THEN
-        assertNull(model.getImageByInfo(dummy));
+        assertNull(model.getImagePathByInfo(dummy));
 
     }
 
@@ -434,7 +400,5 @@ public class ModelImplTest {
     public void testRefactoredObserverUpdateSendReportComplete(){
 
     }
-
-
 
 }

@@ -13,7 +13,7 @@ public interface ModelFacade {
 
     public CharacterInfo getCharacterInfo(String name);
 
-    public Image getImageByInfo(CharacterInfo info);
+    public String getImagePathByInfo(CharacterInfo info);
 
     public boolean sendReport(CharacterInfo info);
     public String getReportUrl();

@@ -73,11 +73,11 @@ public class ModelImpl implements ModelFacade{
     }
 
     @Override
-    public Image getImageByInfo(CharacterInfo info){
+    public String getImagePathByInfo(CharacterInfo info){
         if(info == null){
             throw new NullPointerException();
         }
-        return input.getThumbnailImage(info);
+        return input.getThumbnailFullPath(info);
     }
 
     @Override

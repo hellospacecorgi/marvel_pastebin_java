@@ -22,7 +22,7 @@ public class OnlineMarvelModel implements InputModel{
     }
 
     @Override
-    public Image getThumbnailImage(CharacterInfo info) {
+    public String getThumbnailFullPath(CharacterInfo info) {
         if(info == null){
             return null;
         }
@@ -36,6 +36,6 @@ public class OnlineMarvelModel implements InputModel{
         String path = info.getThumbnail().getPath();
         path = path.concat("/standard_large.");
         path = path.concat(info.getThumbnail().getExtension());
-        return apiHandler.getImageByUrl(path);
+        return null;
     }
 }

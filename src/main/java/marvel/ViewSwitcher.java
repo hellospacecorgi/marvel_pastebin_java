@@ -11,6 +11,9 @@ import java.util.Map;
 
 /**
  * Used for switching between views upon navigation buttons clicked.
+ *
+ * @see App
+ * @see View
  */
 public class ViewSwitcher {
     private static Scene scene;
