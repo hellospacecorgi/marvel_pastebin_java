@@ -2,3 +2,4 @@ marvel
 marvel.model
 marvel.model.character
 marvel.model.input
+marvel.model.output

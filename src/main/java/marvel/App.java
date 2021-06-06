@@ -25,13 +25,8 @@ public class App extends Application {
     InputModel input;
     OutputModel output;
 
-    public String getGreeting() {
-        return "Hello world.";
-    }
-
     public static void main(String[] args) {
 
-        System.out.println(new App().getGreeting());
         if(args.length < 1){
             System.out.println("Give --args=\"offline\" to switch to offline mode. \nRunning online mode by default.");
         } else {
@@ -73,9 +68,7 @@ public class App extends Application {
             output = new OnlinePastebinModel();
         }
 
-
         model = new ModelImpl(input, output, configFilePath);
-
 
         ViewSwitcher.setModel(model);
         ViewSwitcher.setScene(scene);
@@ -84,7 +77,6 @@ public class App extends Application {
         stage.setScene(scene);
         stage.setTitle("Marvel Characters");
         stage.show();
-
 
     }
 }

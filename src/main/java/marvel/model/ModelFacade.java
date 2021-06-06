@@ -19,5 +19,6 @@ public interface ModelFacade {
     public String getReportUrl();
 
     public void addObserver(ModelObserver obs);
-    public void notifyObservers();
+    public void notifyObserversGetInfoComplete();
+    public void notifyObserversSendReportComplete();
 }

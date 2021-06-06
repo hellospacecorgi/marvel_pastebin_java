@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"marvel"},{"l":"marvel.model"},{"l":"marvel.model.character"},{"l":"marvel.model.input"}]
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"marvel"},{"l":"marvel.model"},{"l":"marvel.model.character"},{"l":"marvel.model.input"},{"l":"marvel.model.output"}]

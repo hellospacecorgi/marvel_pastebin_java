@@ -11,8 +11,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.PixelWriter;
-import javafx.scene.image.WritableImage;
 import marvel.model.ModelObserver;
 import marvel.model.character.*;
 import marvel.model.ModelFacade;
@@ -34,38 +32,45 @@ import java.net.URL;
 public class MainPresenter implements ModelObserver {
     /**
      *  Takes in user input to generate search enquiry for character information.
-     *  Expects string input.
      */
     @FXML
     TextField characterName;
 
     /**
      *  Represents the lower left panel where response messages are printed.
+     *  Response messages can be request results (character information, link to output report paste), error messages, instructions
      */
     @FXML
     TextArea message;
 
+    /**
+     *
+     */
     @FXML
     TableView centerTable;
 
+    /**
+     *
+     */
     @FXML
     ImageView thumbnail;
 
+    /**
+     *
+     */
     ModelFacade model;
 
     public MainPresenter(ModelFacade model){
-
         this.model = model;
-
     }
 
     /**
      * Triggered by 'Search Character' button.
      * Expects textfield to have string value input.
-     * @throws IOException
+     *
      */
     @FXML
-    public void onSearch() throws IOException {
+    public void onSearch() {
         if(characterName.getText().equals("") || characterName.getText().isEmpty()){
             message.setText("Input field is empty - enter name for searching.");
             return;
@@ -193,11 +198,13 @@ public class MainPresenter implements ModelObserver {
 
     }
 
-    /**
-     * Triggered by ModelFacade's notifyObservers()
-     */
     @Override
-    public void update(){
+    public void updateCharacterInfo() {
+
+    }
+
+    @Override
+    public void updateReportUrl() {
 
     }
 }

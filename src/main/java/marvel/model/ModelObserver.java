@@ -1,5 +1,6 @@
 package marvel.model;
 
 public interface ModelObserver {
-    public void update();
+    public void updateCharacterInfo();
+    public void updateReportUrl();
 }

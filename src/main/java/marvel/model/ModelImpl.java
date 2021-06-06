@@ -7,6 +7,9 @@ import marvel.model.input.MarvelApiHandler;
 import marvel.model.output.OutputModel;
 import marvel.model.output.PastebinApiHandler;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Provides methods for clients to make mutable and accessor calls to APIs.
  * Acts as an interface for the client to interact with the complex model subsystem.
@@ -19,6 +22,8 @@ public class ModelImpl implements ModelFacade{
 
     CharacterInfo currentCharacter;
 
+    List<ModelObserver> observers;
+
     /**
      * Takes in a version of InputModel and OutputModel for online/offline versions.
      * @param input takes in a input model implementation
@@ -27,6 +32,7 @@ public class ModelImpl implements ModelFacade{
     public ModelImpl(InputModel input, OutputModel output, String configFilePath){
         this.input = input;
         this.output = output;
+        this.observers = new ArrayList<>();
 
         ConfigHandler config = new ConfigHandler(configFilePath);
         this.input.setApiHandler(new MarvelApiHandler(config.getInputPublicKey(), config.getInputPrivateKey()));
@@ -86,11 +92,18 @@ public class ModelImpl implements ModelFacade{
 
     @Override
     public void addObserver(ModelObserver obs) {
-
+        observers.add(obs);
     }
 
     @Override
-    public void notifyObservers() {
+    public void notifyObserversGetInfoComplete() {
+        for(int i = 0 ; i < observers.size() ; i++){
+            observers.get(i).updateCharacterInfo();
+        }
+    }
+
+    @Override
+    public void notifyObserversSendReportComplete(){
 
     }
 

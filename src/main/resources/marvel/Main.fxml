@@ -35,7 +35,7 @@
                <children>
                   <VBox prefHeight="109.0" prefWidth="560.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <TextArea fx:id="message" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #0000;" styleClass="label" text="hello!" VBox.vgrow="ALWAYS">
+                        <TextArea fx:id="message" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #0000;" styleClass="label" text="hello! &#10;Please give specified character name in the search field and click search button to begin searching. &#10;Upon successful response,  information about the character will be displayed here,&#10;additionally, the top bar buttons can be used to view lists of resources related to that character.&#10;&#10;After a successful search, clicking the send report button will generate a report on the character data to a paste,&#10;where the URL to pastebin will be displayed here." wrapText="true" VBox.vgrow="ALWAYS">
                            <VBox.margin>
                               <Insets right="5.0" />
                            </VBox.margin>
@@ -53,6 +53,11 @@
                            </VBox.margin>
                         </TextField>
                         <Button alignment="CENTER" onAction="#onSearch" text="Search Character">
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" style="-fx-background-color: #369F4D#369F4D;" text="Load from cache">
                            <VBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </VBox.margin>
@@ -115,11 +120,6 @@
                      </HBox.margin>
                   </Button>
                   <Region prefHeight="31.0" prefWidth="30.0" HBox.hgrow="ALWAYS" />
-                  <Button mnemonicParsing="false" style="-fx-background-color: #369F4D#369F4D;" text="Load from cache">
-                     <HBox.margin>
-                        <Insets bottom="5.0" left="5.0" top="5.0" />
-                     </HBox.margin>
-                  </Button>
                </children>
             </HBox>
             <TableView fx:id="centerTable" fixedCellSize="0.0" prefHeight="375.0" prefWidth="626.0" VBox.vgrow="ALWAYS">

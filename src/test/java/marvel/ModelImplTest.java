@@ -31,16 +31,19 @@ public class ModelImplTest {
     String imgPath = "./src/main/resources/marvel/dummy.png";
     CharacterInfo spiderman;
 
+    /**
+     *  Used to specify GIVEN behaviour for mocked input model class on valid and invalid search names
+     */
     @Before
     public void ModelImplSetUp(){
         //mock API classes
         input = mock(InputModel.class);
         output = mock(OutputModel.class);
 
-        //inject mocks to model impl
+        //GIVEN ModelImpl initialised with an instance of InputModel and OutputModel
         model = new ModelImpl(input, output, configFilePath);
 
-        //valid character name
+        //GIVEN - CharacterInfo build from valid name search response
         List<ResourceUrl> urls = new ArrayList<>();
         urls.add(new ResourceUrl("wiki", "dummy-url.com"));
         urls.add(new ResourceUrl("blog", "another-dummy.com"));
@@ -48,13 +51,20 @@ public class ModelImplTest {
         spiderman = new CharacterInfo(1234, "spiderman","Can jump around buildings", "1999-99-99");
         spiderman.setUrls(urls);
         spiderman.setThumbnail(new Thumbnail("fake.jpg", "jpg"));
+
+        //GIVEN searching for valid character name search triggered will return valid CharacterInfo built from data
         when(input.getInfoByName("spider-man")).thenReturn(spiderman);
 
-        //invalid character name - Not a marvel character
+        //GIVEN searching for invalid character name - Not a marvel character will return null
         when(input.getInfoByName("wonder-woman")).thenReturn(null);
 
     }
 
+    /**
+     * Unit testing concrete class ConfigHandler
+     *
+     * Used for getting API Keys configuration for sending input and output API requests
+     */
     @Test
     public void testConfigHandler(){
         ConfigHandler handler = new ConfigHandler("./src/main/resources/marvel/KeyConfig.json");
@@ -63,18 +73,32 @@ public class ModelImplTest {
         assertNotEquals("", handler.getOutputKey());
     }
 
+    /**
+     * Testing ModelImpl submodel retrieval method
+     */
     @Test
     public void testGetSubModels(){
         assertNotNull(model.getInputSubModel());
         assertNotNull(model.getOutputSubModel());
+
+        assertEquals(model.getInputSubModel(), input);
+        assertEquals(model.getOutputSubModel(), output);
     }
 
+    /**
+     * Test for expected coordination behavior from ModelImpl to InputModel instance when searching for valid name.
+     * See GIVEN @Before setup method.
+     */
     @Test
     public void testValidCharacterName(){
+
+        //WHEN - searching valid character name
         CharacterInfo info = model.getCharacterInfo("spider-man");
 
+        //THEN - expect input model's getInfoByName will be triggered
         verify(input, times(1)).getInfoByName("spider-man");
 
+        //THEN - expect returned CharacterInfo object matches expected valid object
         assertEquals(1234, info.getId());
         assertEquals("spiderman", info.getName());
         assertEquals("fake.jpg", info.getThumbnail().getPath());
@@ -87,24 +111,40 @@ public class ModelImplTest {
 
     }
 
+    /**
+     * Test for expected coordination behavior from ModelImpl to InputModel instance when searching for invalid name.
+     * See GIVEN @Before setup method.
+     */
     @Test
     public void testInvalidCharacterName(){
+
+        //WHEN - searching for invalid character name
         CharacterInfo info = model.getCharacterInfo("wonder-woman");
 
+        //THEN - expect InputModel method to be triggered
         verify(input, times(1)).getInfoByName("wonder-woman");
 
+        //THEN - expect null return returned
         assertNull(info);
     }
 
+    /**
+     * Testing InputModel's getInfoByName() invalid name search
+     * Testing a one layer down ModelFacade - specifically for OnlineMarvelModel's interaction with
+     * the concrete class MarvelApiHandler which is responsible for sending requests that hits the web API.
+     *
+     */
     @Test
     public void testInputModelGetInfoByNameValid(){
         //mock marvelApiHandler
         input = new OnlineMarvelModel();
         MarvelApiHandler handler = mock(MarvelApiHandler.class);
 
+        //GIVEN
         model = new ModelImpl(input, output, configFilePath);
         model.getInputSubModel().setApiHandler(handler);
 
+        //GIVEN
         List<ResourceUrl> urls = new ArrayList<>();
         urls.add(new ResourceUrl("wiki", "dummy-url.com"));
         urls.add(new ResourceUrl("blog", "another-dummy.com"));
@@ -113,10 +153,13 @@ public class ModelImplTest {
         spiderman.setUrls(urls);
         spiderman.setThumbnail(new Thumbnail("fake.jpg", "jpg"));
 
+        //GIVEN
         when(handler.getCharacterInfoByName("spider-man")).thenReturn(spiderman);
 
+        //WHEN
         CharacterInfo info = model.getCharacterInfo("spider-man");
 
+        //THEN
         verify(handler, times(1)).getCharacterInfoByName("spider-man");
 
         assertNotNull(input.getInfoByName("spider-man"));
@@ -127,41 +170,60 @@ public class ModelImplTest {
 
     }
 
+    /**
+     *
+     * Testing InputModel's getInfoByName() invalid name search
+     * Testing a one layer down ModelFacade - specifically for OnlineMarvelModel's interaction with
+     * the concrete class MarvelApiHandler which is responsible for sending requests that hits the web API.
+     *
+     */
     @Test
     public void testInputModelGetInfoByNameInvalid(){
         //mock marvelApiHandler
         input = new OnlineMarvelModel();
         MarvelApiHandler handler = mock(MarvelApiHandler.class);
 
+        //GIVEN
         model = new ModelImpl(input, output, configFilePath);
         model.getInputSubModel().setApiHandler(handler);
 
+        //GIVEN
         when(handler.getCharacterInfoByName("invalid")).thenReturn(null);
 
+        //WHEN
         CharacterInfo info = model.getCharacterInfo("invalid");
 
+        //THEN
         verify(handler, times(1)).getCharacterInfoByName("invalid");
         assertNull(info);
 
     }
 
+    /**
+     * Testing expected CharacterInfo returned from input model when searching
+     */
     @Test
     public void testInputModelGetInfoNullList(){
         //mock marvelApiHandler
         input = new OnlineMarvelModel();
         MarvelApiHandler handler = mock(MarvelApiHandler.class);
 
+        //GIVEN
         model = new ModelImpl(input, output, configFilePath);
         model.getInputSubModel().setApiHandler(handler);
 
+        //GIVEN
         CharacterInfo spiderman = new CharacterInfo(1234, "spiderman","Can jump around buildings", "1999-99-99");
         spiderman.setThumbnail(null);
         spiderman.setStoryList(null);
 
+        //GIVEN
         when(handler.getCharacterInfoByName("spider-man")).thenReturn(spiderman);
 
+        //WHEN
         CharacterInfo info = model.getCharacterInfo("spider-man");
 
+        //THEN
         verify(handler, times(1)).getCharacterInfoByName("spider-man");
 
         assertNotNull(input.getInfoByName("spider-man"));
@@ -173,6 +235,11 @@ public class ModelImplTest {
         assertNull(info.getStoryList());
     }
 
+    /**
+     * Testing Image object for thumbnail display created from provided CharacterInfo object.
+     *
+     * Test using mocked InputModel, testing behviour between ModelFacade and InputModel
+     */
     @Test
     public void testGetImageViaModelFacade(){
         //uses mock InputModel
@@ -183,12 +250,15 @@ public class ModelImplTest {
         //mock behavior
         Image spiderImg = null;
         try{
+            //GIVEN
             spiderImg = new Image(new FileInputStream(imgPath));
             when(input.getThumbnailImage(info)).thenReturn(spiderImg);
+
+            //WHEN
             Image img = model.getImageByInfo(info);
 
+            //THEN
             verify(input, times(1)).getThumbnailImage(info);
-
             assertNotNull(img);
             assertEquals(spiderImg, img);
 
@@ -197,32 +267,46 @@ public class ModelImplTest {
         }
     }
 
+    /**
+     * Testing Image object for thumbnail display created from provided CharacterInfo object.
+     *
+     * Test using mocked MarvelApiHandler with instance of OnlineMarvelModel,
+     * testing behviour between InputModel and MarvelApiHandler
+     */
     @Test
     public void testInputModelGetThumbnailImage(){
         //uses concrete model
         input = new OnlineMarvelModel();
         MarvelApiHandler handler = mock(MarvelApiHandler.class);
 
+        //GIVEN
         model = new ModelImpl(input, output, configFilePath);
         model.getInputSubModel().setApiHandler(handler);
 
+        //GIVEN
         CharacterInfo spiderman = new CharacterInfo(1234, "spiderman","Can jump around buildings", "1999-99-99");
         spiderman.setStoryList(null);
-
         when(handler.getCharacterInfoByName("spider-man")).thenReturn(spiderman);
+
+        //WHEN
         CharacterInfo info = model.getCharacterInfo("spider-man");
+
+        //THEN
         verify(handler, times(1)).getCharacterInfoByName("spider-man");
 
+        //GIVEN
         spiderman.setThumbnail(new Thumbnail("fake", "jpg"));
 
         Image spiderImg = null;
         try{
             spiderImg = new Image(new FileInputStream(imgPath));
             when(handler.getImageByUrl("fake/standard_large.jpg")).thenReturn(spiderImg);
+
+            //WHEN
             Image img = model.getImageByInfo(info);
 
+            //THEN
             verify(handler, times(1)).getImageByUrl("fake/standard_large.jpg");
-
             assertNotNull(img);
             assertEquals(spiderImg, img);
 
@@ -232,42 +316,68 @@ public class ModelImplTest {
 
     }
 
+    /**
+     * Test for getImageByInfo behaviour when CharacterInfo object has null thumbnail attribute.
+     */
     @Test
     public void testNullThumbnailCharacter(){
+        //GIVEN
         CharacterInfo dummy = new CharacterInfo(2222, "dummy","Some dummy hero", "199-23-23");
         dummy.setThumbnail(null);
+        //WHEN-THEN
         assertNull(model.getImageByInfo(dummy));
 
+        //GIVEN
         dummy.setThumbnail(new Thumbnail("", ""));
+        //WHEN-THEN
         assertNull(model.getImageByInfo(dummy));
 
     }
 
+    /**
+     * Testing ModelFacade sendReport behavior for valid and invalid CharacterInfo passed in.
+     */
     @Test
     public void testSendReportFacade(){
+        //GIVEN
         when(output.sendReport(spiderman)).thenReturn(true);
         when(output.sendReport(null)).thenReturn(false);
-
+        //WHEN
         boolean ret = model.sendReport(spiderman);
-
+        //THEN
         assertTrue(ret);
         verify(output, times(1)).sendReport(spiderman);
-
+        //WHEN
         ret = model.sendReport(null);
+        //THEN
         assertFalse(ret);
 
     }
 
+    /**
+     * Testing output model's getReportUrl() triggered when model facade's getReportUrl is called.
+     */
     @Test
     public void testGetReportUrlFacade(){
+        //GIVEN
         when(output.getReportUrl()).thenReturn("dummy.url");
+        //WHEN
         String ret = model.getReportUrl();
+        //THEN
         verify(output, times(1)).getReportUrl();
         assertEquals(ret, "dummy.url");
     }
 
+    /**
+     * Testing sendReport() one layer below ModelFacade, using instance of OnlinePastebinModel.
+     *
+     * Testing with mock PastebinApiHandler, testing interaction between OnlinePastebinModel and PastebinHandler.
+     * Test that PastebinApiHandler's sendReport() is called when ModelFacade's sendReport() is called
+     */
     @Test
     public void testOutputModelSendReport(){
+
+        //GIVEN
         output = new OnlinePastebinModel();
         PastebinApiHandler handler = mock(PastebinApiHandler.class);
         output.setApiHandler(handler);
@@ -275,26 +385,56 @@ public class ModelImplTest {
 
         model = new ModelImpl(input, output, configFilePath);
         model.getOutputSubModel().setApiHandler(handler);
-
+        //WHEN
         boolean ret = model.sendReport(spiderman);
-
+        //THEN
         verify(handler, times(1)).sendReport(anyString(), anyString());
 
     }
 
+    /**
+     * Testing ModelFacade's getReportUrl() interaction with OutputModel
+     *
+     * Testing getReportUrl() one layer below ModelFacade, using instance of OnlinePastebinModel.
+     * Testing with mock PastebinApiHandler, testing interaction between OnlinePastebinModel and PastebinHandler.
+     * Test that PastebinApiHandler's sendReport() is called when ModelFacade's sendReport() is called
+     */
     @Test
     public void testOutputModelGetReportUrl(){
+        //GIVEN
         when(output.getReportUrl()).thenReturn("dummy-report-url");
-
+        //WHEN
         String ret = model.getReportUrl();
-
+        //THEN
         verify(output, times(1)).getReportUrl();
         assertEquals("dummy-report-url", ret);
 
+        //GIVEN
         output = new OfflinePastebinModel();
         model = new ModelImpl(input, output, configFilePath);
+        //WHEN-THEN
         assertEquals("dummy-report-output-url", model.getReportUrl());
 
     }
+
+    /**
+     * REFACTOR RED
+     * added addObserver(), notifyObserverGet/SendComplete() to ModelFacade
+     * added new interface ModelObserver
+     * added updateCharacterInfo(), updateReportUrl() in ModelObserver
+     * MainPresenter implements ModelObserver
+     *
+     */
+    @Test
+    public void testRefactoredObserverUpdateGetCharacterInfoComplete(){
+
+    }
+
+    @Test
+    public void testRefactoredObserverUpdateSendReportComplete(){
+
+    }
+
+
 
 }
