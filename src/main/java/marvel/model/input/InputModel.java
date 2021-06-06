@@ -4,7 +4,8 @@ import javafx.scene.image.Image;
 import marvel.model.character.CharacterInfo;
 
 /**
- * Interface for methods relating to interacting with the input Marvel API.
+ *
+ * Submodel interface for methods relating to interacting with the input Marvel API.
  *
  * @see OnlineMarvelModel
  * @see OfflineMarvelModel

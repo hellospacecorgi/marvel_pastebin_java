@@ -2,14 +2,35 @@ package marvel.model.output;
 
 import marvel.model.character.CharacterInfo;
 
+/**
+ * Online version implementation of OutputModel. Sends data to the live Pastebin API.
+ *
+ * @see PastebinApiHandler
+ */
 public class OnlinePastebinModel implements OutputModel{
+    /**
+     * Handler for processing POST requests and responses to the API
+     */
     private PastebinApiHandler handler;
 
+    /**
+     * Sets a handler for processing POST requests and responses to the API
+     *
+     * @param handler - PastebinApiHandler instance
+     */
     @Override
     public void setApiHandler(PastebinApiHandler handler) {
         this.handler = handler;
     }
 
+    /**
+     * Generate a report based on given CharacterInfo, sends report to pastebin
+     *
+     * Delegates actual sending of HttpRequest to PastebinApiHandler
+     *
+     * @param info - CharacterInfo object containing data to generate report on
+     * @return boolean - return true if report successfully sent, otherwise null
+     */
     @Override
     public boolean sendReport(CharacterInfo info) {
         if(info == null){
@@ -63,6 +84,11 @@ public class OnlinePastebinModel implements OutputModel{
         return handler.sendReport(info.getName(), report);
     }
 
+    /**
+     * Retrieves the URL of paste created for last report sent
+     *
+     * @return String - URL of paste created for last report sent
+     */
     @Override
     public String getReportUrl() {
         return handler.getOutputUrl();

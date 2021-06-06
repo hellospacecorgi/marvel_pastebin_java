@@ -8,8 +8,18 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Handler for handling JSON response body strings from Marvel API request results.
+ *
+ * @see MarvelApiHandler
+ */
 public class ResponseHandler {
-
+    /**
+     * Parses JSON response from get character info GET request
+     *
+     * @param body - response body from GET request
+     * @return CharacterInfo - returns CharacterInfo object built from response data if status code equals 200, otherwise null
+     */
     public CharacterInfo parseResponseBody(String body){
         try{
             JSONObject response = new JSONObject(body);
@@ -33,6 +43,12 @@ public class ResponseHandler {
 
     }
 
+    /**
+     * Parses JSON response body string and build CharacterInfo object from resource items.
+     *
+     * @param body - response body from GET request
+     * @return CharacterInfo - returns CharacterInfo object built from response data
+     */
     public CharacterInfo parseCharacterInfo(String body){
         try{
             JSONObject response = new JSONObject(body);
@@ -117,6 +133,14 @@ public class ResponseHandler {
         return null;
     }
 
+    /**
+     * Parses response body from failed request of status code 409.
+     *
+     * Used to print error message on terminal for debugging and error handling purposes.
+     *
+     * @param body - response body from failed request of status code 409
+     * @return String - parsed error message
+     */
     public String parseError409(String body){
         try{
             JSONObject response = new JSONObject(body);

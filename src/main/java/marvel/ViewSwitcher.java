@@ -16,12 +16,33 @@ import java.util.Map;
  * @see View
  */
 public class ViewSwitcher {
+    /**
+     * Scene node for JavaFX window stage
+     */
     private static Scene scene;
+    /**
+     * Reference to model
+     */
     private static ModelFacade model;
+    /**
+     * Cached View objects for loading from in memory cache
+     */
     private static Map<View, Parent> cache = new HashMap<>();
+
+    /**
+     * Sets scene for window
+     * @param scene - Scene node for JavaFX window
+     */
     public static void setScene(Scene scene){
         ViewSwitcher.scene = scene;
     }
+
+    /**
+     * Switches to a new View
+     *
+     * @param view - View object that maps enum to a .fxml file
+     * @throws IOException if FXMLLoader failed to load .fxml file from path
+     */
     public static void switchTo(View view) throws IOException {
         if (scene == null ){
             System.out.println("No scene or model set");

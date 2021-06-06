@@ -41,22 +41,29 @@ public class MainPresenter implements ModelObserver {
     TextArea message;
 
     /**
-     *
+     * Table for displaying lists of resources for character
      */
     @FXML
     TableView centerTable;
 
     /**
-     *
+     * Displays thumbnail image of character
      */
     @FXML
     ImageView thumbnail;
 
     /**
-     *
+     * Reference to model for interaction with the input and output APIs
      */
     ModelFacade model;
 
+    /**
+     * Constructor for MainPresenter, takes in a ModelFacade object
+     *
+     * Adds itself to the ModelFacade object's observer list
+     *
+     * @param model
+     */
     public MainPresenter(ModelFacade model){
         this.model = model;
         //adds itself to be an observer
@@ -64,9 +71,11 @@ public class MainPresenter implements ModelObserver {
     }
 
     /**
-     * Triggered by 'Search Character' button.
-     * Expects textfield to have string value input.
+     * Called when Search Character button is clicked.
      *
+     * Asks model to process searching for character information given String name
+     *
+     * Expects textfield to have string value input.
      */
     @FXML
     public void onSearch() {
@@ -81,11 +90,19 @@ public class MainPresenter implements ModelObserver {
 
     }
 
+    /**
+     * Called when the Comic button above the table is clicked.
+     *
+     * Calls updateCenterComics() to populate the table.
+     */
     @FXML
     public void onComics(){
         updateCenterComics();
     }
 
+    /**
+     * Update the center table to display list of comics which features character
+     */
     public void updateCenterComics(){
         ObservableList<Comic> clist = FXCollections.observableArrayList(model.getCurrentCharacter().getComicList());
 
@@ -101,7 +118,11 @@ public class MainPresenter implements ModelObserver {
 
     }
 
-
+    /**
+     * Displays list of URLs for public websites tha has character information
+     *
+     * Called when the Url button above the table is clicked.
+     */
     @FXML
     public void onUrl(){
         ObservableList<ResourceUrl> rlist = FXCollections.observableArrayList(model.getCurrentCharacter().getUrls());
@@ -118,6 +139,11 @@ public class MainPresenter implements ModelObserver {
 
     }
 
+    /**
+     * Displays list of Stories that the character appears
+     *
+     * Called when the Stories button above the table is clicked.
+     */
     @FXML
     public void onStories(){
         ObservableList<Story> clist = FXCollections.observableArrayList(model.getCurrentCharacter().getStoryList());
@@ -136,7 +162,11 @@ public class MainPresenter implements ModelObserver {
         centerTable.setItems(clist);
         centerTable.getColumns().addAll(name, type, path);
     }
-
+    /**
+     * Displays list of events that the character appears
+     *
+     * Called when the Events button above the table is clicked.
+     */
     @FXML
     public void onEvents(){
         ObservableList<Event> clist = FXCollections.observableArrayList(model.getCurrentCharacter().getEventList());
@@ -152,7 +182,11 @@ public class MainPresenter implements ModelObserver {
         centerTable.setItems(clist);
         centerTable.getColumns().addAll(name, path);
     }
-
+    /**
+     * Displays list of series that the character appears
+     *
+     * Called when the Series button above the table is clicked.
+     */
     @FXML
     public void onSeries(){
         ObservableList<Series> clist = FXCollections.observableArrayList(model.getCurrentCharacter().getSeriesList());
@@ -167,14 +201,22 @@ public class MainPresenter implements ModelObserver {
         centerTable.setItems(clist);
         centerTable.getColumns().addAll(name, path);
     }
-
+    /**
+     * Generate report based on character data, ask model to send report and create paste
+     *
+     * Called when the Send Report is clicked.
+     */
     @FXML
     public void onSendReport(){
         model.sendReport(model.getCurrentCharacter());
-
-
     }
-
+    /**
+     * Performs action upon knowing CharacterInfo is built in model
+     *
+     * Display character summary on lower left text area,
+     * display list of comics in table by default (calling updateCenterComic() )
+     * display thumbnail image of character on top right ImageView
+     */
     @Override
     public void updateCharacterInfo() {
 
@@ -212,7 +254,11 @@ public class MainPresenter implements ModelObserver {
             }
         }
     }
-
+    /**
+     * Performs action upon knowing paste report URL is obtained in model
+     *
+     * Display paste report URL on lower left text area
+     */
     @Override
     public void updateReportUrl() {
         String url = model.getReportUrl();

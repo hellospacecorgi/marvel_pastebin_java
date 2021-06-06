@@ -1,6 +1,5 @@
 package marvel.model.input;
 
-import javafx.scene.image.Image;
 import marvel.model.character.CharacterInfo;
 import org.apache.commons.codec.digest.DigestUtils;
 
@@ -10,12 +9,40 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpClient;
 import java.net.http.HttpResponse;
 
+/**
+ * API handler that handles sending and retrieving requests to the Marvel web API.
+ *
+ * @see OnlineMarvelModel
+ * @see ResponseHandler
+ */
 public class MarvelApiHandler {
+    /**
+     * Parses JSON response and creates CharacterInfo from valid response data
+     */
     private ResponseHandler responseHandler;
+    /**
+     * User's Marvel API developer public key
+     */
     private String publicKey;
+    /**
+     * User's Marvel API developer private key
+     */
     private String privateKey;
+    /**
+     * HttpClient used to send and retrieve response
+     */
     private HttpClient client;
 
+    /**
+     * Constructor for MarvelApiHandler,
+     * takes in public key and private key parsed from ConfigKey.json file.
+     *
+     * @param publicKey User's Marvel API developer public key
+     * @param privateKey User's Marvel API developer private key
+     *
+     * @throws NullPointerException if public key and private keys are null
+     * @throws IllegalArgumentException if public key and private keys are empty
+     */
     public MarvelApiHandler(String publicKey, String privateKey){
         if(publicKey == null || privateKey == null){
             throw new NullPointerException();
@@ -30,6 +57,14 @@ public class MarvelApiHandler {
         responseHandler = new ResponseHandler();
     }
 
+    /**
+     * Required for sending requests to Marvel web API,
+     * uses MD5 to generate hash from String concatenated from timestamp + private key + public key
+     *
+     * Precondition: Non null public and private key strings provided via constructor.
+     *
+     * @return String - Return hash value String generated if keys non null, otherwise return null
+     */
     public String generateHash(){
         if(publicKey != null && privateKey != null){
             String ts = "1359";
@@ -45,8 +80,10 @@ public class MarvelApiHandler {
     /**
      * Sends GET request to Marvel API to retrieve live result for searching character information by name String.
      *
-     * @param name
-     * @return
+     * Uses ResponseHandler to parse JSON response and build CharacterInfo object
+     *
+     * @param name - String of character name to send GET request with
+     * @return CharacterInfo - return CharacterInfo object built from response upon successful search, otherwise return null
      */
     public CharacterInfo getCharacterInfoByName(String name){
         if(publicKey == null || privateKey == null){
