@@ -1,5 +1,5 @@
 # SOFT3202 Exam Pre-work README
-
+** Simple Extension of 2 Days applied**
 * [How to run application](#how-to-run-application)
 * [Feature claim - PASS](#feature-claim)
 * [RED-GREEN-REFACTOR commits](#red-green-refactor-commits)
