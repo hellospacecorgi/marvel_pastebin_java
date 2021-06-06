@@ -36,6 +36,6 @@ public class OnlineMarvelModel implements InputModel{
         String path = info.getThumbnail().getPath();
         path = path.concat("/standard_large.");
         path = path.concat(info.getThumbnail().getExtension());
-        return null;
+        return path;
     }
 }
