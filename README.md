@@ -46,7 +46,7 @@ The version where this is fully completed and tested in tagged with version `<ve
 
 ## RED-GREEN-REFACTOR Commits
 
-* [Pass set 1](#pass-set-1) , [Pass set 2](#pass-set-2) , [Pass set 3](#pass-set-3)
+* [Pass set 1](#pass-set-1) , [Pass set 2](#pass-set-2) , [Pass set 3](#pass-set-3), [Pass set 4](#pass-set-4), [Pass set 5](#pass-set-5)
 * [Credit set](#credit-set)
 * <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/blob/master/RED-GREEN-REFACTOR.md">TDD Log [ RED-GREEN-REFACTOR.md ]</a>
 
