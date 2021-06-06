@@ -69,11 +69,34 @@ The version where this is fully completed and tested in tagged with version `<ve
 ---
 
 ### Pass set 3
-**RED** Commit URL: <a href=""></a>
+**RED** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/1b6354243320e8cfd76c6a9a8c367c3875f0761e">1b6354243320e8cfd76c6a9a8c367c3875f0761e</a>
 
-**GREEN** Commit URL: <a href=""></a> 
+**GREEN** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/09ce9e19892a408ac674930df5a05861136ba28d">09ce9e19892a408ac674930df5a05861136ba28d</a>
 
-**REFACTOR** Commit URL: <a href=""></a>  
+**REFACTOR** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/446a133e9799091a8b42ea55c935c134396c54fa">446a133e9799091a8b42ea55c935c134396c54fa</a>
+
+---
+
+### Pass set 4
+**RED** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/203c4799ebbcd2b9491625806ae2baee2429de37">203c4799ebbcd2b9491625806ae2baee2429de37</a>
+
+**GREEN** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/77e5c8178db8e22bd51fc5640d1e0f3e5bf338c3">77e5c8178db8e22bd51fc5640d1e0f3e5bf338c3</a>
+
+**REFACTOR** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/b547848523eead07b0570c39a31be3137c27d21b">b547848523eead07b0570c39a31be3137c27d21b</a>
+
+---
+
+### Pass set 5
+
+**REFACTOR RED** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/0524160fd5d7cdc3eac075d7d88981b9e9e1c25c">0524160fd5d7cdc3eac075d7d88981b9e9e1c25c</a>
+
+**REFACTOR GREEN** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/bb1de09a047c9085c1ba9c4d490e11b0be09978f">bb1de09a047c9085c1ba9c4d490e11b0be09978f</a>
+
+**REFACTOR RED** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/46b740c05e072f4559b2bc60d3dc08bfbce35eb9">46b740c05e072f4559b2bc60d3dc08bfbce35eb9</a>
+
+**GREEN** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/bc6c545fed706da786ccfde5b8c647d502a97e6e">bc6c545fed706da786ccfde5b8c647d502a97e6e</a>
+
+**REFACTOR** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/626a93e4a6a15a61c0a9c6481e836de9cf0df854">626a93e4a6a15a61c0a9c6481e836de9cf0df854</a>
 
 ---
 
@@ -84,13 +107,15 @@ The test suite also covered some unit testing of concrete model classes to asser
 ---
 
 ### Javadoc location
+
+Javadoc documentation for the project is located under `docs` folder
   
 ### Citations for code in previous unit
 
 
 ### References
 
-<a href=\"http://marvel.com\">Data provided by Marvel. © 2021 MARVEL</a>
+Data provided by Marvel. © 2021 MARVEL</a>
 
 JavaDoc description for character package classes references description of Response Class attributes under <a href="https://developer.marvel.com/docs#!/public/getCreatorCollection_get_0">Marvel API Interactive Documentation</a>
 
