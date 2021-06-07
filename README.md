@@ -70,7 +70,8 @@ Relevant tests :
 testValidCharacterName() [Mocked InputModel] 
 
 testInvalidCharacterName() [Mocked InputModel]
-<p>Feature: getCharacterInfo() method in ModelFacade and getInfoByName() method in InputModel</p>
+
+<p>Methods: getCharacterInfo() method in ModelFacade and getInfoByName() method in InputModel</p>
 
 **RED** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/34085ddc84013575a8313846ef4f753bdca4a33b">34085ddc84013575a8313846ef4f753bdca4a33b</a>
 
@@ -91,7 +92,7 @@ testInputModelGetInfoByNameValid() [Mocked MarvelApiHandler]
 
 testInptModelGetInfoNullList() [Mocked MarvelApiHandler]
 
-<p>Feature: getInfoByName() method in InputModel and getCharacterInfoByName in MarvelApiHandler</p>
+<p>Methods: getCharacterInfo() in ModelFacade, getInfoByName() in InputModel and getCharacterInfoByName() in MarvelApiHandler</p>
 
 **RED** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/5eb7094b1fc518177fb8599680991137255ff78e">5eb7094b1fc518177fb8599680991137255ff78e</a>
 
@@ -107,37 +108,99 @@ MarvelApiHandler constructor is refactored, uses injected strings to set keys ra
 This leads to modification in method call inside ModelImpl to setApiHandler for input model, ModelImpl's line 29.
 
 Tests for InputModel still passes after this refactoring (interaction between OnlineMarvelModel and MarvelApiHandler still behaves as before).
+
 ---
 
 ### Pass set 3
+
+Relevant tests:
+
+testGetImageViaModelFacade() [Mock InputModel]
+
+testInputModelGetThumbnailImage() [Mock InputModel]
+
 **RED** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/1b6354243320e8cfd76c6a9a8c367c3875f0761e">1b6354243320e8cfd76c6a9a8c367c3875f0761e</a>
 
 **GREEN** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/09ce9e19892a408ac674930df5a05861136ba28d">09ce9e19892a408ac674930df5a05861136ba28d</a>
+
+GREEN for testGetImageViaModelFacade()
+
+RED-GREEN for testInputModelGetThumbnailImage() submerged
 
 **REFACTOR** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/446a133e9799091a8b42ea55c935c134396c54fa">446a133e9799091a8b42ea55c935c134396c54fa</a>
 
 ---
 
 ### Pass set 4
+Relevant tests:
+
+testSendReportFacade() [Mocked OutputModel]
+
+testGetReportUrlFacade() [Mocked OutputModel]
+
+Methods: sendReport() in ModelFacade and sendReport() in OutputModel
+
+Methods: getReportUrl() in ModelFacade and getReportUrl() in OutputModel
+
 **RED** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/203c4799ebbcd2b9491625806ae2baee2429de37">203c4799ebbcd2b9491625806ae2baee2429de37</a>
 
-**GREEN** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/77e5c8178db8e22bd51fc5640d1e0f3e5bf338c3">77e5c8178db8e22bd51fc5640d1e0f3e5bf338c3</a>
+**GREEN** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/100599aa893b87d88373eb85e1f582cd54a83b2c">100599aa893b87d88373eb85e1f582cd54a83b2c</a>
 
-**REFACTOR** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/b547848523eead07b0570c39a31be3137c27d21b">b547848523eead07b0570c39a31be3137c27d21b</a>
+See commit comments.
+
+**REFACTOR** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/face90c6efe6c72344c380a214ad5130910626d6">face90c6efe6c72344c380a214ad5130910626d6</a>
 
 ---
 
 ### Pass set 5
+Relevant tests:
+
+testOutputModelSendReport()
+
+testOutputModelGetReportUrl()
+
+Methods: sendReport() in ModelFacade and sendReport() in OutputModel
+
+Methods: getReportUrl() in ModelFacade, getReportUrl() in OutputModel and sendReport() in PastebinApiHandler
+
+**RED** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/face90c6efe6c72344c380a214ad5130910626d6">face90c6efe6c72344c380a214ad5130910626d6</a>
+
+**GREEN** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/77e5c8178db8e22bd51fc5640d1e0f3e5bf338c3">77e5c8178db8e22bd51fc5640d1e0f3e5bf338c3</a>
+
+See commit comments - submerged RED-GREEN.
+
+---
+
+### Pass set 6
+
+Relevant test: testInputModelGetThumbnailFullPath() [Mocked InputModel]
+
+Methods: ModelFacade getImagePathByInfo() and getThumbnailFullPath() in InputModel
 
 **REFACTOR RED** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/0524160fd5d7cdc3eac075d7d88981b9e9e1c25c">0524160fd5d7cdc3eac075d7d88981b9e9e1c25c</a>
 
 **REFACTOR GREEN** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/bb1de09a047c9085c1ba9c4d490e11b0be09978f">bb1de09a047c9085c1ba9c4d490e11b0be09978f</a>
 
+---
+
+### Pass set 7
+
+Relavant tests:
+
+testRefactoredObserverUpdateGetCharacterInfoComplete()
+
+testRefactoredObserverUpdateSendReportComplete()
+
+Methods: 
+
+ModelFacade's addObserver(), getCharacterInfo() and ModelObserver's updateCharacterInfo()
+
+ModelFacade's addObserver(), sendReport() and ModelObserver's updateReportUrl()
+
+
 **REFACTOR RED** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/46b740c05e072f4559b2bc60d3dc08bfbce35eb9">46b740c05e072f4559b2bc60d3dc08bfbce35eb9</a>
 
 **GREEN** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/bc6c545fed706da786ccfde5b8c647d502a97e6e">bc6c545fed706da786ccfde5b8c647d502a97e6e</a>
-
-**REFACTOR** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/626a93e4a6a15a61c0a9c6481e836de9cf0df854">626a93e4a6a15a61c0a9c6481e836de9cf0df854</a>
 
 ---
 
