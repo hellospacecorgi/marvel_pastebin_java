@@ -1,4 +1,4 @@
-## RED-GREEN-REFACTOR Commits (INCOMPLETE)
+## RED-GREEN-REFACTOR Commits (IGNORE - INCOMPLETE AND NOT REQUIRED)
 
 NOTE: Refer to README.md for complete listing of commits, this is not a fully updated logging of the TDD process.
 
