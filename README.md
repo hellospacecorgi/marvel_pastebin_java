@@ -120,9 +120,9 @@ testInputModelGetThumbnailImage() [Mock InputModel]
 
 **GREEN** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/09ce9e19892a408ac674930df5a05861136ba28d">09ce9e19892a408ac674930df5a05861136ba28d</a>
 
-GREEN for testGetImageViaModelFacade()
+-- GREEN for testGetImageViaModelFacade()
 
-RED-GREEN for testInputModelGetThumbnailImage() submerged
+-- RED-GREEN for testInputModelGetThumbnailImage() submerged
 
 **REFACTOR** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/446a133e9799091a8b42ea55c935c134396c54fa">446a133e9799091a8b42ea55c935c134396c54fa</a>
 
