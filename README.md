@@ -51,7 +51,7 @@ Note to marker:
 please refer to <b>commit comments</b> where some commits might be used for both RED and REFACTOR 
 (where new tests were added for feature to be implemented (RED for new commit set), and previous features were modified for better code structure (REFACTOR for previous commit set) )</p>
 
-<p>2. While Git commit might show the ModelImplTest file as modified in a GREEN commit, changes might have been made to a test method that is different to what the commit set is referring to (GREEN for tests for feature A but tests for feature B was modified), I have added <b>commit comments<b> to help illustrate which tests and features are relevant to the commit set</p>
+<p>2. While Git commit might show the ModelImplTest file as modified in a GREEN commit, changes might have been made to a test method that is different to what the commit set is referring to (GREEN for tests for feature A but tests for feature B was modified), I have added <b>commit comments</b> to help illustrate which tests and features are relevant to the commit set</p>
 
 <p>3. Some RED-GREEN processes were submerged within a commit (as a mistake of not correctly tracking RED-GREEN-RED-GREEN-REFACTORs where modification to existing tests were done before refactoring), after consulting Josh, it was adviced to still list them, <b>Pass set 2<b> is a clean RED-GREEN-REFACTOR set, <b>Pass set 4<b> also shows a RED-GREEN-REFACTOR cycle (but requires note 1.) and <b>Pass set 1, 6, 7<b> are clean RED-GREEN sets, and much cleaner commits were listed for the CREDIT feature implementations.</p>
 
