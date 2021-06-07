@@ -46,6 +46,18 @@ The version where this is fully completed and tested in tagged with version `<ve
 
 ## RED-GREEN-REFACTOR Commits
 
+Note to marker: 
+<p>1. While there was effort to keep track of TDD through commit messages, they do not reflect all the changes for each commit, 
+please refer to commit comments where some commits might be used for both RED and REFACTOR 
+(where new tests were added for feature to be implemented (RED for new commit set), and previous features were modified for better code structure (REFACTOR for previous commit set) )</p>
+
+<p>2. Another note is that while Git commit might show the ModelImplTest file as modified in a GREEN commit, changes might have been made to a test method that is different to what the commit set is referring to (GREEN for tests for feature A but tests for feature B was modified), I have added comments to help illustrate which tests and features are relevant to the commit set</p>
+
+<p>3. Some RED-GREEN processes were submerged within a commit (as a mistake of not correctly tracking modification to existing tests), after consulting Josh, it was adviced to still list them, however at least 1 commit set that cleanly reflected a RED-GREEN-REFACTOR was identified, and much cleaner commits were listed for the CREDIT implementation.</p>
+
+
+<p>The issue was identified after implementing the PASS requirements, and more careful version control was adopted in the Credit implementation (hence credit TDD commits are more clean), the most 'clean' commit set for the PASS is highlighted below.</p>
+
 * [Pass set 1](#pass-set-1) , [Pass set 2](#pass-set-2) , [Pass set 3](#pass-set-3), [Pass set 4](#pass-set-4), [Pass set 5](#pass-set-5)
 * [Credit set](#credit-set)
 * <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/blob/master/RED-GREEN-REFACTOR.md">TDD Log [ RED-GREEN-REFACTOR.md ]</a>
