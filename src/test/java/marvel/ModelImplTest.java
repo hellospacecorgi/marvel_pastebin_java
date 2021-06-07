@@ -53,6 +53,7 @@ public class ModelImplTest {
      */
     String configFilePath = "./src/main/resources/marvel/KeyConfig.json";
 
+
     /**
      * Path to a dummy image for character thumbnail accessor methods
      */
@@ -77,7 +78,8 @@ public class ModelImplTest {
         output = mock(OutputModel.class);
 
         //GIVEN ModelImpl initialised with an instance of InputModel and OutputModel
-        model = new ModelImpl(input, output, configFilePath);
+        ConfigHandler handler = new ConfigHandler(configFilePath);
+        model = new ModelImpl(input, output, handler);
 
         //GIVEN - CharacterInfo build from valid name search response
         List<ResourceUrl> urls = new ArrayList<>();
