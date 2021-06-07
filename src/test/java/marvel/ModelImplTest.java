@@ -1,7 +1,5 @@
 package marvel;
 
-import javafx.beans.binding.When;
-import javafx.scene.image.Image;
 import marvel.model.*;
 import marvel.model.character.CharacterInfo;
 import marvel.model.character.ResourceUrl;
@@ -17,25 +15,63 @@ import marvel.model.output.PastebinApiHandler;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
+/**
+ * Class used as test suite for testing ModelImpl, an implementation of the ModelFacade interface.
+ *
+ * <p>Tests written following the Test-Driven-Development process, where tests go through a RED-GREEN-REFACTOR process as features are added and implemented.</p>
+ *
+ * <p>Tests might undergo refactoring after the initial GREEN-REFACTOR as methods are removed or restructured, these changes are on a method name / return value level, and logic within a test case remain largely the same</p>
+ */
 public class ModelImplTest {
+    /**
+     * Reference to the model used in tests
+     *
+     * <p>May be mocked</p>
+     */
     ModelFacade model;
+    /**
+     * Reference to the input submodel used in tests
+     *
+     * <p>May be mocked</p>
+     */
     InputModel input;
+    /**
+     * Reference to the input submodel used in tests
+     *
+     * <p>May be mocked</p>
+     */
     OutputModel output;
+    /**
+     * Reference to a observer used in tests
+     *
+     * <p>May be mocked</p>
+     */
     ModelObserver observer;
+    /**
+     * Path to keys configuration file for initialising model
+     */
     String configFilePath = "./src/main/resources/marvel/KeyConfig.json";
+    /**
+     * Path to a dummy image for character thumbnail accessor methods
+     */
     String imgPath = "./src/main/resources/marvel/dummy.png";
+    /**
+     * Reference to a character object used in tests
+     */
     CharacterInfo spiderman;
 
     /**
-     *  Used to specify GIVEN behaviour for mocked input model class on valid and invalid search names
+     * Tagged by @Before, called before every test.
+     *
+     *  <p>Used to specify GIVEN behaviour for mocked input model class on valid and invalid search names</p>
+     *
+     * @see Before
      */
     @Before
     public void ModelImplSetUp(){
@@ -66,7 +102,7 @@ public class ModelImplTest {
     /**
      * Unit testing concrete class ConfigHandler
      *
-     * Used for getting API Keys configuration for sending input and output API requests
+     * <p>ConfigHandler used for getting API Keys configuration for sending input and output API requests</p>
      */
     @Test
     public void testConfigHandler(){
@@ -89,8 +125,9 @@ public class ModelImplTest {
     }
 
     /**
-     * Test for expected coordination behavior from ModelImpl to InputModel instance when searching for valid name.
-     * See GIVEN @Before setup method.
+     * Test for expected coordination behavior from ModelImpl to InputModel instance when searching for a valid name.
+     *
+     * <p>See ModelImplSetUp() for mocked input model behavior.</p>
      */
     @Test
     public void testValidCharacterName(){
@@ -120,7 +157,8 @@ public class ModelImplTest {
 
     /**
      * Test for expected coordination behavior from ModelImpl to InputModel instance when searching for invalid name.
-     * See GIVEN @Before setup method.
+     *
+     * <p>See ModelImplSetUp() for mocked input model behavior.</p>
      */
     @Test
     public void testInvalidCharacterName(){
@@ -137,9 +175,11 @@ public class ModelImplTest {
 
     /**
      * Testing InputModel's getInfoByName() invalid name search
-     * Testing a one layer down ModelFacade - specifically for OnlineMarvelModel's interaction with
-     * the concrete class MarvelApiHandler which is responsible for sending requests that hits the web API.
      *
+     * <p>Testing a one layer down ModelFacade - specifically for OnlineMarvelModel's interaction with
+     * the concrete class MarvelApiHandler which is responsible for sending requests that hits the web API.</p>
+     *
+     * <p>See ModelImplSetUp() for mocked input model behavior.</p>
      */
     @Test
     public void testInputModelGetInfoByNameValid(){
@@ -180,10 +220,12 @@ public class ModelImplTest {
     }
 
     /**
-     *
      * Testing InputModel's getInfoByName() invalid name search
-     * Testing a one layer down ModelFacade - specifically for OnlineMarvelModel's interaction with
-     * the concrete class MarvelApiHandler which is responsible for sending requests that hits the web API.
+     *
+     * <p>Testing a one layer below ModelFacade - specifically for OnlineMarvelModel's interaction with
+     * the concrete class MarvelApiHandler which is responsible for sending requests that hits the web API.</p>
+     *
+     * <p>MarvelApiHandler is mocked using Mockito.</p>
      *
      */
     @Test
@@ -208,7 +250,9 @@ public class ModelImplTest {
     }
 
     /**
-     * Testing expected CharacterInfo returned from input model when searching
+     * Testing expected CharacterInfo returned from input model after search.
+     *
+     * <p>MarvelApiHandler is mocked using Mockito.</p>
      */
     @Test
     public void testInputModelGetInfoNullList(){
@@ -246,9 +290,13 @@ public class ModelImplTest {
     }
 
     /**
-     * Testing Image object for thumbnail display created from provided CharacterInfo object.
+     * Testing image path retrieval from provided CharacterInfo object.
      *
-     * Test using mocked InputModel, testing behviour between ModelFacade and InputModel
+     * <p>Test using mocked InputModel,
+     * testing behaviour between ModelFacade and InputModel
+     * when model's getImagePathByInfo() is called</p>
+     *
+     * <p>See ModelImplSetUp() for mocked input model behavior.</p>
      */
     @Test
     public void testGetImagePathViaModelFacade(){
@@ -266,30 +314,28 @@ public class ModelImplTest {
     }
 
     /**
-     * Testing image path for dummy intput API model for thumbnail display created from provided CharacterInfo object.
+     * Testing image path retrieval from provided CharacterInfo object using concrete offline model.
      *
+     * <p>Test using concrete OfflineMarvelModel,
+     * testing behaviour between ModelFacade and InputModel
+     * when model's getImagePathByInfo() is called</p>
      */
     @Test
-    public void testInputModelGetThumbnailFullPath(){
+    public void testInputModelGetThumbnailFullPathOffline(){
         //uses concrete model
         input = new OfflineMarvelModel();
 
         //GIVEN
         model = new ModelImpl(input, output, configFilePath);
-
-        //WHEN
         model.getCharacterInfo("spider-man");
-
         //WHEN
         String path = model.getImagePathByInfo(model.getCurrentCharacter());
-
         //THEN
         assertNull(path);
-
     }
 
     /**
-     * Test for getImageByInfo behaviour when CharacterInfo object has null thumbnail attribute.
+     * Test getImageByInfo() behaviour when CharacterInfo object has null thumbnail attribute.
      */
     @Test
     public void testNullThumbnailCharacter(){
@@ -307,13 +353,14 @@ public class ModelImplTest {
     }
 
     /**
-     * Testing ModelFacade sendReport behavior for valid and invalid CharacterInfo passed in.
+     * Testing ModelFacade sendReport() behavior for valid and invalid CharacterInfo passed in.
+     *
+     * <p>Test for interaction between ModelImpl and OutputModel</p>
      */
     @Test
     public void testSendReportFacade(){
         //WHEN
         model.sendReport(spiderman);
-
         //THEN
         verify(output, times(1)).sendReport(spiderman);
 
@@ -325,7 +372,7 @@ public class ModelImplTest {
     }
 
     /**
-     * Testing output model's getReportUrl() triggered when model facade's getReportUrl is called.
+     * Testing output model's getReportUrl() triggered when model facade's getReportUrl() is called.
      */
     @Test
     public void testGetReportUrlFacade(){
@@ -339,10 +386,13 @@ public class ModelImplTest {
     }
 
     /**
-     * Testing sendReport() one layer below ModelFacade, using instance of OnlinePastebinModel.
-     *
-     * Testing with mock PastebinApiHandler, testing interaction between OnlinePastebinModel and PastebinHandler.
      * Test that PastebinApiHandler's sendReport() is called when ModelFacade's sendReport() is called
+     *
+     * <p>Testing sendReport() one layer below ModelFacade, using instance of OnlinePastebinModel.</p>
+     *
+     * <p>Testing with mock PastebinApiHandler, testing interaction between OnlinePastebinModel and PastebinHandler.
+     *
+     * <p>PastebinApiHandler is mocked using Mockito</p>
      */
     @Test
     public void testOutputModelSendReport(){
@@ -363,11 +413,13 @@ public class ModelImplTest {
     }
 
     /**
-     * Testing ModelFacade's getReportUrl() interaction with OutputModel
-     *
-     * Testing getReportUrl() one layer below ModelFacade, using instance of OnlinePastebinModel.
-     * Testing with mock PastebinApiHandler, testing interaction between OnlinePastebinModel and PastebinHandler.
      * Test that PastebinApiHandler's sendReport() is called when ModelFacade's sendReport() is called
+     *
+     * <p>Testing ModelFacade's getReportUrl() interaction with OutputModel</p>
+     *
+     * <p>Testing getReportUrl() one layer below ModelFacade, using instance of OnlinePastebinModel.</p>
+     *
+     * <p>Testing with mock PastebinApiHandler, testing interaction between OnlinePastebinModel and PastebinHandler.</p>
      */
     @Test
     public void testOutputModelGetReportUrl(){
@@ -388,12 +440,13 @@ public class ModelImplTest {
     }
 
     /**
-     * REFACTOR RED
-     * added addObserver(), notifyObserverGet/SendComplete() to ModelFacade
-     * added new interface ModelObserver
-     * added updateCharacterInfo(), updateReportUrl() in ModelObserver
-     * MainPresenter implements ModelObserver
+     * Testing updateCharacterInfo() in ModelObserver called by ModelFacade notify methods
      *
+     * <p>Test for Observer pattern refactored to ModelImpl with added interface ModelObserver</p>
+     *
+     * <p>Refactoring added addObserver(), notifyObserverGet/SendComplete() to ModelFacade</p>
+     *
+     * <p>Added new interface ModelObserver</p>
      */
     @Test
     public void testRefactoredObserverUpdateGetCharacterInfoComplete(){
@@ -411,6 +464,15 @@ public class ModelImplTest {
         verify(obs2, times(1)).updateCharacterInfo();
     }
 
+    /**
+     * Testing updateReportUrl() in ModelObserver called by ModelFacade's notify methods
+     *
+     * <p>Test for Observer pattern refactored to ModelImpl with added interface ModelObserver</p>
+     *
+     * <p>Refactoring added addObserver(), notifyObserverGet/SendComplete() to ModelFacade</p>
+     *
+     * <p>Added new interface ModelObserver</p>
+     */
     @Test
     public void testRefactoredObserverUpdateSendReportComplete(){
         //GIVEN

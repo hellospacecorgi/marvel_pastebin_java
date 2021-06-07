@@ -1,6 +1,8 @@
 package marvel;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -12,9 +14,14 @@ import marvel.model.output.OfflinePastebinModel;
 import marvel.model.output.OnlinePastebinModel;
 import marvel.model.output.OutputModel;
 
+import java.io.IOException;
+
 /**
- * First class called when application starts.
+ * Entry point for JavaFX application. Set up configurations on application set up.
  *
+ * <p>Set up model with sub model versions as specified by command line arguments, set up application stage</p>
+ *
+ * @see Application
  */
 public class App extends Application {
     /**
@@ -45,16 +52,18 @@ public class App extends Application {
     /**
      * The application main method.
      *
-     * <p>Allow 2 command line arguments in sequence to specifiy which version of input and output API to use</p>
+     * <p>Allow 2 command line arguments in sequence to specify which version of input and output API to use.</p>
      *
      * <p>For example, "online offline" will run application with online input API and offline output API.</p>
      *
-     * @param args - command line arguments
+     * <p>If no arguments are specified, will run application using online models by default.</p>
+     *
+     * @param args command line arguments
      */
     public static void main(String[] args) {
 
         if(args.length < 1){
-            System.out.println("Give --args=\"offline\" to switch to offline mode. \nRunning online mode by default.");
+            System.out.println("Give --args=\"offline\" to switch to offline mode.\nRunning online mode by default.");
         } else {
             if(args[0].equals("offline")) {
                 offlineInput = true;
@@ -72,21 +81,21 @@ public class App extends Application {
                 System.out.println("[OUTPUT API] Running online version.");
             }
         }
-        //calls start()
+
         launch(args);
     }
 
     /**
-     *  Starts the JavaFX application
+     *  Starts the JavaFX application.
      *
-     *  <p>Initialises sub model based on command line arguments given.</p>
+     *  <p>Initialise model with sub models based on command line arguments given and path to keys configuration file.</p>
      *
-     *  <p>Initialise model with sub models and path to configuration file.</p>
+     *  <p>Sets the scene to Main view with MainPresenter as its JavaFX controller class</p>
      *
-     *  <p>Sets the scene to Main</p>
+     *  <p>Sets the scene to stage</p>
      *
-     * @param stage
-     * @throws Exception
+     * @param stage primary stage for the application
+     * @throws IOException if file to Main view cannot be loaded
      */
     @Override
     public void start(Stage stage) throws Exception {
@@ -107,9 +116,16 @@ public class App extends Application {
 
         model = new ModelImpl(input, output, configFilePath);
 
-        ViewSwitcher.setModel(model);
-        ViewSwitcher.setScene(scene);
-        ViewSwitcher.switchTo(View.MAIN);
+        Parent root = null;
+        try{
+            FXMLLoader viewLoader = new FXMLLoader(App.class.getResource("Main.fxml"));
+            viewLoader.setController(new MainPresenter(model));
+            root = viewLoader.load();
+            scene.setRoot(root);
+
+        } catch (IOException e){
+            e.printStackTrace();
+        }
 
         stage.setScene(scene);
         stage.setTitle("Marvel Characters");

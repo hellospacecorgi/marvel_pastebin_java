@@ -57,13 +57,23 @@ public class PastebinApiHandler {
     /**
      * Sends POST request to Pastebin web API to create paste containing given report.
      *
-     *  @param name - Name of character that the report is about
-     * @param report - String of report data to create paste with
-     * @return boolean - return true if paste sent and URL to paste retrieved, otherwise false
+     * <p>Paste created with paste name "<character name> Report</>"</p>
+     *
+     * <p>Returns false if name or report is null or empty.</p>
+     *
+     *  @param name Name of character that the report is about
+     * @param report String representation of report data to create paste with
+     * @return boolean - return true if report sent and URL to paste retrieved, otherwise false
      */
     public boolean sendReport(String name, String report){
-        System.out.println("Report : " + report);
-
+        if(name == null || report == null){
+            System.out.println("null name or report passed to PastebinApiHandler's sendReport()");
+            return false;
+        }
+        if(name.isEmpty() || report.isEmpty()){
+            System.out.println("Empty name or report passed to PastebinApiHandler's sendReport()");
+            return false;
+        }
         Map<Object, Object> bodyData = new HashMap<>();
         bodyData.put("api_dev_key", this.publicKey);
         bodyData.put("api_option", "paste");

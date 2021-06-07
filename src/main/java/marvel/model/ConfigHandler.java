@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- *  Reads and stores API key as configured inside KeyConfig.json file.
+ *  Reads and stores API keys as configured inside KeyConfig.json file.
  *
  *  @see ModelImpl
  */
@@ -28,11 +28,11 @@ public class ConfigHandler {
     private String outputKey = "";
 
     /**
-     * Constructor for ConfigHandler, takes in path to ConfigKey.json file
+     * Constructor for ConfigHandler, takes in path to KeyConfig.json file
      *
-     * Retrieves and stores the 3 API keys from configuration file.
+     * <p>Retrieves and stores the 3 API keys from configuration file.</p>
      *
-     * @param filePath - path to ConfigKey.json file
+     * @param filePath - path to KeyConfig.json file
      */
     public ConfigHandler(String filePath){
         JSONParser parser = new JSONParser();

@@ -16,7 +16,7 @@ public class OnlinePastebinModel implements OutputModel{
     /**
      * Sets a handler for processing POST requests and responses to the API
      *
-     * @param handler - PastebinApiHandler instance
+     * @param handler PastebinApiHandler instance
      */
     @Override
     public void setApiHandler(PastebinApiHandler handler) {
@@ -26,9 +26,9 @@ public class OnlinePastebinModel implements OutputModel{
     /**
      * Generate a report based on given CharacterInfo, sends report to pastebin
      *
-     * Delegates actual sending of HttpRequest to PastebinApiHandler
+     * <p>Delegates actual sending of HttpRequest to PastebinApiHandler</p>
      *
-     * @param info - CharacterInfo object containing data to generate report on
+     * @param info CharacterInfo object containing data to generate report for
      * @return boolean - return true if report successfully sent, otherwise null
      */
     @Override

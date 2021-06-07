@@ -19,6 +19,7 @@ public class Story {
     private String resourcePath;
     /**
      * Constructor for creating a Story.
+     *
      * @param name The name of the story
      * @param type The type of the story (interior or cover)
      * @param resourcePath Path to individual story resource
@@ -30,6 +31,7 @@ public class Story {
     }
     /**
      * Getter for name of Story
+     *
      * @return name - String, name of the Story
      */
     public String getName() {
@@ -38,6 +40,7 @@ public class Story {
 
     /**
      * Getter for type of Story
+     *
      * @return type - Type of the story (interior or cover)
      */
     public String getType() {
@@ -46,6 +49,7 @@ public class Story {
 
     /**
      * Getter for path to resource URI of Story
+     *
      * @return resourcePath - path to resource URI of Story
      */
     public String getResourcePath() {

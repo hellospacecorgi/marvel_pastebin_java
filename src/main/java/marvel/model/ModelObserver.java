@@ -1,7 +1,7 @@
 package marvel.model;
 
 /**
- * Interface for ModelObserver methods
+ * Interface for ModelObserver methods to perform actions based on ModelFacade notifications.
  */
 public interface ModelObserver {
     /**

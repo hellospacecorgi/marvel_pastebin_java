@@ -33,6 +33,9 @@ public class OfflineMarvelModel implements InputModel{
         urls.add(new ResourceUrl("wiki", "dummy-url.com"));
         urls.add(new ResourceUrl("blog", "another-dummy.com"));
 
+        List<Comic> comics = new ArrayList<>();
+        comics.add(new Comic("One time hero", "comic-not-published.com"));
+
         List<Event> events = new ArrayList<>();
         events.add(new Event("Very important event", "dummy-path"));
         events.add(new Event("Another very important event", "dummy-path"));
@@ -48,12 +51,13 @@ public class OfflineMarvelModel implements InputModel{
         CharacterInfo dummy = new CharacterInfo(2222, name, "A hero that is created for the sake of dummy version.", "1999-999-9999");
         dummy.setUrls(urls);
         dummy.setThumbnail(thb);
+        dummy.setComicList(comics);
         dummy.setStoryList(stories);
         dummy.setEventList(events);
         dummy.setSeriesList(series);
         dummy.setNEvents(234);
         dummy.setNStories(144);
-        dummy.setNComics(0);
+        dummy.setNComics(1);
         dummy.setNSeries(53);
 
         return dummy;
@@ -64,7 +68,7 @@ public class OfflineMarvelModel implements InputModel{
      * Simulates accessor call for retrieving full path to thumbnail image from CharacterInfo
      * Since this is a dummy version, return null will let Presenter load default dummy image to display as thumbnail.
      *
-     * @param info - CharacterInfo object that contains
+     * @param info CharacterInfo object that contains
      * @return String - always return null in dummy version
      */
     @Override

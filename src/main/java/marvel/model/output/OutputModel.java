@@ -13,14 +13,14 @@ public interface OutputModel {
     /**
      * Sets a handler for processing POST requests and responses to the API
      *
-     * @param handler - PastebinApiHandler instance
+     * @param handler PastebinApiHandler instance
      */
     public void setApiHandler(PastebinApiHandler handler);
 
     /**
-     * Generate a report based on given CharacterInfo, sends report to pastebin
+     * Generate a report based on given CharacterInfo, sends report to output API
      *
-     * @param info - CharacterInfo object containing data to generate report on
+     * @param info CharacterInfo object containing data to generate report on
      * @return boolean - return true if report successfully sent, otherwise null
      */
     public boolean sendReport(CharacterInfo info);

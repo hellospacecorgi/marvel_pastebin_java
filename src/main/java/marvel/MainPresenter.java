@@ -18,13 +18,14 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 /**
- * MainPresenter class observes the main view (Main.fxml),
- * triggers Model operations upon user events,
- * and ask corresponding view components to update accordingly via manipulating FXML attributes.
+ * MainPresenter class observes the main view (Main.fxml)
+ *
+ * <p>Triggers ModelFacade operations upon user events,
+ * and ask corresponding view components to update accordingly via manipulating FXML attributes.</p>
+ *
+ * <p>Listens for notification from ModelFacade as a ModelObserver to perform respective update operations</p>
  *
  * @version 1.0.0
- * @see View
- * @see ViewSwitcher
  */
 public class MainPresenter implements ModelObserver {
     /**
@@ -34,7 +35,7 @@ public class MainPresenter implements ModelObserver {
     TextField characterName;
 
     /**
-     *  Represents the lower left panel where response messages are printed.
+     *  Lower left panel where response messages are printed.
      *  Response messages can be request results (character information, link to output report paste), error messages, instructions
      */
     @FXML
@@ -58,9 +59,8 @@ public class MainPresenter implements ModelObserver {
     ModelFacade model;
 
     /**
-     * Constructor for MainPresenter, takes in a ModelFacade object
-     *
-     * Adds itself to the ModelFacade object's observer list
+     * Takes in a ModelFacade object with non null InputModel and OutputModel
+     * and adds itself to the object's observer list.
      *
      * @param model
      */
@@ -73,9 +73,9 @@ public class MainPresenter implements ModelObserver {
     /**
      * Called when Search Character button is clicked.
      *
-     * Asks model to process searching for character information given String name
+     * <p>Asks model to process searching for character information given String name</p>
      *
-     * Expects textfield to have string value input.
+     * <p>Expects text field to have non empty string value input.</p>
      */
     @FXML
     public void onSearch() {
@@ -86,14 +86,12 @@ public class MainPresenter implements ModelObserver {
 
         //Ask model to process request
         model.getCharacterInfo(characterName.getText());
-
-
     }
 
     /**
      * Called when the Comic button above the table is clicked.
      *
-     * Calls updateCenterComics() to populate the table.
+     * <p>Calls updateCenterComics() to populate the table.</p>
      */
     @FXML
     public void onComics(){
@@ -101,7 +99,7 @@ public class MainPresenter implements ModelObserver {
     }
 
     /**
-     * Update the center table to display list of comics which features character
+     * Update the center table TableView to display list of comics which features character
      */
     public void updateCenterComics(){
         ObservableList<Comic> clist = FXCollections.observableArrayList(model.getCurrentCharacter().getComicList());
@@ -115,13 +113,12 @@ public class MainPresenter implements ModelObserver {
         centerTable.getColumns().clear();
         centerTable.setItems(clist);
         centerTable.getColumns().addAll(name, path);
-
     }
 
     /**
-     * Displays list of URLs for public websites tha has character information
-     *
      * Called when the Url button above the table is clicked.
+     *
+     * <p>Displays list of URLs for public websites tha has character information</p>
      */
     @FXML
     public void onUrl(){
@@ -140,9 +137,9 @@ public class MainPresenter implements ModelObserver {
     }
 
     /**
-     * Displays list of Stories that the character appears
-     *
      * Called when the Stories button above the table is clicked.
+     *
+     * <p>Displays list of Stories that the character appears</p>
      */
     @FXML
     public void onStories(){
@@ -163,9 +160,9 @@ public class MainPresenter implements ModelObserver {
         centerTable.getColumns().addAll(name, type, path);
     }
     /**
-     * Displays list of events that the character appears
-     *
      * Called when the Events button above the table is clicked.
+     *
+     * <p>Displays list of events that the character appears</p>
      */
     @FXML
     public void onEvents(){
@@ -183,9 +180,9 @@ public class MainPresenter implements ModelObserver {
         centerTable.getColumns().addAll(name, path);
     }
     /**
-     * Displays list of series that the character appears
-     *
      * Called when the Series button above the table is clicked.
+     *
+     * <p>Displays list of series that the character appears</p>
      */
     @FXML
     public void onSeries(){
@@ -202,9 +199,9 @@ public class MainPresenter implements ModelObserver {
         centerTable.getColumns().addAll(name, path);
     }
     /**
-     * Generate report based on character data, ask model to send report and create paste
+     * Called when the Send Report button is clicked.
      *
-     * Called when the Send Report is clicked.
+     * <p>Ask model to generate report based on character data, send report to Pastebin to create new paste</p>
      */
     @FXML
     public void onSendReport(){
@@ -213,9 +210,9 @@ public class MainPresenter implements ModelObserver {
     /**
      * Performs action upon knowing CharacterInfo is built in model
      *
-     * Display character summary on lower left text area,
+     * <p>Display character summary on lower left text area,
      * display list of comics in table by default (calling updateCenterComic() )
-     * display thumbnail image of character on top right ImageView
+     * display thumbnail image of character in top right ImageView</p>
      */
     @Override
     public void updateCharacterInfo() {
@@ -230,7 +227,7 @@ public class MainPresenter implements ModelObserver {
         result = result.concat("ID: ").concat(String.valueOf(info.getId()));
         result = result.concat("\nName: ").concat(info.getName());
         result = result.concat("\nDescription: ").concat(info.getDescription());
-        result = result.concat("\nNumber of Comics: ").concat(String.valueOf(info.getNComics()));
+        result = result.concat("\n\nNumber of Comics: ").concat(String.valueOf(info.getNComics()));
         result = result.concat("\nNumber of Stories: ").concat(String.valueOf(info.getNStories()));
         result = result.concat("\nNumber of Events: ").concat(String.valueOf(info.getNEvents()));
         result = result.concat("\nNumber of Series: ").concat(String.valueOf(info.getNSeries()));
@@ -257,7 +254,7 @@ public class MainPresenter implements ModelObserver {
     /**
      * Performs action upon knowing paste report URL is obtained in model
      *
-     * Display paste report URL on lower left text area
+     * <p>Display paste report URL in lower left text area</p>
      */
     @Override
     public void updateReportUrl() {

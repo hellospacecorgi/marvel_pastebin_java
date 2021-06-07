@@ -57,7 +57,7 @@
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </VBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" style="-fx-background-color: #369F4D#369F4D;" text="Load from cache">
+                        <Button mnemonicParsing="false" style="-fx-background-color: #369F4D#369F4D;">
                            <VBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </VBox.margin>

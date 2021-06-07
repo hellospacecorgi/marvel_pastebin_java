@@ -2,6 +2,7 @@ package marvel.model.character;
 
 /**
  * Represents thumbnail image data including image path and extension.
+ *
  * @see CharacterInfo
  */
 public class Thumbnail {
@@ -27,6 +28,7 @@ public class Thumbnail {
 
     /**
      * Getter for directory path of Thumbnail
+     *
      * @return path - directory path to the image
      */
     public String getPath() {
@@ -35,6 +37,7 @@ public class Thumbnail {
 
     /**
      * Getter for file extension of Thumbnail
+     *
      * @return extension - file extension of image
      */
     public String getExtension() {

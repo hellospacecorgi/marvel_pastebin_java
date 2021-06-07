@@ -17,7 +17,7 @@ public class ResponseHandler {
     /**
      * Parses JSON response from get character info GET request
      *
-     * @param body - response body from GET request
+     * @param body response body from GET request
      * @return CharacterInfo - returns CharacterInfo object built from response data if status code equals 200, otherwise null
      */
     public CharacterInfo parseResponseBody(String body){
@@ -46,8 +46,8 @@ public class ResponseHandler {
     /**
      * Parses JSON response body string and build CharacterInfo object from resource items.
      *
-     * @param body - response body from GET request
-     * @return CharacterInfo - returns CharacterInfo object built from response data
+     * @param body response body from GET request
+     * @return CharacterInfo - returns CharacterInfo object built from response data, returns null on failure to parse
      */
     public CharacterInfo parseCharacterInfo(String body){
         try{
@@ -136,10 +136,10 @@ public class ResponseHandler {
     /**
      * Parses response body from failed request of status code 409.
      *
-     * Used to print error message on terminal for debugging and error handling purposes.
+     * Used to print error messages on terminal for debugging and error handling purposes.
      *
-     * @param body - response body from failed request of status code 409
-     * @return String - parsed error message
+     * @param body response body from failed request of status code 409
+     * @return String - returns parsed error message, returns null if failed to parse
      */
     public String parseError409(String body){
         try{

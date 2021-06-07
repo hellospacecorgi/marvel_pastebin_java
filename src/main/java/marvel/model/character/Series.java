@@ -16,6 +16,7 @@ public class Series {
 
     /**
      * Constructor for creating a Series.
+     *
      * @param name The name of the series
      * @param resourcePath Path to individual series resource
      */
@@ -25,6 +26,7 @@ public class Series {
     }
     /**
      * Getter for name of Series
+     *
      * @return name - String, name of the Series
      */
     public String getName() {
@@ -33,6 +35,7 @@ public class Series {
 
     /**
      * Getter for path to resource URI of Series
+     *
      * @return resourcePath - path to resource URI of Series
      */
     public String getResourcePath() {

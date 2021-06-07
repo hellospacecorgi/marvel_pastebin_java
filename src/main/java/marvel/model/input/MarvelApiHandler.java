@@ -71,7 +71,6 @@ public class MarvelApiHandler {
             String combined = ts.concat(privateKey).concat(publicKey);
 
             String hashValue = DigestUtils.md5Hex(combined);
-            System.out.println(hashValue);
             return hashValue;
         }
         return null;
@@ -82,7 +81,7 @@ public class MarvelApiHandler {
      *
      * Uses ResponseHandler to parse JSON response and build CharacterInfo object
      *
-     * @param name - String of character name to send GET request with
+     * @param name String of character name to send GET request with
      * @return CharacterInfo - return CharacterInfo object built from response upon successful search, otherwise return null
      */
     public CharacterInfo getCharacterInfoByName(String name){

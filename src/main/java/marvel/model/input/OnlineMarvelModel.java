@@ -14,7 +14,7 @@ public class OnlineMarvelModel implements InputModel{
     private MarvelApiHandler apiHandler;
 
     /**
-     * Default constructor for OnlinemarvelModel
+     * Default constructor for OnlineMarvelModel
      */
     public OnlineMarvelModel(){
     }
@@ -22,7 +22,7 @@ public class OnlineMarvelModel implements InputModel{
     /**
      * Sets a handler for processing GET requests and responses to the API
      *
-     * @param handler - MarvelApiHandler instance
+     * @param handler MarvelApiHandler instance
      */
     @Override
     public void setApiHandler(MarvelApiHandler handler){
@@ -30,7 +30,8 @@ public class OnlineMarvelModel implements InputModel{
     }
     /**
      * Sends and process GET request for retrieving information about character given name.
-     *  Delegates actual sending of HttpRequest to MarvelApiHandler
+     *
+     * <p>Delegates actual sending of HttpRequest to MarvelApiHandler</p>
      *
      * @param name Specified character name to search API with
      * @return CharacterInfo - object that represents data related to a specified character if name is a valid Marvel character name, null otherwise

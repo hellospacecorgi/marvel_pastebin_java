@@ -16,6 +16,7 @@ public class Event {
     private String resourcePath;
     /**
      * Constructor for creating a Event.
+     *
      * @param name The name of the event
      * @param resourcePath Path to individual event resource
      */
@@ -25,6 +26,7 @@ public class Event {
     }
     /**
      * Getter for name of Event
+     *
      * @return name - String, name of the event
      */
     public String getName() {
@@ -33,6 +35,7 @@ public class Event {
 
     /**
      * Getter for path to resource URI of Event
+     *
      * @return resourcePath - path to resource URI of Event
      */
     public String getResourcePath() {

@@ -1,11 +1,10 @@
 package marvel.model.input;
 
-import javafx.scene.image.Image;
 import marvel.model.character.CharacterInfo;
 
 /**
  *
- * Submodel interface for methods relating to interacting with the input Marvel API.
+ * Sub model interface for methods relating to interacting with the input Marvel API.
  *
  * @see OnlineMarvelModel
  * @see OfflineMarvelModel
@@ -31,9 +30,9 @@ public interface InputModel {
      * Generate the full image path for retrieving a representative image of the given character,
      * using CharacterInfo info's Thumbnail attribute.
      *
-     * <p>Returns null if info's Thumbnail is null'</p>
+     * <p>Returns null if info's Thumbnail is null</p>
      *
-     * @param info - CharacterInfo object that contains
+     * @param info CharacterInfo object that contains
      * @return String - Full image path created using path and extension from Thumbnail of info if it is not null, return null otherwise.
      */
     public String getThumbnailFullPath(CharacterInfo info);

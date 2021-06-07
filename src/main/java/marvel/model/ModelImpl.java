@@ -27,7 +27,7 @@ public class ModelImpl implements ModelFacade{
      */
     OutputModel output;
     /**
-     * Reference to a CharacterInfo that was built from last successful character GET request
+     * Reference to a CharacterInfo that was built from the last successful search
      */
     CharacterInfo currentCharacter;
     /**
@@ -37,8 +37,9 @@ public class ModelImpl implements ModelFacade{
 
     /**
      * Takes in a version of InputModel and OutputModel for online/offline versions.
-     * @param input takes in a input model implementation
-     * @param output takes in a output model implementation
+     * @param input A InputModel object that can be online or offline
+     * @param output A OutputModel object that can be online or offline
+     * @param configFilePath Path to KeyConfig.json file that contains API developer keys
      */
     public ModelImpl(InputModel input, OutputModel output, String configFilePath){
         this.input = input;
@@ -69,12 +70,11 @@ public class ModelImpl implements ModelFacade{
     }
 
     /**
-     * Uses injected instance of InputModel to conduct search for character information with `name` name.
+     * Ask input sub model to conduct search for character information with provided name.
      *
-     * Calls notifyObserverGetInfoComplete() to notify all observers.
+     * <p>Calls notifyObserverGetInfoComplete() to notify all observers when operation is done.</p>
      *
      * @param name String of name of character to search API with.
-     * @return CharacterInfo object that stores information and links to resources related to character of `name` name.
      */
     @Override
     public void getCharacterInfo(String name) {
@@ -91,7 +91,7 @@ public class ModelImpl implements ModelFacade{
     /**
      * Retrieves current CharacterInfo in model
      *
-     * @return CharacterInfo - CharacterInfo object built from last successful GET request
+     * @return CharacterInfo - CharacterInfo object built from last successful search
      */
     @Override
     public CharacterInfo getCurrentCharacter() {
@@ -99,10 +99,10 @@ public class ModelImpl implements ModelFacade{
     }
 
     /**
-     * Retrieves full URL path to thumbnail given CharacterInfo object
+     * Retrieves full URL path to thumbnail given a CharacterInfo object
      *
-     * @param info - CharacterInfo object that contains data
-     * @return Stirng - Full URL path for thumbnail image
+     * @param info CharacterInfo object that contains data
+     * @return String - Full URL path for thumbnail image if info is not null, otherwise return null
      */
     @Override
     public String getImagePathByInfo(CharacterInfo info){
@@ -113,7 +113,9 @@ public class ModelImpl implements ModelFacade{
     }
 
     /**
-     * Generates and sends report based on provided CharacterInfo's data
+     * Ask output sub model to send a report based on provided CharacterInfo's data.
+     *
+     * <p>Calls notifyObserverGetInfoComplete() to notify all observers when operation is done.</p>
      *
      * @param info - CharacterInfo object that contains data to generate report with
      */
@@ -123,7 +125,7 @@ public class ModelImpl implements ModelFacade{
         notifyObserversSendReportComplete();
     }
     /**
-     * Retrieve pastebin URL for paste that contains last report sent
+     * Retrieve pastebin URL for paste for the last report sent.
      *
      * @return String - URL to paste generated for last report sent
      */
@@ -132,9 +134,9 @@ public class ModelImpl implements ModelFacade{
         return output.getReportUrl();
     }
     /**
-     * Adds observer to list of ModelObserver, to be notified upon API requests completed
+     * Adds an observer to list of ModelObserver, to be notified upon API requests completed
      *
-     * @param obs - ModelObserver object
+     * @param obs - ModelObserver object to be added
      */
     @Override
     public void addObserver(ModelObserver obs) {

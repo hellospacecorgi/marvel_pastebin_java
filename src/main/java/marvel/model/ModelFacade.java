@@ -6,7 +6,8 @@ import marvel.model.input.InputModel;
 import marvel.model.output.OutputModel;
 
 /**
- * ModelFacade interface for interacting with model operations.
+ * Provides methods for clients to make mutable and accessor calls to APIs.
+ * Acts as an interface for the client to interact with the complex model subsystem.
  *
  * @see InputModel
  * @see OutputModel
@@ -49,14 +50,14 @@ public interface ModelFacade {
     public CharacterInfo getCurrentCharacter();
 
     /**
-     * Retrieve full URL path for thumbnail image given a CharacterInfo object
+     * Retrieve full URL path to thumbnail image given a CharacterInfo object
      *
      * @param info - CharacterInfo object that contains data
      * @return String - Full URL path to retrieve thumbnail image
      */
     public String getImagePathByInfo(CharacterInfo info);
     /**
-     * Retrieve pastebin URL for paste that contains last report sent
+     * Retrieve pastebin URL for paste generated for last report sent
      *
      * @return String - URL to paste generated for last report sent
      */

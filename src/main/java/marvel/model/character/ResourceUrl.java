@@ -27,6 +27,7 @@ public class ResourceUrl {
 
     /**
      * Getter for getting type of ResourceUrl
+     *
      * @return type - Text identifier for URL
      */
     public String getType() {
@@ -35,6 +36,7 @@ public class ResourceUrl {
 
     /**
      * Getter for getting full URL for ResrouceUrl
+     *
      * @return url - A full URL (including scheme, domain, and path)
      */
     public String getUrl() {
