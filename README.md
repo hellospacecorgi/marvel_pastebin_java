@@ -48,16 +48,16 @@ The version where this is fully completed and tested in tagged with version `<ve
 
 Note to marker: 
 <p>1. While there was effort to keep track of TDD through commit messages, they do not reflect all the changes for each commit, 
-please refer to <b>commit comments<b> where some commits might be used for both RED and REFACTOR 
+please refer to <b>commit comments</b> where some commits might be used for both RED and REFACTOR 
 (where new tests were added for feature to be implemented (RED for new commit set), and previous features were modified for better code structure (REFACTOR for previous commit set) )</p>
 
-<p>2. Another note is that while Git commit might show the ModelImplTest file as modified in a GREEN commit, changes might have been made to a test method that is different to what the commit set is referring to (GREEN for tests for feature A but tests for feature B was modified), I have added <b>commit comments<b> to help illustrate which tests and features are relevant to the commit set</p>
+<p>2. While Git commit might show the ModelImplTest file as modified in a GREEN commit, changes might have been made to a test method that is different to what the commit set is referring to (GREEN for tests for feature A but tests for feature B was modified), I have added <b>commit comments<b> to help illustrate which tests and features are relevant to the commit set</p>
 
-<p>3. Some RED-GREEN processes were submerged within a commit (as a mistake of not correctly tracking RED-GREEN-RED-GREEN-REFACTORs where modification to existing tests were done before refactoring), after consulting Josh, it was adviced to still list them, <b>Pass set 2<b> is a clean RED-GREEN-REFACTOR set and <b>Pass set 1, 7<b> are clean RED-GREEN sets, and much cleaner commits were listed for the CREDIT feature implementations.</p>
+<p>3. Some RED-GREEN processes were submerged within a commit (as a mistake of not correctly tracking RED-GREEN-RED-GREEN-REFACTORs where modification to existing tests were done before refactoring), after consulting Josh, it was adviced to still list them, <b>Pass set 2 and 4<b> are clean RED-GREEN-REFACTOR sets and <b>Pass set 1, 7<b> are clean RED-GREEN sets, and much cleaner commits were listed for the CREDIT feature implementations.</p>
 
 <p>The issue was identified after implementing the PASS requirements, and more careful version control was adopted in the Credit implementation (hence credit TDD commits are more clean)</p>
 
-* [Pass set 1 - Clean RED-GREEN](#pass-set-1) , [Pass set 2 - CLEAN](#pass-set-2) , [Pass set 3](#pass-set-3), [Pass set 4](#pass-set-4), [Pass set 5](#pass-set-5), [Pass set 6](#pass-set-6), [Pass set 7 - Clean RED-GREEN](#pass-set-7)
+* [Pass set 1 - Clean RED-GREEN](#pass-set-1) , [Pass set 2 - CLEAN](#pass-set-2) , [Pass set 3](#pass-set-3), [Pass set 4 - CLEAN](#pass-set-4), [Pass set 5](#pass-set-5), [Pass set 6](#pass-set-6), [Pass set 7 - Clean RED-GREEN](#pass-set-7)
 * [Credit set](#credit-set)
 
 ### Pass set 1
@@ -129,6 +129,9 @@ RED-GREEN for testInputModelGetThumbnailImage() submerged
 ---
 
 ### Pass set 4
+
+CLEAN RED-GREEN-FACTOR, please ignore commit messages and see commit comments for details.
+
 Relevant tests:
 
 testSendReportFacade() [Mocked OutputModel]
