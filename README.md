@@ -60,10 +60,11 @@ please refer to commit comments where some commits might be used for both RED an
 
 * [Pass set 1](#pass-set-1) , [Pass set 2 - CLEAN](#pass-set-2) , [Pass set 3](#pass-set-3), [Pass set 4](#pass-set-4), [Pass set 5](#pass-set-5)
 * [Credit set](#credit-set)
-* <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/blob/master/RED-GREEN-REFACTOR.md">TDD Log [ RED-GREEN-REFACTOR.md ]</a>
+* <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/blob/master/RED-GREEN-REFACTOR.md">TDD Partial Log [ RED-GREEN-REFACTOR.md ]</a>
 
 
 ### Pass set 1
+Relevant tests : testValidCharacterName() [Mocked InputModel] testInvalidCharacterName() [Mocked InputModel]
 **RED** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/34085ddc84013575a8313846ef4f753bdca4a33b">34085ddc84013575a8313846ef4f753bdca4a33b</a>
 
 **GREEN** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/62ae76d3050793e2555b3bb024b43f5bfe3f4f7f">62ae76d3050793e2555b3bb024b43f5bfe3f4f7f</a>
@@ -112,7 +113,8 @@ please refer to commit comments where some commits might be used for both RED an
 
 ---
 
-The RED-GREEN-REFACTOR commits listed above are the major ones closely related to the ModelFacade and ModelImpl.
+<p>The commits listed above are ones closely related to the interaction of ModelImpl with InputModel (mocked) and OutputModel (mocked),
+the interaction of OnlineMarvelModel and MarvelApiHandler (mocked), and the interaction of OutputModel and PastebinApiHandler (mocked).</p>
 
 The test suite also covered some unit testing of concrete model classes to assert for expected behaviours.
 
