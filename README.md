@@ -1,5 +1,5 @@
 # README for SOFT3202 Exam Pre Work
-Testing for multiple commits
+Testing for multiple commits and then push
 ## Assigned APIs
 
 Input: https://developer.marvel.com/
