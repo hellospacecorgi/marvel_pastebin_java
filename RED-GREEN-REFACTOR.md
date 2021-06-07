@@ -1,6 +1,6 @@
-## RED-GREEN-REFACTOR Commits
+## RED-GREEN-REFACTOR Commits (INCOMPLETE)
 
-This is used to document sets of RED-GREEN-REFACTOR commits listed under README.md
+NOTE: Refer to README.md for complete listing of commits, this is not a fully updated logging of the TDD process.
 
 * [Pass set 1](#pass-set-1) , [Pass set 2](#pass-set-2) , [Pass set 3](#pass-set-3)
 * [Credit set](#credit-set)
