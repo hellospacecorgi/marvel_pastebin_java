@@ -113,7 +113,7 @@ public class ModelImplTest {
     }
 
     /**
-     * Testing ModelImpl submodel retrieval method
+     * Testing ModelImpl sub model retrieval method
      */
     @Test
     public void testGetSubModels(){
