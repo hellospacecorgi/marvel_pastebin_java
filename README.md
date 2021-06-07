@@ -53,7 +53,7 @@ please refer to <b>commit comments</b> where some commits might be used for both
 
 <p>2. While Git commit might show the ModelImplTest file as modified in a GREEN commit, changes might have been made to a test method that is different to what the commit set is referring to (GREEN for tests for feature A but tests for feature B was modified), I have added <b>commit comments<b> to help illustrate which tests and features are relevant to the commit set</p>
 
-<p>3. Some RED-GREEN processes were submerged within a commit (as a mistake of not correctly tracking RED-GREEN-RED-GREEN-REFACTORs where modification to existing tests were done before refactoring), after consulting Josh, it was adviced to still list them, <b>Pass set 2 and 4<b> are clean RED-GREEN-REFACTOR sets and <b>Pass set 1, 7<b> are clean RED-GREEN sets, and much cleaner commits were listed for the CREDIT feature implementations.</p>
+<p>3. Some RED-GREEN processes were submerged within a commit (as a mistake of not correctly tracking RED-GREEN-RED-GREEN-REFACTORs where modification to existing tests were done before refactoring), after consulting Josh, it was adviced to still list them, <b>Pass set 2 and 4<b> are clean RED-GREEN-REFACTOR sets and <b>Pass set 1, 6, 7<b> are clean RED-GREEN sets, and much cleaner commits were listed for the CREDIT feature implementations.</p>
 
 <p>The issue was identified after implementing the PASS requirements, and more careful version control was adopted in the Credit implementation (hence credit TDD commits are more clean)</p>
 
