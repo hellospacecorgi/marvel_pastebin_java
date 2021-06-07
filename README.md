@@ -16,11 +16,21 @@ Input: https://developer.marvel.com/ Output: https://pastebin.com/doc_api
 
 Marker's own API keys for both input and output APIs should be placed in the configuration JSON file `KeyConfig.json` under `src/main/resources/marvel` in order for the live versions to run.
 
+Replace API keys as JSON strings in the following fields as annotated
+
+```
+{
+"marvelKey": "<Marvel API public key>",
+"marvelPrivateKey": "<Marvel API private key>",
+"pastebinKey" : "<Pastebin API public key>"
+}
+```
+
 NOTE: For Marvel API, **both public and private keys** need to be provided.
 
 #### Gradle command
 
-Option to use live or dummpy versions of both the input and output APIs can be selected with 2 arguments in sequence, where the first specifies for the input API and the second for the output API.
+Option to use live or dummy versions of both the input and output APIs can be selected with 2 arguments in sequence, where the first specifies for the input API and the second for the output API.
 
 For example,
 
