@@ -64,21 +64,49 @@ please refer to commit comments where some commits might be used for both RED an
 
 
 ### Pass set 1
-Relevant tests : testValidCharacterName() [Mocked InputModel] testInvalidCharacterName() [Mocked InputModel]
+
+Relevant tests : 
+
+testValidCharacterName() [Mocked InputModel] 
+
+testInvalidCharacterName() [Mocked InputModel]
+<p>Feature: getCharacterInfo() method in ModelFacade and getInfoByName() method in InputModel</p>
+
 **RED** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/34085ddc84013575a8313846ef4f753bdca4a33b">34085ddc84013575a8313846ef4f753bdca4a33b</a>
 
 **GREEN** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/62ae76d3050793e2555b3bb024b43f5bfe3f4f7f">62ae76d3050793e2555b3bb024b43f5bfe3f4f7f</a>
-
+<p>Shows ModelImplTest as modified file but changes were not made to relevant tests.</p>
+  
 **REFACTOR** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/f50a188a001db8954dbbf479fb1fc5b0a4fed0f7">f50a188a001db8954dbbf479fb1fc5b0a4fed0f7</a>
+<p>Submerged RED-GREEN process concerning change to CharacterInfo</p>
 
 ---
 ### Pass set 2
+
+Relevant tests : 
+
+testInputModelGetInfoByNameInvalid() [Mocked MarvelApiHandler]
+
+testInputModelGetInfoByNameValid() [Mocked MarvelApiHandler]
+
+testInptModelGetInfoNullList() [Mocked MarvelApiHandler]
+
+<p>Feature: getInfoByName() method in InputModel and getCharacterInfoByName in MarvelApiHandler</p>
+
 **RED** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/5eb7094b1fc518177fb8599680991137255ff78e">5eb7094b1fc518177fb8599680991137255ff78e</a>
 
 **GREEN** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/f6a9831731296ced3fe5456f86593b57e2ec0ef3">f6a9831731296ced3fe5456f86593b57e2ec0ef3</a>
 
 **REFACTOR** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/51a4911b7c30bc9abda1a68a2a6916472e788b07">51a4911b7c30bc9abda1a68a2a6916472e788b07</a>
 
+Modification to how MarvelApiHandler's access to public and private keys were done,
+from setApiKeys to setting keys by Constructor arguments.
+
+MarvelApiHandler constructor is refactored, uses injected strings to set keys rather than hard coded strings.
+
+This leads to modification in method call inside ModelImpl to setApiHandler for input model, ModelImpl's line 29.
+
+Tests for InputModel still passes after this refactoring (interaction between OnlineMarvelModel and MarvelApiHandler still behaves as before).
 ---
 
 ### Pass set 3
