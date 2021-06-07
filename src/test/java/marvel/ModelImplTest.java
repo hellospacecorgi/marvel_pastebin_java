@@ -5,13 +5,8 @@ import marvel.model.character.CharacterInfo;
 import marvel.model.character.ResourceUrl;
 import marvel.model.character.Thumbnail;
 import marvel.model.input.InputModel;
-import marvel.model.input.MarvelApiHandler;
-import marvel.model.input.OfflineMarvelModel;
-import marvel.model.input.OnlineMarvelModel;
 import marvel.model.output.OfflinePastebinModel;
-import marvel.model.output.OnlinePastebinModel;
 import marvel.model.output.OutputModel;
-import marvel.model.output.PastebinApiHandler;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -233,32 +228,6 @@ public class ModelImplTest {
         assertEquals(ret, "dummy.url");
     }
 
-    /**
-     * Test that PastebinApiHandler's sendReport() is called when ModelFacade's sendReport() is called
-     *
-     * <p>Testing sendReport() one layer below ModelFacade, using instance of OnlinePastebinModel.</p>
-     *
-     * <p>Testing with mock PastebinApiHandler, testing interaction between OnlinePastebinModel and PastebinHandler.
-     *
-     * <p>PastebinApiHandler is mocked using Mockito</p>
-     */
-    @Test
-    public void testOutputModelSendReport(){
-
-        //GIVEN
-        output = new OnlinePastebinModel();
-        PastebinApiHandler handler = mock(PastebinApiHandler.class);
-        output.setApiHandler(handler);
-        when(handler.sendReport(anyString(), anyString())).thenReturn(true);
-
-        model = new ModelImpl(input, output, configFilePath);
-        model.getOutputSubModel().setApiHandler(handler);
-        //WHEN
-        model.sendReport(spiderman);
-        //THEN
-        verify(handler, times(1)).sendReport(anyString(), anyString());
-
-    }
 
     /**
      * Test that PastebinApiHandler's sendReport() is called when ModelFacade's sendReport() is called
@@ -278,12 +247,6 @@ public class ModelImplTest {
         //THEN
         verify(output, times(1)).getReportUrl();
         assertEquals("dummy-report-url", ret);
-
-        //GIVEN
-        output = new OfflinePastebinModel();
-        model = new ModelImpl(input, output, configFilePath);
-        //WHEN-THEN
-        assertEquals("dummy-report-output-url", model.getReportUrl());
 
     }
 

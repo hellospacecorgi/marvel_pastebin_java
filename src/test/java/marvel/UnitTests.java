@@ -6,11 +6,11 @@ import marvel.model.ModelImpl;
 import marvel.model.ModelObserver;
 import marvel.model.input.InputModel;
 import marvel.model.input.OfflineMarvelModel;
+import marvel.model.output.OfflinePastebinModel;
 import marvel.model.output.OutputModel;
 import org.junit.Test;
 
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 
 public class UnitTests {
@@ -62,8 +62,8 @@ public class UnitTests {
     @Test
     public void testInputModelGetThumbnailFullPathOffline(){
         //uses concrete input model
-        InputModel input = new OfflineMarvelModel();
-        OutputModel output = mock(OutputModel.class);
+        input = new OfflineMarvelModel();
+        output = mock(OutputModel.class);
         //GIVEN
         model = new ModelImpl(input, output, configFilePath);
         model.getCharacterInfo("spider-man");
@@ -71,5 +71,15 @@ public class UnitTests {
         String path = model.getImagePathByInfo(model.getCurrentCharacter());
         //THEN
         assertNull(path);
+    }
+
+    @Test
+    public void testOfflinePastebinGetReportUrl(){
+        //GIVEN
+        output = new OfflinePastebinModel();
+        input = mock(InputModel.class);
+        model = new ModelImpl(input, output, configFilePath);
+        //WHEN-THEN
+        assertEquals("dummy-report-output-url", model.getReportUrl());
     }
 }
