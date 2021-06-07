@@ -67,7 +67,7 @@ please refer to <b>commit comments</b> where some commits might be used for both
 
 <p>The issue was identified after implementing the PASS requirements, and more careful version control was adopted in the Credit implementation (hence credit TDD commits are more clean)</p>
 
-* [Pass set 1 - Clean RED-GREEN](#pass-set-1) , [Pass set 2 - CLEAN](#pass-set-2) , [Pass set 3](#pass-set-3), [Pass set 4 - CLEAN](#pass-set-4), [Pass set 5](#pass-set-5), [Pass set 6](#pass-set-6), [Pass set 7 - Clean RED-GREEN](#pass-set-7)
+* [Pass set 1 - Clean RED-GREEN](#pass-set-1) , [Pass set 2 - CLEAN](#pass-set-2) , [Pass set 3](#pass-set-3), [Pass set 4 - CLEAN](#pass-set-4), [Pass set 5](#pass-set-5), [Pass set 6 - Clean RED-GREEN](#pass-set-6), [Pass set 7 - Clean RED-GREEN](#pass-set-7)
 * [Credit set](#credit-set)
 
 ### Pass set 1
