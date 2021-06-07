@@ -82,7 +82,7 @@ testInvalidCharacterName() [Mocked InputModel]
 
 ---
 ### Pass set 2
-
+### CLEAN RED-GREEN-REFACTOR
 Relevant tests : 
 
 testInputModelGetInfoByNameInvalid() [Mocked MarvelApiHandler]
