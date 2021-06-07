@@ -50,7 +50,7 @@ will run the application using  live (requests hitting the web) input API and of
 
 - Produce report related to character information entity built from input Marvel API for output Pastebin API
 
-The version where this is fully completed and tested in tagged with version `<version-no>`.
+The version where this is fully completed and tested in tagged with version `v1.2`.
 
 ---
 
