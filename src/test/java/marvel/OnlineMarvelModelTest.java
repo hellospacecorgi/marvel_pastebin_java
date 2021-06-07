@@ -1,5 +1,6 @@
 package marvel;
 
+import marvel.model.ConfigHandler;
 import marvel.model.ModelFacade;
 import marvel.model.ModelImpl;
 import marvel.model.ModelObserver;
@@ -74,7 +75,8 @@ public class OnlineMarvelModelTest {
         output = mock(OutputModel.class);
 
         //GIVEN ModelImpl initialised with an instance of InputModel and OutputModel
-        model = new ModelImpl(input, output, configFilePath);
+        ConfigHandler handler = new ConfigHandler(configFilePath);
+        model = new ModelImpl(input, output, handler);
 
         //GIVEN - CharacterInfo build from valid name search response
         List<ResourceUrl> urls = new ArrayList<>();
@@ -108,7 +110,8 @@ public class OnlineMarvelModelTest {
         MarvelApiHandler handler = mock(MarvelApiHandler.class);
 
         //GIVEN
-        model = new ModelImpl(input, output, configFilePath);
+        ConfigHandler config = new ConfigHandler(configFilePath);
+        model = new ModelImpl(input, output, config);
         model.getInputSubModel().setApiHandler(handler);
 
         //GIVEN
@@ -155,7 +158,8 @@ public class OnlineMarvelModelTest {
         MarvelApiHandler handler = mock(MarvelApiHandler.class);
 
         //GIVEN
-        model = new ModelImpl(input, output, configFilePath);
+        ConfigHandler config = new ConfigHandler(configFilePath);
+        model = new ModelImpl(input, output, config);
         model.getInputSubModel().setApiHandler(handler);
 
         //GIVEN
@@ -182,7 +186,8 @@ public class OnlineMarvelModelTest {
         MarvelApiHandler handler = mock(MarvelApiHandler.class);
 
         //GIVEN
-        model = new ModelImpl(input, output, configFilePath);
+        ConfigHandler config = new ConfigHandler(configFilePath);
+        model = new ModelImpl(input, output, config);
         model.getInputSubModel().setApiHandler(handler);
 
         //GIVEN

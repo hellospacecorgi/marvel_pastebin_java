@@ -114,7 +114,8 @@ public class App extends Application {
             output = new OnlinePastebinModel();
         }
 
-        model = new ModelImpl(input, output, configFilePath);
+        ConfigHandler config = new ConfigHandler(configFilePath);
+        model = new ModelImpl(input, output, config);
 
         Parent root = null;
         try{

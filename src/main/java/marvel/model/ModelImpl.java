@@ -39,23 +39,12 @@ public class ModelImpl implements ModelFacade{
      * Takes in a version of InputModel and OutputModel for online/offline versions.
      * @param input A InputModel object that can be online or offline
      * @param output A OutputModel object that can be online or offline
-     * @param configFilePath Path to KeyConfig.json file that contains API developer keys
+     * @param handler A ConfigHandler object used for getting API keys
      */
-    public ModelImpl(InputModel input, OutputModel output, String configFilePath){
-        this.input = input;
-        this.output = output;
-        this.observers = new ArrayList<>();
-
-        ConfigHandler config = new ConfigHandler(configFilePath);
-        this.input.setApiHandler(new MarvelApiHandler(config.getInputPublicKey(), config.getInputPrivateKey()));
-        this.output.setApiHandler(new PastebinApiHandler(config.getOutputKey()));
-    }
-
     public ModelImpl(InputModel input, OutputModel output, ConfigHandler handler){
         this.input = input;
         this.output = output;
         this.observers = new ArrayList<>();
-
     }
 
     /**

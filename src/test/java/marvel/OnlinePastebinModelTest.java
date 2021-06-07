@@ -1,5 +1,6 @@
 package marvel;
 
+import marvel.model.ConfigHandler;
 import marvel.model.ModelFacade;
 import marvel.model.ModelImpl;
 import marvel.model.ModelObserver;
@@ -73,7 +74,8 @@ public class OnlinePastebinModelTest {
         output = mock(OutputModel.class);
 
         //GIVEN ModelImpl initialised with an instance of InputModel and OutputModel
-        model = new ModelImpl(input, output, configFilePath);
+        ConfigHandler handler = new ConfigHandler(configFilePath);
+        model = new ModelImpl(input, output, handler);
 
         //GIVEN - CharacterInfo build from valid name search response
         List<ResourceUrl> urls = new ArrayList<>();
@@ -111,8 +113,10 @@ public class OnlinePastebinModelTest {
         output.setApiHandler(handler);
         when(handler.sendReport(anyString(), anyString())).thenReturn(true);
 
-        model = new ModelImpl(input, output, configFilePath);
+        ConfigHandler config = new ConfigHandler(configFilePath);
+        model = new ModelImpl(input, output, config);
         model.getOutputSubModel().setApiHandler(handler);
+
         //WHEN
         model.sendReport(spiderman);
         //THEN

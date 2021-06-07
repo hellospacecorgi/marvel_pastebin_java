@@ -65,7 +65,8 @@ public class UnitTests {
         input = new OfflineMarvelModel();
         output = mock(OutputModel.class);
         //GIVEN
-        model = new ModelImpl(input, output, configFilePath);
+        ConfigHandler config = new ConfigHandler(configFilePath);
+        model = new ModelImpl(input, output, config);
         model.getCharacterInfo("spider-man");
         //WHEN
         String path = model.getImagePathByInfo(model.getCurrentCharacter());
@@ -78,7 +79,8 @@ public class UnitTests {
         //GIVEN
         output = new OfflinePastebinModel();
         input = mock(InputModel.class);
-        model = new ModelImpl(input, output, configFilePath);
+        ConfigHandler config = new ConfigHandler(configFilePath);
+        model = new ModelImpl(input, output, config);
         //WHEN-THEN
         assertEquals("dummy-report-output-url", model.getReportUrl());
     }
