@@ -57,6 +57,7 @@ public class ModelImplTest {
      * Path to keys configuration file for initialising model
      */
     String configFilePath = "./src/main/resources/marvel/KeyConfig.json";
+
     /**
      * Path to a dummy image for character thumbnail accessor methods
      */
@@ -65,6 +66,7 @@ public class ModelImplTest {
      * Reference to a character object used in tests
      */
     CharacterInfo spiderman;
+
 
     /**
      * Tagged by @Before, called before every test.
@@ -100,19 +102,6 @@ public class ModelImplTest {
     }
 
     /**
-     * Unit testing concrete class ConfigHandler
-     *
-     * <p>ConfigHandler used for getting API Keys configuration for sending input and output API requests</p>
-     */
-    @Test
-    public void testConfigHandler(){
-        ConfigHandler handler = new ConfigHandler("./src/main/resources/marvel/KeyConfig.json");
-        assertNotEquals("", handler.getInputPublicKey());
-        assertNotEquals("", handler.getInputPrivateKey());
-        assertNotEquals("", handler.getOutputKey());
-    }
-
-    /**
      * Testing ModelImpl sub model retrieval method
      */
     @Test
@@ -139,10 +128,6 @@ public class ModelImplTest {
         verify(input, times(1)).getInfoByName("spider-man");
 
         //THEN - expect returned CharacterInfo object matches expected valid object
-
-        /*
-         * Refactored test from info to model.getCurrentCharacter
-         */
         assertEquals(1234, model.getCurrentCharacter().getId());
         assertEquals("spiderman", model.getCurrentCharacter().getName());
         assertEquals("fakepath", model.getCurrentCharacter().getThumbnail().getPath());
@@ -169,124 +154,6 @@ public class ModelImplTest {
         //THEN - expect InputModel method to be triggered
         verify(input, times(1)).getInfoByName("wonder-woman");
 
-//        //THEN - expect null return returned
-//        assertNull(info);
-    }
-
-    /**
-     * Testing InputModel's getInfoByName() invalid name search
-     *
-     * <p>Testing a one layer down ModelFacade - specifically for OnlineMarvelModel's interaction with
-     * the concrete class MarvelApiHandler which is responsible for sending requests that hits the web API.</p>
-     *
-     * <p>See ModelImplSetUp() for mocked input model behavior.</p>
-     */
-    @Test
-    public void testInputModelGetInfoByNameValid(){
-        //mock marvelApiHandler
-        input = new OnlineMarvelModel();
-        MarvelApiHandler handler = mock(MarvelApiHandler.class);
-
-        //GIVEN
-        model = new ModelImpl(input, output, configFilePath);
-        model.getInputSubModel().setApiHandler(handler);
-
-        //GIVEN
-        List<ResourceUrl> urls = new ArrayList<>();
-        urls.add(new ResourceUrl("wiki", "dummy-url.com"));
-        urls.add(new ResourceUrl("blog", "another-dummy.com"));
-        Thumbnail thb = new Thumbnail("./src/main/resources/marvel/dummy.png", "png");
-        CharacterInfo spiderman = new CharacterInfo(1234, "spiderman","Can jump around buildings", "1999-99-99");
-        spiderman.setUrls(urls);
-        spiderman.setThumbnail(new Thumbnail("fakepath", "jpg"));
-
-        //GIVEN
-        when(handler.getCharacterInfoByName("spider-man")).thenReturn(spiderman);
-
-        //WHEN
-        model.getCharacterInfo("spider-man");
-
-        //THEN
-        verify(handler, times(1)).getCharacterInfoByName("spider-man");
-
-        /*
-         * Refactored to use model.getCurrentCharacter() after refactoring return value of getCharacterInfo to void
-         * to prepare for observer pattern refactoring
-         */
-        assertEquals(spiderman.getName(), model.getCurrentCharacter().getName());
-        assertEquals(spiderman.getDescription(), model.getCurrentCharacter().getDescription());
-        assertEquals(spiderman.getModified(), model.getCurrentCharacter().getModified());
-
-    }
-
-    /**
-     * Testing InputModel's getInfoByName() invalid name search
-     *
-     * <p>Testing a one layer below ModelFacade - specifically for OnlineMarvelModel's interaction with
-     * the concrete class MarvelApiHandler which is responsible for sending requests that hits the web API.</p>
-     *
-     * <p>MarvelApiHandler is mocked using Mockito.</p>
-     *
-     */
-    @Test
-    public void testInputModelGetInfoByNameInvalid(){
-        //mock marvelApiHandler
-        input = new OnlineMarvelModel();
-        MarvelApiHandler handler = mock(MarvelApiHandler.class);
-
-        //GIVEN
-        model = new ModelImpl(input, output, configFilePath);
-        model.getInputSubModel().setApiHandler(handler);
-
-        //GIVEN
-        when(handler.getCharacterInfoByName("invalid")).thenReturn(null);
-
-        //WHEN
-        model.getCharacterInfo("invalid");
-
-        //THEN
-        verify(handler, times(1)).getCharacterInfoByName("invalid");
-
-    }
-
-    /**
-     * Testing expected CharacterInfo returned from input model after search.
-     *
-     * <p>MarvelApiHandler is mocked using Mockito.</p>
-     */
-    @Test
-    public void testInputModelGetInfoNullList(){
-        //mock marvelApiHandler
-        input = new OnlineMarvelModel();
-        MarvelApiHandler handler = mock(MarvelApiHandler.class);
-
-        //GIVEN
-        model = new ModelImpl(input, output, configFilePath);
-        model.getInputSubModel().setApiHandler(handler);
-
-        //GIVEN
-        CharacterInfo spiderman = new CharacterInfo(1234, "spiderman","Can jump around buildings", "1999-99-99");
-        spiderman.setThumbnail(null);
-        spiderman.setStoryList(null);
-
-        //GIVEN
-        when(handler.getCharacterInfoByName("spider-man")).thenReturn(spiderman);
-
-        //WHEN
-        model.getCharacterInfo("spider-man");
-
-        //THEN
-        verify(handler, times(1)).getCharacterInfoByName("spider-man");
-        /*
-         * Refactored test to use model.getCurrentCharacter()
-         *  after refactoring return value of getCharacterInfo to void
-         * to prepare for observer pattern refactoring
-         */
-        assertEquals(spiderman.getName(), model.getCurrentCharacter().getName());
-        assertEquals(spiderman.getDescription(), model.getCurrentCharacter().getDescription());
-        assertEquals(spiderman.getModified(), model.getCurrentCharacter().getModified());
-        assertNull(model.getCurrentCharacter().getThumbnail());
-        assertNull(model.getCurrentCharacter().getStoryList());
     }
 
     /**
@@ -313,26 +180,7 @@ public class ModelImplTest {
 
     }
 
-    /**
-     * Testing image path retrieval from provided CharacterInfo object using concrete offline model.
-     *
-     * <p>Test using concrete OfflineMarvelModel,
-     * testing behaviour between ModelFacade and InputModel
-     * when model's getImagePathByInfo() is called</p>
-     */
-    @Test
-    public void testInputModelGetThumbnailFullPathOffline(){
-        //uses concrete model
-        input = new OfflineMarvelModel();
 
-        //GIVEN
-        model = new ModelImpl(input, output, configFilePath);
-        model.getCharacterInfo("spider-man");
-        //WHEN
-        String path = model.getImagePathByInfo(model.getCurrentCharacter());
-        //THEN
-        assertNull(path);
-    }
 
     /**
      * Test getImageByInfo() behaviour when CharacterInfo object has null thumbnail attribute.

@@ -51,6 +51,13 @@ public class ModelImpl implements ModelFacade{
         this.output.setApiHandler(new PastebinApiHandler(config.getOutputKey()));
     }
 
+    public ModelImpl(InputModel input, OutputModel output, ConfigHandler handler){
+        this.input = input;
+        this.output = output;
+        this.observers = new ArrayList<>();
+
+    }
+
     /**
      * Getter for input sub model
      * @return InputModel - InputModel object that handles functionalities to input API
