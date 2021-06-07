@@ -45,6 +45,9 @@ public class ModelImpl implements ModelFacade{
         this.input = input;
         this.output = output;
         this.observers = new ArrayList<>();
+
+        input.setApiHandler(new MarvelApiHandler(handler.getInputPublicKey(), handler.getInputPrivateKey()));
+        output.setApiHandler(new PastebinApiHandler(handler.getOutputKey()));
     }
 
     /**
