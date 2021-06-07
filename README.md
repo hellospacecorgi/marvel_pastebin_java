@@ -63,11 +63,11 @@ please refer to <b>commit comments</b> where some commits might be used for both
 
 <p>2. While Git commit might show the ModelImplTest file as modified in a GREEN commit, changes might have been made to a test method that is different to what the commit set is referring to (GREEN for tests for feature A but tests for feature B was modified), I have added <b>commit comments</b> to help illustrate which tests and features are relevant to the commit set</p>
 
-<p>3. Some RED-GREEN processes were submerged within a commit (as a mistake of not correctly tracking RED-GREEN-RED-GREEN-REFACTORs where modification to existing tests were done before refactoring), after consulting Josh, it was adviced to still list them, <b>Pass set 2</b> is a clean RED-GREEN-REFACTOR set, <b>Pass set 4</b> also shows a RED-GREEN-REFACTOR cycle (but requires note 1.) and <b>Pass set 1, 6, 7</b> shows clean RED-GREEN, and much cleaner commits were listed for the CREDIT feature implementations.</p>
+<p>3. Some RED-GREEN processes were submerged within a commit (as a mistake of not correctly tracking RED-GREEN-RED-GREEN-REFACTORs where modification to existing tests were done before refactoring), after consulting Josh, it was adviced to still list them, <b>Pass set 2</b> is a clean RED-GREEN-REFACTOR set and <b>Pass set 1, 4, 6, 7</b> shows clean RED-GREEN, and much cleaner commits were listed for the CREDIT feature implementations.</p>
 
 <p>The issue was identified after implementing the PASS requirements, and more careful version control was adopted in the Credit implementation (hence credit TDD commits are more clean)</p>
 
-* [Pass set 1 - Clean RED-GREEN](#pass-set-1) , [Pass set 2 - CLEAN](#pass-set-2) , [Pass set 3](#pass-set-3), [Pass set 4 - CLEAN](#pass-set-4), [Pass set 5](#pass-set-5), [Pass set 6 - Clean RED-GREEN](#pass-set-6), [Pass set 7 - Clean RED-GREEN](#pass-set-7)
+* [Pass set 1 - Clean RED-GREEN](#pass-set-1) , [Pass set 2 - CLEAN](#pass-set-2) , [Pass set 3](#pass-set-3), [Pass set 4 - Clean RED-GREEN](#pass-set-4), [Pass set 5](#pass-set-5), [Pass set 6 - Clean RED-GREEN](#pass-set-6), [Pass set 7 - Clean RED-GREEN](#pass-set-7)
 * [Credit set](#credit-set)
 
 ### Pass set 1
@@ -158,7 +158,7 @@ Methods: getReportUrl() in ModelFacade and getReportUrl() in OutputModel
 
 See commit comments.
 
-**REFACTOR** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/face90c6efe6c72344c380a214ad5130910626d6">face90c6efe6c72344c380a214ad5130910626d6</a>
+**REFACTOR** (Relevant tests unchanged and passed - however test suite fails because commit ) Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/face90c6efe6c72344c380a214ad5130910626d6">face90c6efe6c72344c380a214ad5130910626d6</a>
 
 ---
 
@@ -187,9 +187,9 @@ Relevant test: testInputModelGetThumbnailFullPath() [Mocked InputModel]
 
 Methods: ModelFacade getImagePathByInfo() and getThumbnailFullPath() in InputModel
 
-**REFACTOR RED** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/0524160fd5d7cdc3eac075d7d88981b9e9e1c25c">0524160fd5d7cdc3eac075d7d88981b9e9e1c25c</a>
+**RED** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/0524160fd5d7cdc3eac075d7d88981b9e9e1c25c">0524160fd5d7cdc3eac075d7d88981b9e9e1c25c</a>
 
-**REFACTOR GREEN** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/bb1de09a047c9085c1ba9c4d490e11b0be09978f">bb1de09a047c9085c1ba9c4d490e11b0be09978f</a>
+**GREEN** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/bb1de09a047c9085c1ba9c4d490e11b0be09978f">bb1de09a047c9085c1ba9c4d490e11b0be09978f</a>
 
 ---
 
@@ -208,7 +208,7 @@ ModelFacade's addObserver(), getCharacterInfo() and ModelObserver's updateCharac
 ModelFacade's addObserver(), sendReport() and ModelObserver's updateReportUrl()
 
 
-**REFACTOR RED** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/46b740c05e072f4559b2bc60d3dc08bfbce35eb9">46b740c05e072f4559b2bc60d3dc08bfbce35eb9</a>
+**RED** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/46b740c05e072f4559b2bc60d3dc08bfbce35eb9">46b740c05e072f4559b2bc60d3dc08bfbce35eb9</a>
 
 **GREEN** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/bc6c545fed706da786ccfde5b8c647d502a97e6e">bc6c545fed706da786ccfde5b8c647d502a97e6e</a>
 
