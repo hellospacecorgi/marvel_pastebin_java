@@ -11,10 +11,7 @@ import org.json.simple.parser.ParseException;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +25,19 @@ public class OfflineMarvelModel implements InputModel{
     private boolean isInfoInCache;
     private String dummyResponseFilePath = "./src/main/resources/marvel/DummyApiResponse.json";
     private ResponseHandler responseHandler;
+
+    /**
+     * Constructor for OfflineMarvelModel
+     */
+    public OfflineMarvelModel(){
+        try{
+            Class.forName("org.sqlite.JDBC");
+            connection = DriverManager.getConnection("jdbc:sqlite:MarvelCache.sqlite");
+
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * Set a API handler to this model.
      * Inherited from InputModel interface - no usage in offline model.
@@ -60,8 +70,9 @@ public class OfflineMarvelModel implements InputModel{
         try{
             String dummyResponse = Files.readString(Path.of(dummyResponseFilePath));
             if(dummyResponse != null){
-
-                return responseHandler.parseResponseBody(dummyResponse);
+                CharacterInfo info = responseHandler.parseResponseBody(dummyResponse);
+                saveToCache(info.getName(), dummyResponse);
+                return info;
             }
         }catch(IOException e){
           e.printStackTrace();
@@ -77,6 +88,13 @@ public class OfflineMarvelModel implements InputModel{
      */
     @Override
     public CharacterInfo getInfoByNameFromCache(String name) {
+        String response = loadFromCache(name);
+        System.out.println(response);
+
+        if(response != null){
+            CharacterInfo info = responseHandler.parseResponseBody(response);
+            return info;
+        }
         return null;
     }
 
@@ -116,6 +134,46 @@ public class OfflineMarvelModel implements InputModel{
             e.printStackTrace();
         }
         return false;
+    }
+
+    private void saveToCache(String name, String response){
+
+        String query = "INSERT INTO Character (Name, Response) \nVALUES(?, ?)";
+
+        try{
+            PreparedStatement pr = connection.prepareStatement(query);
+            System.out.println("saved to cache : " + name);
+            pr.setString(1, name);
+            pr.setString(2, response);
+            pr.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private String loadFromCache(String name){
+        System.out.println("CacheHandler loadFromCache");
+        String query = "SELECT * from Character where Name = ?;";
+
+        try{
+            PreparedStatement pr = connection.prepareStatement(query);
+            pr.setString(1, name);
+
+            ResultSet rs = pr.executeQuery();
+
+            if(rs.next()){
+                System.out.println("Result set");
+                System.out.println(rs.getString("Response"));
+                return rs.getString("Response");
+            }
+
+            return null;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }

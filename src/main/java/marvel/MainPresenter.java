@@ -52,8 +52,16 @@ public class MainPresenter implements ModelObserver, ViewObserver {
      */
     @Override
     public void onSearch(String name){
-        //Ask model to process request
-        model.getCharacterInfo(name);
+        //Check if there is cached data in database
+        if(model.isInfoInCache(name)){
+            //If cache exists - ask user for option to load from API or cache
+            view.updateMessage("Found information on " + name + " in cache, " +
+                    "\nclick <Load from cache> to get information from cache," +
+                    "\nclick <Search character> to get information from API");
+        } else {
+            //ask model to get info from API
+            model.getCharacterInfo(name);
+        }
     }
 
     /**
@@ -136,7 +144,12 @@ public class MainPresenter implements ModelObserver, ViewObserver {
      */
     @Override
     public void onLoadFromCache(String name) {
-
+        CharacterInfo info = model.loadInfoFromCache(name);
+        if(info != null){
+            updateCharacterInfo();
+        }else {
+            view.updateMessage("Null load");
+        }
     }
 
     /**

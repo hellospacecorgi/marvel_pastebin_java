@@ -166,7 +166,11 @@ public class ModelImpl implements ModelFacade{
             throw new IllegalArgumentException();
         }
         if(input.isInfoInCache(name)){
-            return input.getInfoByNameFromCache(name);
+            CharacterInfo info = input.getInfoByNameFromCache(name);
+            if(info != null){
+                currentCharacter = info;
+                return info;
+            }
         }
         return null;
     }

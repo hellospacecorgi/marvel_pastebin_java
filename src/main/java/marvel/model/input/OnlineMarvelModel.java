@@ -25,7 +25,7 @@ public class OnlineMarvelModel implements InputModel{
     private ResponseHandler responseHandler;
 
     /**
-     * Default constructor for OnlineMarvelModel
+     * Constructor for OnlineMarvelModel
      */
     public OnlineMarvelModel(){
         try{
@@ -72,6 +72,9 @@ public class OnlineMarvelModel implements InputModel{
         }
         String response = apiHandler.getCharacterInfoByName(name);
         CharacterInfo info = responseHandler.parseResponseBody(response);
+        if(info != null){
+            saveToCache(name, response);
+        }
         return info;
     }
 
@@ -110,7 +113,11 @@ public class OnlineMarvelModel implements InputModel{
      */
     @Override
     public CharacterInfo getInfoByNameFromCache(String name) {
-        return null;
+
+        String response = loadFromCache(name);
+        CharacterInfo info = responseHandler.parseResponseBody(response);
+
+        return info;
     }
 
     @Override
@@ -137,5 +144,46 @@ public class OnlineMarvelModel implements InputModel{
             e.printStackTrace();
         }
         return false;
+    }
+
+
+    private void saveToCache(String name, String response){
+
+        String query = "INSERT INTO Character (Name, Response) \nVALUES(?, ?)";
+
+        try{
+            PreparedStatement pr = connection.prepareStatement(query);
+            System.out.println("saved to cache : " + name);
+            pr.setString(1, name);
+            pr.setString(2, response);
+            pr.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private String loadFromCache(String name){
+        System.out.println("CacheHandler loadFromCache");
+        String query = "SELECT * from Character where Name = ?;";
+
+        try{
+            PreparedStatement pr = connection.prepareStatement(query);
+            pr.setString(1, name);
+
+            ResultSet rs = pr.executeQuery();
+
+            if(rs.next()){
+                System.out.println("Result set");
+                System.out.println(rs.getString("Response"));
+                return rs.getString("Response");
+            }
+
+            return null;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
