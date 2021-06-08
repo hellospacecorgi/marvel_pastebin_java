@@ -145,7 +145,7 @@ public class ModelImpl implements ModelFacade{
     }
 
     /**
-     * Ask input submodel to search database for record with key matchign given name
+     * Ask input sub model to search database if record with key matching given name
      *
      * @param name String to search database for matching record
      * @return boolean - return true if record found, otherwise false
@@ -161,7 +161,7 @@ public class ModelImpl implements ModelFacade{
     /**
      * Ask input model to search for record with name as key from cache,
      *
-     * <p>if found and CharacterInfo created from record,
+     * <p>If found and CharacterInfo created from record,
      * set current character reference to it</p>
      *
      * <p>After input model completed request, notify observers request complete</p>

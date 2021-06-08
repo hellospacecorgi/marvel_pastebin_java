@@ -15,10 +15,10 @@ import java.util.List;
  */
 public class ResponseHandler {
     /**
-     * Parses JSON response from get character info GET request
+     * Parses a JSON response from a Marvel API GET request response
      *
      * @param body response body from GET request
-     * @return CharacterInfo - returns CharacterInfo object built from response data if status code equals 200, otherwise null
+     * @return CharacterInfo - returns CharacterInfo object built from response data if status code equals 200 and data count is not zero, otherwise null
      */
     public CharacterInfo parseResponseBody(String body){
         try{
@@ -44,12 +44,15 @@ public class ResponseHandler {
     }
 
     /**
-     * Parses JSON response body string and build CharacterInfo object from resource items.
+     * Parses JSON response body string and build CharacterInfo object from resource items represented by JSONObjects.
      *
      * @param body response body from GET request
-     * @return CharacterInfo - returns CharacterInfo object built from response data, returns null on failure to parse
+     * @return CharacterInfo - returns CharacterInfo object built from response data, returns null on failure to parse or body is null or empty
      */
     public CharacterInfo parseCharacterInfo(String body){
+        if(body == null || body.isEmpty()){
+            return null;
+        }
         try{
             JSONObject response = new JSONObject(body);
             JSONObject data = response.getJSONObject("data");
@@ -138,10 +141,14 @@ public class ResponseHandler {
      *
      * Used to print error messages on terminal for debugging and error handling purposes.
      *
+     *
      * @param body response body from failed request of status code 409
-     * @return String - returns parsed error message, returns null if failed to parse
+     * @return String - returns parsed error message, returns null if failed to parse or body is null or empty
      */
     public String parseError409(String body){
+        if(body == null || body.isEmpty()){
+            return null;
+        }
         try{
             JSONObject response = new JSONObject(body);
             return response.getString("status");

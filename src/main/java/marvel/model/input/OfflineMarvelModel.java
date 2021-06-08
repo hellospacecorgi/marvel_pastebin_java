@@ -1,28 +1,43 @@
 package marvel.model.input;
 
 import marvel.model.character.*;
-import org.json.JSONException;
-import org.json.JSONTokener;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
- * Dummy version implementation of InputModel. Returns dummy data on mutable and accessor calls.
+ * Dummy offline version implementation of InputModel.
+ *
+ * <p>Returns dummy data on search requests, will not send requests to the actual live Marvel API.</p>
+ *
+ * <p>Retrieval of cached data is still available,
+ * this means if a valid character information response in a previous session that used the OnlineMarvelModel is cached in the database,
+ * the offline version will be able to retrieve the data and return a CharacterInfo object that is representative of the valid data.</p>
+ *
+ * <p>Note that with the implementation of the getCharacterInfo() method,
+ * dummy response is loaded from the dummy JSON file DummyApiResponse.json,
+ * and will be automatically cached to the database.
+ * </p>
+ *
+ * <p>This means that valid responses from a previous live session may be overwritten by dummy data</p>
  *
  * @see InputModel
  */
 public class OfflineMarvelModel implements InputModel{
+    /**
+     * Handler that handles queries to the cache database
+     */
     private CacheHandler cacheHandler;
+    /**
+     * File path to the file containing dummy JSON response on dummy character information
+     */
     private String dummyResponseFilePath = "./src/main/resources/marvel/DummyApiResponse.json";
+    /**
+     *  Handler that handles processing JSON response to model objects
+     *
+     *  Used in offline model to retrieve CharacterInfo object from cached and dummy response
+     */
     private ResponseHandler responseHandler;
 
     /**
@@ -33,7 +48,7 @@ public class OfflineMarvelModel implements InputModel{
     /**
      * Set a API handler to this model.
      * Inherited from InputModel interface - no usage in offline model.
-     * @param handler MarvelApiHandler that handles live API requests - ignored
+     * @param handler handler that process live API requests - ignored
      */
     @Override
     public void setApiHandler(MarvelApiHandler handler){ }
@@ -47,12 +62,18 @@ public class OfflineMarvelModel implements InputModel{
         this.responseHandler = handler;
     }
 
+    /**
+     * Set a cache handler to this model.
+     * @param handler handler to process queries to the cache database
+     */
     @Override
     public void setCacheHandler(CacheHandler handler) {
 
     }
 
     /**
+     * Retrieves a CharacterInfo object containing data about a character with the given name
+     *
      * Simulates a response from successful character name search.
      * Will always return a dummy character
      *
@@ -78,7 +99,9 @@ public class OfflineMarvelModel implements InputModel{
         return null;
     }
     /**
-     * Use cached response with key matching given name to create CharacterInfo object.
+     * Load
+     *
+     * Uses cached response with key matching given name to create CharacterInfo object.
      *
      * @param name To be used as key for searching record in database
      * @return CharacterInfo - object created from cached data found, return null on error or cache not found

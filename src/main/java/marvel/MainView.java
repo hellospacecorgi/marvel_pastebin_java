@@ -17,7 +17,9 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 /**
- * MainView class observes the main view (Main.fxml)
+ * MainView class observes the main view through being set as a JavaFX Controller class to (Main.fxml)
+ *
+ * <p>Takes the view role in MVP pattern as responsible for updating UI component contents</p>
  *
  * <p>Listens for user events on UI and notify ViewObservers upon user events,
  * update view components via manipulating FXML attributes.</p>
@@ -53,10 +55,18 @@ public class MainView {
     @FXML
     ImageView thumbnail;
 
+    /**
+     * A list of ViewObserver objects to be notified of UI events
+     */
     List<ViewObserver> observers;
 
     public MainView() { }
 
+    /**
+     * Adds a ViewObserver object to this MainView to receive notification when UI events happen.
+     *
+     * @param observer Receives notification upon UI events
+     */
     public void addObserver(ViewObserver observer) {
         if (observers == null) {
             observers = new ArrayList<>();
@@ -67,9 +77,10 @@ public class MainView {
     /**
      * Called when Search Character button is clicked.
      *
-     * <p>Notify all observers event happened</p>
+     * <p>Expects text field to have non empty string value input,
+     * will set text area message to ""Input field is empty - enter name for searching." if empty.</p>
      *
-     * <p>Expects text field to have non empty string value input.</p>
+     * <p>If text field is non empty, notify all observers event happened</p>
      */
     @FXML
     public void onSearch() {
@@ -84,6 +95,11 @@ public class MainView {
         }
     }
 
+    /**
+     * Called when the Comics button is clicked
+     *
+     * <p>Notify all observers event happened</p>
+     */
     @FXML
     public void onComics(){
         //notify observers the event happened
@@ -91,7 +107,11 @@ public class MainView {
             observers.get(i).onComics();
         }
     }
-
+    /**
+     * Called when the Stories button is clicked
+     *
+     * <p>Notify all observers event happened</p>
+     */
     @FXML
     public void onStories(){
         //notify observers the event happened
@@ -100,6 +120,11 @@ public class MainView {
         }
     }
 
+    /**
+     * Called when the Events button is clicked
+     *
+     * <p>Notify all observers event happened</p>
+     */
     @FXML
     public void onEvents(){
         //notify observers the event happened
@@ -108,6 +133,11 @@ public class MainView {
         }
     }
 
+    /**
+     * Called when the Series button is clicked
+     *
+     * <p>Notify all observers event happened</p>
+     */
     @FXML
     public void onSeries(){
         //notify observers the event happened
@@ -116,6 +146,11 @@ public class MainView {
         }
     }
 
+    /**
+     * Called when the URLs button is clicked
+     *
+     * <p>Notify all observers event happened</p>
+     */
     @FXML
     public void onUrl(){
         //notify observers the event happened
@@ -146,16 +181,33 @@ public class MainView {
      */
     @FXML
     public void onLoadFromCache(){
+        if (characterName.getText().equals("") || characterName.getText().isEmpty()) {
+            message.setText("Input field is empty - enter name for loading from cache.");
+            return;
+        }
         //notify observers the event happened
         for(int i = 0 ; i < observers.size() ; i++){
             observers.get(i).onLoadFromCache(characterName.getText());
         }
     }
 
+    /**
+     * Sets the lower left text area panel to display text as provided by the String argument result
+     *
+     * @param result String to be set on display
+     */
     public void updateMessage(String result) {
         message.setText(result);
     }
 
+    /**
+     * Displays representative thumbnail image of character loaded from URL imagePath<
+     *
+     *
+     * <p>Uses the provided imagePath to create a Image and set it to the upper right ImageView.</p>
+     *
+     * @param imagePath URL path to a image
+     */
     public void updateThumbnail(String imagePath) {
         //Update thumbnail view
         Image img = null;
@@ -173,9 +225,9 @@ public class MainView {
     }
 
     /**
-     * Update the center table TableView to display list of comics which features character
+     * Update TableView to display list of comics which features character
      *
-     * @param comics
+     * @param comics List of Comic objects that contain data of comics featuring current character loaded
      */
     public void updateTableViewComics(List<Comic> comics) {
         ObservableList<Comic> clist = FXCollections.observableArrayList(comics);
@@ -192,9 +244,9 @@ public class MainView {
     }
 
     /**
-     * Called when the Url button above the table is clicked.
+     * Update center TableView to display list of URLs for public websites tha has character information</p>
      *
-     * <p>Displays list of URLs for public websites tha has character information</p>
+     * @param urls List of ResourceUrl objects that contain URLs to public website about character
      */
     public void updateTableViewResourceUrls(List<ResourceUrl> urls) {
         ObservableList<ResourceUrl> rlist = FXCollections.observableArrayList(urls);
@@ -212,9 +264,9 @@ public class MainView {
     }
 
     /**
-     * Called when the Stories button above the table is clicked.
+     * Update center TableView to display list of Stories that the character appears
      *
-     * <p>Displays list of Stories that the character appears</p>
+     * @param stories List of Story objects that contain data of stories featuring current character loaded
      */
     public void updateTableViewStories(List<Story> stories) {
         ObservableList<Story> clist = FXCollections.observableArrayList(stories);
@@ -235,9 +287,9 @@ public class MainView {
     }
 
     /**
-     * Called when the Events button above the table is clicked.
+     * Update center TableView to display list of events that the character appears
      *
-     * <p>Displays list of events that the character appears</p>
+     * @param events List of Event objects that contain data of events featuring current character loaded
      */
     public void updateTableViewEvents(List<Event> events) {
         ObservableList<Event> clist = FXCollections.observableArrayList(events);
@@ -255,9 +307,9 @@ public class MainView {
     }
 
     /**
-     * Called when the Series button above the table is clicked.
+     * Update center TableView to display list of series that the character appears
      *
-     * <p>Displays list of series that the character appears</p>
+     * @param series List of Series objects that contain data of series featuring current character loaded
      */
     public void updateTableViewSeries(List<Series> series) {
         ObservableList<Series> clist = FXCollections.observableArrayList(series);

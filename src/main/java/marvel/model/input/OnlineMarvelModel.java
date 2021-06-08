@@ -2,8 +2,6 @@ package marvel.model.input;
 
 import marvel.model.character.CharacterInfo;
 
-import java.sql.*;
-
 /**
  * Online version implementation of InputModel. Returns live data retrieved from Marvel web API.
  *
@@ -11,6 +9,9 @@ import java.sql.*;
  */
 public class OnlineMarvelModel implements InputModel{
 
+    /**
+     * Handler that handles queries to the cache database
+     */
     private CacheHandler cacheHandler;
 
     /**
@@ -19,7 +20,7 @@ public class OnlineMarvelModel implements InputModel{
     private MarvelApiHandler apiHandler;
 
     /**
-     *  Handler that handles processing JSON response to model objects and vice versa
+     *  Handler that handles processing JSON response to model objects
      */
     private ResponseHandler responseHandler;
 
@@ -50,6 +51,10 @@ public class OnlineMarvelModel implements InputModel{
         this.responseHandler = handler;
     }
 
+    /**
+     * Set a cache handler to this model.
+     * @param handler handler to process queries to the cache database
+     */
     @Override
     public void setCacheHandler(CacheHandler handler) {
         this.cacheHandler = handler;

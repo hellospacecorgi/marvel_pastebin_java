@@ -5,7 +5,7 @@ import marvel.model.character.*;
 import marvel.model.ModelFacade;
 
 /**
- * MainPresenter class observes the ModelFacade and MainView object that is passed in through the constructor.
+ * MainPresenter class that observes the ModelFacade and MainView object that is passed in through the constructor.
  *
  * <p>Calls operations upon notification from MainView on user events,
  * retrieves data from the model and ask the view to update accordingly.</p>
@@ -53,7 +53,7 @@ public class MainPresenter implements ModelObserver, ViewObserver {
         view.addObserver(this);
     }
     /**
-     * Called when Search Character button is clicked.
+     * Notified when Search Character button is clicked.
      *
      * <p>Asks model to process searching for character information given String name</p>
      */
@@ -81,10 +81,13 @@ public class MainPresenter implements ModelObserver, ViewObserver {
     }
 
     /**
-     * Called when the Comic button above the table is clicked.
+     * Notified when the Comic button above the table is clicked.
+     *
+     * <p>Retrieve current character in model</p>
      *
      * <p>Calls view's updateCenterComics() to populate the table.</p>
      */
+    @Override
     public void onComics(){
         if(model.getCurrentCharacter() != null){
             view.updateTableViewComics(model.getCurrentCharacter().getComicList());
@@ -93,56 +96,61 @@ public class MainPresenter implements ModelObserver, ViewObserver {
     }
 
     /**
-     * Called when the Url button above the table is clicked.
+     * Notified when the Url button above the table is clicked.
+     *
+     * <p>Retrieve current character in model</p>
      *
      * <p>Ask view to display list of URLs for public websites tha has character information</p>
      */
-    public void onUrl(){
+    @Override
+    public void onUrls(){
         if(model.getCurrentCharacter() != null){
             view.updateTableViewResourceUrls(model.getCurrentCharacter().getUrls());
         }
     }
 
     /**
-     * Called when the Stories button above the table is clicked.
+     * Notified when the Stories button above the table is clicked.
+     *
+     * <p>Retrieve current character in model</p>
      *
      * <p>Ask view to display list of Stories that the character appears</p>
      */
+    @Override
     public void onStories(){
         if(model.getCurrentCharacter() != null){
             view.updateTableViewStories(model.getCurrentCharacter().getStoryList());
         }
     }
     /**
-     * Called when the Events button above the table is clicked.
+     * Notified when the Events button above the table is clicked.
+     *
+     * <p>Retrieve current character in model</p>
      *
      * <p>Ask view to display list of events that the character appears</p>
      */
+    @Override
     public void onEvents(){
         if(model.getCurrentCharacter() != null){
             view.updateTableViewEvents(model.getCurrentCharacter().getEventList());
         }
     }
     /**
-     * Called when the Series button above the table is clicked.
+     * Notified the Series button above the table is clicked.
+     *
+     * <p>Retrieve current character in model</p>
      *
      * <p>Ask view to display list of series that the character appears</p>
      */
+    @Override
     public void onSeries(){
         if(model.getCurrentCharacter() != null){
             view.updateTableViewSeries(model.getCurrentCharacter().getSeriesList());
         }
     }
 
-    @Override
-    public void onUrls() {
-        if(model.getCurrentCharacter() != null){
-            view.updateTableViewResourceUrls(model.getCurrentCharacter().getUrls());
-        }
-    }
-
     /**
-     * Called when the Send Report button is clicked.
+     * Notified when the Send Report button is clicked.
      *
      * <p>Ask model to generate report based on character data, send report to Pastebin to create new paste</p>
      */
@@ -154,7 +162,7 @@ public class MainPresenter implements ModelObserver, ViewObserver {
     }
 
     /**
-     * Called when the load from cache button is clicked
+     * Notified when the load from cache button is clicked
      *
      * <p>Ask model to load data corresponding to given name from cache</p>
      */
@@ -169,7 +177,7 @@ public class MainPresenter implements ModelObserver, ViewObserver {
     }
 
     /**
-     * Performs action upon knowing CharacterInfo is built in model
+     * Retrieves updated CharacterInfo object from model
      *
      * <p>Ask view to display character summary on lower left text area,
      * display list of comics in table by default (calling updateCenterComic() )
@@ -201,7 +209,7 @@ public class MainPresenter implements ModelObserver, ViewObserver {
 
     }
     /**
-     * Performs action upon knowing paste report URL is obtained in model
+     * Retrieves updated URL to report paste from model.
      *
      * <p>Ask view to display paste report URL in lower left text area</p>
      */

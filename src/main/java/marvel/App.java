@@ -36,21 +36,6 @@ public class App extends Application {
      * Path to configuration file containing user's API developer keys
      */
     static String configFilePath = "./src/main/resources/marvel/KeyConfig.json";
-    /**
-     * Model to be used by Presenter to retrieve and post data to APIs
-     */
-    ModelFacade model;
-    /**
-     * A version of InputModel that sends requests to input API
-     */
-    InputModel input;
-    /**
-     * A version of OutputModel that sends requests to output API
-     */
-    OutputModel output;
-
-    MainView view;
-    MainPresenter presenter;
 
     /**
      * The application main method.
@@ -91,22 +76,26 @@ public class App extends Application {
     /**
      *  Starts the JavaFX application.
      *
-     *  <p>Initialise a model with sub models based on command line arguments given and path to keys configuration file.</p>
+     *  <p>Sets up key components of MVP pattern for data-presentation separation of the application.</p>
      *
-     *  <p>Initialise a presenter with model and view objects</p>
+     *  <p>Initialise a ModelImpl model object as a ModelFacade with sub models based on command line arguments given and path to keys configuration file.</p>
      *
-     *  <p>Sets scene from Main.fxml and sets view as its JavaFX Controller class</p>
+     *  <p>Sets scene from Main.fxml and sets a MainView object as its JavaFX Controller class</p>
+     *
+     *  <p>Initialise a MainPresenter presenter object with ModelFacade and MainView objects</p>
      *
      *  <p>Sets the scene to stage</p>
      *
      * @param stage primary stage for the application
-     * @throws IOException if file to Main view cannot be loaded
+     * @throws IOException if file to Main view cannot be loaded by FXMLLoader
      */
     @Override
     public void start(Stage stage) throws Exception {
 
         Scene scene = new Scene(new Pane());
 
+        OutputModel output;
+        InputModel input;
         if(offlineInput){
             input = new OfflineMarvelModel();
         } else {
@@ -120,9 +109,9 @@ public class App extends Application {
         }
 
         ConfigHandler config = new ConfigHandler(configFilePath);
-        model = new ModelImpl(input, output, config);
-        view = new MainView();
-        presenter = new MainPresenter(model, view);
+        ModelFacade model = new ModelImpl(input, output, config);
+        MainView view = new MainView();
+        MainPresenter presenter = new MainPresenter(model, view);
 
         Parent root = null;
         try{

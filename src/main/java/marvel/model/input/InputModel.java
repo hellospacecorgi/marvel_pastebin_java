@@ -13,7 +13,6 @@ import marvel.model.character.CharacterInfo;
 public interface InputModel {
     /**
      * Sets a handler for processing GET requests and responses to the API
-     *
      * @param handler MarvelApiHandler instance
      */
     public void setApiHandler(MarvelApiHandler handler);
@@ -31,7 +30,9 @@ public interface InputModel {
     public void setCacheHandler(CacheHandler handler);
 
     /**
-     * Sends and process GET request for retrieving information about character given name.
+     * Sends and process GET request to the API for retrieving information about character given name.
+     *
+     * Returns a CharacterInfo object containing data on the character.
      *
      * @param name Specified character name to search API with
      * @return CharacterInfo - object that represents data related to a specified character if name is a valid Marvel character name, null otherwise
