@@ -213,7 +213,7 @@ public class OnlineMarvelModelTest {
 
         //GIVEN
         when(handler.getCharacterInfoByName("spider-man")).thenReturn(dummyResponseBody);
-
+        when(responseHandler.parseResponseBody(dummyResponseBody)).thenReturn(spiderman);
         //WHEN
         model.getCharacterInfo("spider-man");
 
