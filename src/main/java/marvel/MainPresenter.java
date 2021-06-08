@@ -147,6 +147,7 @@ public class MainPresenter implements ModelObserver, ViewObserver {
         if(name == null || name.isEmpty()){
             throw new IllegalArgumentException();
         }
+
         model.loadInfoFromCache(name);
     }
 

@@ -45,7 +45,6 @@ public class CacheHandler {
 
             if(rs.next()){
                 System.out.println("Result set");
-                System.out.println(rs.getString("Response"));
                 return rs.getString("Response");
             }
 

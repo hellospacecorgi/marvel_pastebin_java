@@ -146,7 +146,10 @@ public class MainView {
      */
     @FXML
     public void onLoadFromCache(){
-
+        //notify observers the event happened
+        for(int i = 0 ; i < observers.size() ; i++){
+            observers.get(i).onLoadFromCache(characterName.getText());
+        }
     }
 
     public void updateMessage(String result) {
