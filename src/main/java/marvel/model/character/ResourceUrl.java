@@ -35,7 +35,7 @@ public class ResourceUrl {
     }
 
     /**
-     * Getter for getting full URL for ResrouceUrl
+     * Getter for getting full URL for ResourceUrl
      *
      * @return url - A full URL (including scheme, domain, and path)
      */

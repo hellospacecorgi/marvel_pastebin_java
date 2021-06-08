@@ -1,8 +1,6 @@
 package marvel.model.input;
 
-import marvel.model.character.CharacterInfo;
 import org.apache.commons.codec.digest.DigestUtils;
-
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpRequest;
@@ -16,10 +14,6 @@ import java.net.http.HttpResponse;
  * @see ResponseHandler
  */
 public class MarvelApiHandler {
-    /**
-     * Parses JSON response and creates CharacterInfo from valid response data
-     */
-    private ResponseHandler responseHandler;
     /**
      * User's Marvel API developer public key
      */
@@ -54,7 +48,6 @@ public class MarvelApiHandler {
         this.publicKey = publicKey;
         this.privateKey = privateKey;
         client = HttpClient.newHttpClient();
-        responseHandler = new ResponseHandler();
     }
 
     /**

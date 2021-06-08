@@ -1,0 +1,109 @@
+{
+  "code": 200,
+  "status": "Ok",
+  "copyright": "© 2021 MARVEL",
+  "attributionText": "Dummy response data following Data provided by Marvel API",
+  "attributionHTML": "<a href=\"http://marvel.com\">Data provided by Marvel. © 2021 MARVEL</a>",
+  "etag": "386610002c4ec3cc69e71f9450f4a8451eda1a5b",
+  "data": {
+    "offset": 0,
+    "limit": 20,
+    "total": 1,
+    "count": 1,
+    "results": [
+      {
+        "id": 123456,
+        "name": "Dummy Hero",
+        "description": "Dummy Hero is a hero created for the dummy Marvel API",
+        "modified": "2020-00-00",
+        "thumbnail": {
+          "path": "dummy",
+          "extension": "jpg"
+        },
+        "resourceURI": "dummy.com",
+        "comics": {
+          "available": 1111,
+          "collectionURI": "invalid",
+          "items": [
+            {
+              "resourceURI": "dummpyhttp://dummy-dummy.com/comics/1234",
+              "name": "The one dummy comic"
+            }
+          ],
+          "returned": 1
+        },
+        "series": {
+          "available": 2222,
+          "collectionURI": "invalid",
+          "items": [
+            {
+              "resourceURI": "dummpyhttp://dummy-dummy.com/series/1234",
+              "name": "Series about another better character"
+            },
+            {
+              "resourceURI": "dummpyhttp://dummy-dummy.com/series/122",
+              "name": "A alternative universe series"
+            },
+            {
+              "resourceURI": "dummpyhttp://dummy-dummy.com/series/114",
+              "name": "Dummy series"
+            }
+          ],
+          "returned": 3
+        },
+        "stories": {
+          "available": 2571,
+          "collectionURI": "invalid",
+          "items": [
+            {
+              "resourceURI": "dummpyhttp://dummy-dummy.com/stories/1",
+              "name": "The first story about dummy"
+            },
+            {
+              "resourceURI": "dummpyhttp://dummy-dummy.com/stories/2",
+              "name": "Last story about dummy"
+            }
+          ],
+          "returned": 2
+        },
+        "events": {
+          "available": 26,
+          "collectionURI": "invalid",
+          "items": [
+            {
+              "resourceURI": "dummpyhttp://dummy-dummy.com/events/5253",
+              "name": "Important event about dummy"
+            },
+            {
+              "resourceURI": "dummpyhttp://dummy-dummy.com/events/1",
+              "name": "Birth of dummy"
+            },
+            {
+              "resourceURI": "dummpyhttp://dummy-dummy.com/events/52",
+              "name": "Dummy's special power discovery"
+            },
+            {
+              "resourceURI": "dummpyhttp://dummy-dummy.com/events/54214",
+              "name": "Day in the life of dummy"
+            }
+          ],
+          "returned": 4
+        },
+        "urls": [
+          {
+            "type": "detail",
+            "url": "dummy-marvel.com/details/dummy"
+          },
+          {
+            "type": "wiki",
+            "url": "wikipedia.com/dummy-hero"
+          },
+          {
+            "type": "blog",
+            "url": "dummy-blog.com/about"
+          }
+        ]
+      }
+    ]
+  }
+}
