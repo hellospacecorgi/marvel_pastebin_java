@@ -112,13 +112,14 @@ public class OnlinePastebinModelTest {
         //GIVEN
         output = new OnlinePastebinModel();
         input = mock(InputModel.class);
-        PastebinApiHandler handler = mock(PastebinApiHandler.class);
-        output.setApiHandler(handler);
-        when(handler.sendReport(anyString(), anyString())).thenReturn(true);
-
         ConfigHandler config = new ConfigHandler(configFilePath);
         model = new ModelImpl(input, output, config);
-        model.getOutputSubModel().setApiHandler(handler);
+        PastebinApiHandler handler = mock(PastebinApiHandler.class);
+        ReportService service = mock(ReportService.class);
+        output.setReportService(service);
+        output.setApiHandler(handler);
+        when(handler.sendReport(anyString(), anyString())).thenReturn(true);
+        when(service.generateReport(spiderman)).thenReturn("report");
 
         //WHEN
         model.sendReport(spiderman);
