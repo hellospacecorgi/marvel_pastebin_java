@@ -214,6 +214,32 @@ ModelFacade's addObserver(), sendReport() and ModelObserver's updateReportUrl()
 
 ---
 
+### Credit set 1
+
+Tests: (Mocked MarvelApiHandler and ResponseHandler to verify OnlineMarvelModel method calls)
+
+testGetCharacterInfoErrorResponse()
+
+testNullApiHandlerSet()
+
+testNullResponseHandlerSet()
+
+testInputModelGetInfoNullList()
+
+testInputModelGetInfoByNameValid()
+
+Feature done: 
+
+<p>Added setResponseHandler() to InputModel, have InputModel coordinate passing response body string to ResponseHandler on getCharacterInfo(), return null on null handlers set.</p>
+
+**RED** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/18a018a17ac8654ebd837cbcfb69605fa806ddd3">18a018a17ac8654ebd837cbcfb69605fa806ddd3</a>
+
+**GREEN** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/1b28bcac427811dddc9209860b92bd6c15e44f40">1b28bcac427811dddc9209860b92bd6c15e44f40</a>
+
+
+
+---
+
 <p>The commits listed above are ones closely related to the interaction of ModelImpl with InputModel (mocked) and OutputModel (mocked),
 the interaction of OnlineMarvelModel and MarvelApiHandler (mocked), and the interaction of OutputModel and PastebinApiHandler (mocked).</p>
 
