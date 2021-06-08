@@ -156,6 +156,16 @@ public class ModelImpl implements ModelFacade{
     }
 
     /**
+     *
+     * @param name String to search database for matching record
+     * @return
+     */
+    @Override
+    public Character loadInfoFromCache(String name) {
+        return null;
+    }
+
+    /**
      * Adds an observer to list of ModelObserver, to be notified upon API requests completed
      *
      * @param obs - ModelObserver object to be added

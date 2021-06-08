@@ -73,6 +73,12 @@ public interface ModelFacade {
      */
     public boolean isInfoInCache(String name);
 
+    /**
+     *
+     * @param name String to search database for matching record
+     */
+    public Character loadInfoFromCache(String name);
+
     //Observer pattern methods
     /**
      * Adds observer to list of ModelObserver, to be notified upon API requests completed

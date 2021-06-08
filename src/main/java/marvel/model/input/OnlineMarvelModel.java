@@ -2,12 +2,18 @@ package marvel.model.input;
 
 import marvel.model.character.CharacterInfo;
 
+import java.sql.*;
+
 /**
  * Online version implementation of InputModel. Returns live data retrieved from Marvel web API.
  *
  * @see MarvelApiHandler
  */
 public class OnlineMarvelModel implements InputModel{
+
+    private static Connection connection = null;
+    private boolean isInfoInCache;
+
     /**
      *  Handler that handles requests to web API
      */
@@ -22,6 +28,13 @@ public class OnlineMarvelModel implements InputModel{
      * Default constructor for OnlineMarvelModel
      */
     public OnlineMarvelModel(){
+        try{
+            Class.forName("org.sqlite.JDBC");
+            connection = DriverManager.getConnection("jdbc:sqlite:MarvelCache.sqlite");
+
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -89,8 +102,40 @@ public class OnlineMarvelModel implements InputModel{
         return path;
     }
 
+    /**
+     * Use cached response with key matching given name to create CharacterInfo object.
+     *
+     * @param name To be used as key for searching record in database
+     * @return CharacterInfo - object created from cached data found, return null on error or cache not found
+     */
+    @Override
+    public CharacterInfo getInfoByNameFromCache(String name) {
+        return null;
+    }
+
     @Override
     public boolean isInfoInCache(String name) {
+        if(name == null || name.isEmpty()){
+            throw new IllegalArgumentException();
+        }
+        return searchCache(name);
+    }
+
+    private boolean searchCache(String name){
+        String query = "SELECT Response from Character where Name = ?;";
+        try{
+            PreparedStatement pr = connection.prepareStatement(query);
+            pr.setString(1, name);
+            ResultSet rs = pr.executeQuery();
+
+            if(rs.next()){
+                System.out.println(name + "is in cache!");
+                return true;
+            }
+            return false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return false;
     }
 }

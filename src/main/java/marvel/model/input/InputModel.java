@@ -33,6 +33,13 @@ public interface InputModel {
     public CharacterInfo getInfoByName(String name);
 
     /**
+     * Use given name as key to create CharacterInfo from cached response in the database
+     * @param name Name of character to retrieve data for
+     * @return CharacterInfo object created from cached data
+     */
+    public CharacterInfo getInfoByNameFromCache(String name);
+
+    /**
      * Generate the full image path for retrieving a representative image of the given character,
      * using CharacterInfo info's Thumbnail attribute.
      *
