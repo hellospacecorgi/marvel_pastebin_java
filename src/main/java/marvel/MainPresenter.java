@@ -1,5 +1,7 @@
 package marvel;
 
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import marvel.model.ModelObserver;
 import marvel.model.character.*;
 import marvel.model.ModelFacade;
@@ -60,8 +62,18 @@ public class MainPresenter implements ModelObserver, ViewObserver {
     @Override
     public void onSearch(String name){
         if(lastSearched.equals(name)){
-            //ask model to get info from API
-            model.getCharacterInfo(name);
+//            //ask model to get info from API
+//            model.getCharacterInfo(name);
+            Task<Void> task = new Task<Void>(){
+                @Override
+                protected Void call() throws Exception{
+                    //ask model to get info from API
+                    model.getCharacterInfo(name);
+                    return null;
+                }
+            };
+            Platform.runLater(task);
+            lastSearched = "";
             return;
         }
 
@@ -74,8 +86,17 @@ public class MainPresenter implements ModelObserver, ViewObserver {
             lastSearched = name;
 
         } else {
+            Task<Void> task = new Task<Void>(){
+                @Override
+                protected Void call() throws Exception{
+                    //ask model to get info from API
+                    model.getCharacterInfo(name);
+                    return null;
+                }
+            };
+            Platform.runLater(task);
             //ask model to get info from API
-            model.getCharacterInfo(name);
+            //model.getCharacterInfo(name);
             lastSearched = "";
         }
     }
@@ -156,9 +177,19 @@ public class MainPresenter implements ModelObserver, ViewObserver {
      */
     @Override
     public void onSendReport(){
-        if(model.getCurrentCharacter() != null){
-            model.sendReport(model.getCurrentCharacter());
+        if(model.getCurrentCharacter() != null) {
+            Task<Void> task = new Task<Void>() {
+                @Override
+                protected Void call() throws Exception {
+                    //ask model to send report to Pastebin
+                    model.sendReport(model.getCurrentCharacter());
+
+                    return null;
+                }
+            };
+            Platform.runLater(task);
         }
+
     }
 
     /**
@@ -171,8 +202,15 @@ public class MainPresenter implements ModelObserver, ViewObserver {
         if(name == null || name.isEmpty()){
             throw new IllegalArgumentException();
         }
+        Task<Void> task = new Task<Void>(){
+            @Override
+            protected Void call() throws Exception{
+                model.loadInfoFromCache(name);
+                return null;
+            }
+        };
 
-        model.loadInfoFromCache(name);
+        Platform.runLater(task);
         lastSearched = "";
     }
 
@@ -185,27 +223,35 @@ public class MainPresenter implements ModelObserver, ViewObserver {
      */
     @Override
     public void updateCharacterInfo() {
-        //Retrieve updated data in CharacterInfo
-        CharacterInfo info = model.getCurrentCharacter();
-        if(info == null){
-            view.updateMessage("Search returned no character information with provided name.");
-            return;
-        }
-        String result = "Character Summary \n";
-        result = result.concat("ID: ").concat(String.valueOf(info.getId()));
-        result = result.concat("\nName: ").concat(info.getName());
-        result = result.concat("\nDescription: ").concat(info.getDescription());
-        result = result.concat("\n\nNumber of Comics: ").concat(String.valueOf(info.getNComics()));
-        result = result.concat("\nNumber of Stories: ").concat(String.valueOf(info.getNStories()));
-        result = result.concat("\nNumber of Events: ").concat(String.valueOf(info.getNEvents()));
-        result = result.concat("\nNumber of Series: ").concat(String.valueOf(info.getNSeries()));
-        result = result.concat("\nLast modified: ").concat(info.getModified());
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
 
-        view.updateMessage(result);
+                //Retrieve updated data in CharacterInfo
+                CharacterInfo info = model.getCurrentCharacter();
+                if (info == null) {
+                    view.updateMessage("Search returned no character information with provided name.");
+                    return;
+                }
+                String result = "Character Summary \n";
+                result = result.concat("ID: ").concat(String.valueOf(info.getId()));
+                result = result.concat("\nName: ").concat(info.getName());
+                result = result.concat("\nDescription: ").concat(info.getDescription());
+                result = result.concat("\n\nNumber of Comics: ").concat(String.valueOf(info.getNComics()));
+                result = result.concat("\nNumber of Stories: ").concat(String.valueOf(info.getNStories()));
+                result = result.concat("\nNumber of Events: ").concat(String.valueOf(info.getNEvents()));
+                result = result.concat("\nNumber of Series: ").concat(String.valueOf(info.getNSeries()));
+                result = result.concat("\nLast modified: ").concat(info.getModified());
 
-        //Update view with response
-        view.updateTableViewComics(model.getCurrentCharacter().getComicList()); //show list of comics by default
-        view.updateThumbnail(model.getImagePathByInfo(info));
+
+
+                view.updateMessage(result);
+
+                //Update view with response
+                view.updateTableViewComics(model.getCurrentCharacter().getComicList()); //show list of comics by default
+                view.updateThumbnail(model.getImagePathByInfo(info));
+            }
+        });
 
     }
     /**
@@ -215,11 +261,16 @@ public class MainPresenter implements ModelObserver, ViewObserver {
      */
     @Override
     public void updateReportUrl() {
-        String url = model.getReportUrl();
-        if(url != null){
-            view.updateMessage("Output Report URL: " + model.getReportUrl());
-        } else {
-            view.updateMessage("Failed sending report - check if last search is valid and loaded results.");
-        }
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                String url = model.getReportUrl();
+                if (url != null) {
+                    view.updateMessage("Output Report URL: " + model.getReportUrl());
+                } else {
+                    view.updateMessage("Failed sending report - check if last search is valid and loaded results.");
+                }
+            }
+        });
     }
 }
