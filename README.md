@@ -287,6 +287,8 @@ Tests: testIsInfoInCacheExceptions(), testIsInfoInCacheNotFound(), testIsInfoInC
 
 ### Credit set 2
 
+***CLEAN RED-GREEN-REFACTOR***
+
 Tests: testLoadInfoFromCacheNoCache(), testLoadInfoFromCacheValid(), testLoadInfoFromCacheException() [Mocked InputModel]
 
 Method: loadInfoFromCache() in ModelImpl interaction with isInfoInCache() and loadInfoByNameFromCache() in InputModel
