@@ -6,6 +6,7 @@ import marvel.model.input.MarvelApiHandler;
 import marvel.model.input.ResponseHandler;
 import marvel.model.output.OutputModel;
 import marvel.model.output.PastebinApiHandler;
+import marvel.model.output.ReportService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +52,7 @@ public class ModelImpl implements ModelFacade{
         output.setApiHandler(new PastebinApiHandler(handler.getOutputKey()));
 
         input.setResponseHandler(new ResponseHandler());
+        output.setReportService(new ReportService());
     }
 
     /**
