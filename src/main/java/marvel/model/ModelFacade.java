@@ -77,7 +77,7 @@ public interface ModelFacade {
      *
      * @param name String to search database for matching record
      */
-    public CharacterInfo loadInfoFromCache(String name);
+    public void loadInfoFromCache(String name);
 
     //Observer pattern methods
     /**

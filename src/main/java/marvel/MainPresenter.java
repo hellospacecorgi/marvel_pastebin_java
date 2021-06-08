@@ -144,12 +144,10 @@ public class MainPresenter implements ModelObserver, ViewObserver {
      */
     @Override
     public void onLoadFromCache(String name) {
-        CharacterInfo info = model.loadInfoFromCache(name);
-        if(info != null){
-            updateCharacterInfo();
-        }else {
-            view.updateMessage("Null load");
+        if(name == null || name.isEmpty()){
+            throw new IllegalArgumentException();
         }
+        model.loadInfoFromCache(name);
     }
 
     /**

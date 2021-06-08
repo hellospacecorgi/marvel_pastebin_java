@@ -156,12 +156,17 @@ public class ModelImpl implements ModelFacade{
     }
 
     /**
+     * Ask input model to search for record with name as key from cache,
+     *
+     * <p>if found and CharacterInfo created from record,
+     * set current character reference to it</p>
+     *
+     * <p>After input model completed request, notify observers request complete</p>
      *
      * @param name String to search database for matching record
-     * @return
      */
     @Override
-    public CharacterInfo loadInfoFromCache(String name) {
+    public void loadInfoFromCache(String name) {
         if(name == null || name.isEmpty()){
             throw new IllegalArgumentException();
         }
@@ -169,10 +174,9 @@ public class ModelImpl implements ModelFacade{
             CharacterInfo info = input.getInfoByNameFromCache(name);
             if(info != null){
                 currentCharacter = info;
-                return info;
             }
+            notifyObserversGetInfoComplete();
         }
-        return null;
     }
 
     /**

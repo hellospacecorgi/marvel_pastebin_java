@@ -11,7 +11,7 @@ import java.sql.*;
  */
 public class OnlineMarvelModel implements InputModel{
 
-    private static Connection connection = null;
+    private CacheHandler cache = new CacheHandler();
     private boolean isInfoInCache;
 
     /**
@@ -28,13 +28,7 @@ public class OnlineMarvelModel implements InputModel{
      * Constructor for OnlineMarvelModel
      */
     public OnlineMarvelModel(){
-        try{
-            Class.forName("org.sqlite.JDBC");
-            connection = DriverManager.getConnection("jdbc:sqlite:MarvelCache.sqlite");
 
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -73,7 +67,7 @@ public class OnlineMarvelModel implements InputModel{
         String response = apiHandler.getCharacterInfoByName(name);
         CharacterInfo info = responseHandler.parseResponseBody(response);
         if(info != null){
-            saveToCache(name, response);
+            cache.saveToCache(name, response);
         }
         return info;
     }
@@ -114,7 +108,7 @@ public class OnlineMarvelModel implements InputModel{
     @Override
     public CharacterInfo getInfoByNameFromCache(String name) {
 
-        String response = loadFromCache(name);
+        String response = cache.loadFromCache(name);
         CharacterInfo info = responseHandler.parseResponseBody(response);
 
         return info;
@@ -125,65 +119,7 @@ public class OnlineMarvelModel implements InputModel{
         if(name == null || name.isEmpty()){
             throw new IllegalArgumentException();
         }
-        return searchCache(name);
+        return cache.isInfoInCache(name);
     }
 
-    private boolean searchCache(String name){
-        String query = "SELECT Response from Character where Name = ?;";
-        try{
-            PreparedStatement pr = connection.prepareStatement(query);
-            pr.setString(1, name);
-            ResultSet rs = pr.executeQuery();
-
-            if(rs.next()){
-                System.out.println(name + "is in cache!");
-                return true;
-            }
-            return false;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-
-    private void saveToCache(String name, String response){
-
-        String query = "INSERT INTO Character (Name, Response) \nVALUES(?, ?)";
-
-        try{
-            PreparedStatement pr = connection.prepareStatement(query);
-            System.out.println("saved to cache : " + name);
-            pr.setString(1, name);
-            pr.setString(2, response);
-            pr.execute();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    private String loadFromCache(String name){
-        System.out.println("CacheHandler loadFromCache");
-        String query = "SELECT * from Character where Name = ?;";
-
-        try{
-            PreparedStatement pr = connection.prepareStatement(query);
-            pr.setString(1, name);
-
-            ResultSet rs = pr.executeQuery();
-
-            if(rs.next()){
-                System.out.println("Result set");
-                System.out.println(rs.getString("Response"));
-                return rs.getString("Response");
-            }
-
-            return null;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 }
