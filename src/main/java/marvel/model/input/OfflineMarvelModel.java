@@ -53,7 +53,6 @@ public class OfflineMarvelModel implements InputModel{
         }
         try{
             String dummyResponse = Files.readString(Path.of(dummyResponseFilePath));
-            System.out.println(dummyResponse);
             if(dummyResponse != null){
 
                 return responseHandler.parseResponseBody(dummyResponse);
