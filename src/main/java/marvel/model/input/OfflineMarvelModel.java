@@ -32,6 +32,7 @@ public class OfflineMarvelModel implements InputModel{
 
     /**
      * Simulates a response from successful character name search.
+     * Will always return a dummy character
      *
      * @param name Specified character name to search API with
      * @return CharacterInfo - dummy CharacterInfo object with dummy data

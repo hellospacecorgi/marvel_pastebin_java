@@ -4,6 +4,7 @@ import marvel.model.ConfigHandler;
 import marvel.model.ModelFacade;
 import marvel.model.ModelImpl;
 import marvel.model.ModelObserver;
+import marvel.model.character.CharacterInfo;
 import marvel.model.input.InputModel;
 import marvel.model.input.OfflineMarvelModel;
 import marvel.model.output.OfflinePastebinModel;
@@ -83,5 +84,26 @@ public class UnitTests {
         model = new ModelImpl(input, output, config);
         //WHEN-THEN
         assertEquals("dummy-report-output-url", model.getReportUrl());
+    }
+
+    @Test
+    public void testOfflineMarvelModelGetCharacter(){
+        //GIVEN
+        output = mock(OutputModel.class);
+        input = new OfflineMarvelModel();
+        ConfigHandler config = new ConfigHandler(configFilePath);
+        model = new ModelImpl(input, output, config);
+
+        //WHEN
+        CharacterInfo info = input.getInfoByName("dummy");
+
+        //THEN
+        assertEquals(info.getId(), 123456);
+        assertEquals(info.getName(), "Dummy Hero");
+        assertEquals(info.getNComics(), 1);
+        assertEquals(info.getNSeries(), 3);
+        assertEquals(info.getNStories(), 2);
+        assertEquals(info.getNEvents(), 4);
+        assertEquals(info.getUrls().size(), 3);
     }
 }

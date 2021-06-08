@@ -34,7 +34,7 @@
         },
         "series": {
           "available": 2222,
-          "collectionURI": "invalid",
+          "collectionURI": "invalid-url",
           "items": [
             {
               "resourceURI": "dummpyhttp://dummy-dummy.com/series/1234",
@@ -57,10 +57,12 @@
           "items": [
             {
               "resourceURI": "dummpyhttp://dummy-dummy.com/stories/1",
+              "type": "cover",
               "name": "The first story about dummy"
             },
             {
               "resourceURI": "dummpyhttp://dummy-dummy.com/stories/2",
+              "type": "interior #999",
               "name": "Last story about dummy"
             }
           ],
