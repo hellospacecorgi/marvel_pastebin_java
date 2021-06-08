@@ -21,6 +21,11 @@ public class OfflineMarvelModel implements InputModel{
     @Override
     public void setApiHandler(MarvelApiHandler handler){ }
 
+    @Override
+    public void setResponseHandler(ResponseHandler handler) {
+
+    }
+
     /**
      * Simulates a response from successful character name search.
      *

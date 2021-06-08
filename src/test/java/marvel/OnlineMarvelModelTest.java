@@ -10,7 +10,9 @@ import marvel.model.character.Thumbnail;
 import marvel.model.input.InputModel;
 import marvel.model.input.MarvelApiHandler;
 import marvel.model.input.OnlineMarvelModel;
+import marvel.model.input.ResponseHandler;
 import marvel.model.output.OutputModel;
+import net.bytebuddy.agent.VirtualMachine;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -62,6 +64,15 @@ public class OnlineMarvelModelTest {
     CharacterInfo spiderman;
 
     /**
+     * Dummy string that represents a JSON response from API
+     */
+    String dummyResponseBody = "dummy json response";
+    /**
+     * Dummy string that represents a JSON response from API when request failed
+     */
+    String dummyErrorResponse = "dummy error response";
+
+    /**
      * Tagged by @Before, called before every test.
      *
      *  <p>Used to specify GIVEN behaviour for mocked input model class on valid and invalid search names</p>
@@ -108,11 +119,13 @@ public class OnlineMarvelModelTest {
         //mock marvelApiHandler
         input = new OnlineMarvelModel();
         MarvelApiHandler handler = mock(MarvelApiHandler.class);
+        ResponseHandler responseHandler = mock(ResponseHandler.class);
 
         //GIVEN
         ConfigHandler config = new ConfigHandler(configFilePath);
         model = new ModelImpl(input, output, config);
         model.getInputSubModel().setApiHandler(handler);
+        model.getInputSubModel().setResponseHandler(responseHandler);
 
         //GIVEN
         List<ResourceUrl> urls = new ArrayList<>();
@@ -124,18 +137,16 @@ public class OnlineMarvelModelTest {
         spiderman.setThumbnail(new Thumbnail("fakepath", "jpg"));
 
         //GIVEN
-        when(handler.getCharacterInfoByName("spider-man")).thenReturn(spiderman);
+        when(handler.getCharacterInfoByName("spider-man")).thenReturn(dummyResponseBody);
+        when(responseHandler.parseResponseBody(dummyResponseBody)).thenReturn(spiderman);
 
         //WHEN
         model.getCharacterInfo("spider-man");
 
         //THEN
         verify(handler, times(1)).getCharacterInfoByName("spider-man");
+        verify(responseHandler, times(1)).parseResponseBody(dummyResponseBody);
 
-        /*
-         * Refactored to use model.getCurrentCharacter() after refactoring return value of getCharacterInfo to void
-         * to prepare for observer pattern refactoring
-         */
         assertEquals(spiderman.getName(), model.getCurrentCharacter().getName());
         assertEquals(spiderman.getDescription(), model.getCurrentCharacter().getDescription());
         assertEquals(spiderman.getModified(), model.getCurrentCharacter().getModified());
@@ -156,11 +167,13 @@ public class OnlineMarvelModelTest {
         //mock marvelApiHandler
         input = new OnlineMarvelModel();
         MarvelApiHandler handler = mock(MarvelApiHandler.class);
+        ResponseHandler responseHandler = mock(ResponseHandler.class);
 
         //GIVEN
         ConfigHandler config = new ConfigHandler(configFilePath);
         model = new ModelImpl(input, output, config);
         model.getInputSubModel().setApiHandler(handler);
+        model.getInputSubModel().setResponseHandler(responseHandler);
 
         //GIVEN
         when(handler.getCharacterInfoByName("invalid")).thenReturn(null);
@@ -170,6 +183,7 @@ public class OnlineMarvelModelTest {
 
         //THEN
         verify(handler, times(1)).getCharacterInfoByName("invalid");
+        verify(responseHandler, times(0)).parseResponseBody(anyString());
 
     }
 
@@ -184,11 +198,13 @@ public class OnlineMarvelModelTest {
         //mock marvelApiHandler
         input = new OnlineMarvelModel();
         MarvelApiHandler handler = mock(MarvelApiHandler.class);
+        ResponseHandler responseHandler = mock(ResponseHandler.class);
 
         //GIVEN
         ConfigHandler config = new ConfigHandler(configFilePath);
         model = new ModelImpl(input, output, config);
         model.getInputSubModel().setApiHandler(handler);
+        model.getInputSubModel().setResponseHandler(responseHandler);
 
         //GIVEN
         CharacterInfo spiderman = new CharacterInfo(1234, "spiderman","Can jump around buildings", "1999-99-99");
@@ -196,23 +212,74 @@ public class OnlineMarvelModelTest {
         spiderman.setStoryList(null);
 
         //GIVEN
-        when(handler.getCharacterInfoByName("spider-man")).thenReturn(spiderman);
+        when(handler.getCharacterInfoByName("spider-man")).thenReturn(dummyResponseBody);
 
         //WHEN
         model.getCharacterInfo("spider-man");
 
         //THEN
         verify(handler, times(1)).getCharacterInfoByName("spider-man");
-        /*
-         * Refactored test to use model.getCurrentCharacter()
-         *  after refactoring return value of getCharacterInfo to void
-         * to prepare for observer pattern refactoring
-         */
+
         assertEquals(spiderman.getName(), model.getCurrentCharacter().getName());
         assertEquals(spiderman.getDescription(), model.getCurrentCharacter().getDescription());
         assertEquals(spiderman.getModified(), model.getCurrentCharacter().getModified());
         assertNull(model.getCurrentCharacter().getThumbnail());
         assertNull(model.getCurrentCharacter().getStoryList());
+    }
+
+    /**
+     * Test for getCharacterInfo return value and interaction when no ResponseHandler is set to InputModel
+     */
+    @Test
+    public void testNullResponseHandlerSet(){
+        //mock marvelApiHandler
+        input = new OnlineMarvelModel();
+        MarvelApiHandler handler = mock(MarvelApiHandler.class);
+
+        //GIVEN
+        ConfigHandler config = new ConfigHandler(configFilePath);
+        model = new ModelImpl(input, output, config);
+        model.getInputSubModel().setApiHandler(handler);
+        model.getInputSubModel().setResponseHandler(null);
+
+        //GIVEN
+        when(handler.getCharacterInfoByName("spider-man")).thenReturn(dummyErrorResponse);
+
+        //WHEN
+        model.getCharacterInfo("spider-man");
+
+        //THEN
+        verify(handler, times(0)).getCharacterInfoByName("spider-man");
+        assertNull(model.getCurrentCharacter());
+    }
+
+    /**
+     * Test for return value and interactions from getCharacterInfo() when error from API
+     */
+    @Test
+    public void testGetCharacterInfoErrorResponse(){
+        //mock marvelApiHandler
+        input = new OnlineMarvelModel();
+        MarvelApiHandler handler = mock(MarvelApiHandler.class);
+        ResponseHandler responseHandler = mock(ResponseHandler.class);
+
+        //GIVEN
+        ConfigHandler config = new ConfigHandler(configFilePath);
+        model = new ModelImpl(input, output, config);
+        model.getInputSubModel().setApiHandler(handler);
+        model.getInputSubModel().setResponseHandler(responseHandler);
+
+        //GIVEN
+        when(handler.getCharacterInfoByName("error-string")).thenReturn(dummyErrorResponse);
+        when(responseHandler.parseResponseBody(dummyErrorResponse)).thenReturn(null);
+
+        //WHEN
+        model.getCharacterInfo("error-string");
+
+        //THEN
+        verify(handler, times(1)).getCharacterInfoByName("error-string");
+        verify(responseHandler, times(1)).parseResponseBody(dummyErrorResponse);
+        assertNull(model.getCurrentCharacter());
     }
 
 

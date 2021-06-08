@@ -75,16 +75,15 @@ public class MarvelApiHandler {
         }
         return null;
     }
-
     /**
      * Sends GET request to Marvel API to retrieve live result for searching character information by name String.
      *
      * Uses ResponseHandler to parse JSON response and build CharacterInfo object
      *
      * @param name String of character name to send GET request with
-     * @return CharacterInfo - return CharacterInfo object built from response upon successful search, otherwise return null
+     * @return String - return response body from API, return null if keys are null or empty
      */
-    public CharacterInfo getCharacterInfoByName(String name){
+    public String getCharacterInfoByName(String name){
         if(publicKey == null || privateKey == null){
             return null;
         }
@@ -106,11 +105,10 @@ public class MarvelApiHandler {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             if(response.statusCode() > 400){
                 System.out.println("Error searching for character info\n");
-                ;
-                return responseHandler.parseResponseBody(response.body());
+                return null;
 
             } else if(response.statusCode() == 200){
-                return responseHandler.parseResponseBody(response.body());
+                return null;
             }
         } catch (IOException | InterruptedException e){
             e.printStackTrace();

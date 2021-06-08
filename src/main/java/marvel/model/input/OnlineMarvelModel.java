@@ -28,6 +28,12 @@ public class OnlineMarvelModel implements InputModel{
     public void setApiHandler(MarvelApiHandler handler){
         this.apiHandler = handler;
     }
+
+    @Override
+    public void setResponseHandler(ResponseHandler handler) {
+
+    }
+
     /**
      * Sends and process GET request for retrieving information about character given name.
      *
@@ -38,8 +44,8 @@ public class OnlineMarvelModel implements InputModel{
      */
     @Override
     public CharacterInfo getInfoByName(String name) {
-        CharacterInfo info = apiHandler.getCharacterInfoByName(name);
-        return info;
+        apiHandler.getCharacterInfoByName(name);
+        return null;
     }
 
     /**

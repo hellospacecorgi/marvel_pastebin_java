@@ -12,6 +12,10 @@ import marvel.model.ModelFacade;
  *
  * <p>Listens for notification from ModelFacade as a ModelObserver to perform respective update operations</p>
  *
+ * @see ModelObserver
+ * @see ModelFacade
+ * @see MainView
+ * @see ViewObserver
  * @version 1.0.0
  */
 public class MainPresenter implements ModelObserver, ViewObserver {

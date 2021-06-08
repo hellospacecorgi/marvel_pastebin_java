@@ -16,7 +16,17 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * MainView class observes the main view (Main.fxml)
+ *
+ * <p>Listens for user events on UI and notify ViewObservers upon user events,
+ * update view components via manipulating FXML attributes.</p>
+ *
+ * <p>Used by MainPresenter for updated data presentation</p>
+ *
+ * @see ViewObserver
+ * @version 1.0.0
+ */
 public class MainView {
     /**
      * Takes in user input to generate search enquiry for character information.

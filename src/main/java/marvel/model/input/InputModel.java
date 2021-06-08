@@ -14,9 +14,15 @@ public interface InputModel {
     /**
      * Sets a handler for processing GET requests and responses to the API
      *
-     * @param handler - MarvelApiHandler instance
+     * @param handler MarvelApiHandler instance
      */
     public void setApiHandler(MarvelApiHandler handler);
+
+    /**
+     * Sets a handler for processing JSON responses into model objects and vice versa.
+     * @param handler ResponseHandler instance
+     */
+    public void setResponseHandler(ResponseHandler handler);
 
     /**
      * Sends and process GET request for retrieving information about character given name.
