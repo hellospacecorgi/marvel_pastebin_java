@@ -42,4 +42,9 @@ public interface InputModel {
      * @return String - Full image path created using path and extension from Thumbnail of info if it is not null, return null otherwise.
      */
     public String getThumbnailFullPath(CharacterInfo info);
+
+    /**
+     * Checks if given name matches a cached response in the database
+     */
+    public boolean isInfoInCache(String name);
 }

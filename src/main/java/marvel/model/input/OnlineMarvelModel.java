@@ -88,4 +88,9 @@ public class OnlineMarvelModel implements InputModel{
         path = path.concat(info.getThumbnail().getExtension());
         return path;
     }
+
+    @Override
+    public boolean isInfoInCache(String name) {
+        return false;
+    }
 }

@@ -128,6 +128,17 @@ public class MainPresenter implements ModelObserver, ViewObserver {
             model.sendReport(model.getCurrentCharacter());
         }
     }
+
+    /**
+     * Called when the load from cache button is clicked
+     *
+     * <p>Ask model to load data corresponding to given name from cache</p>
+     */
+    @Override
+    public void onLoadFromCache(String name) {
+
+    }
+
     /**
      * Performs action upon knowing CharacterInfo is built in model
      *

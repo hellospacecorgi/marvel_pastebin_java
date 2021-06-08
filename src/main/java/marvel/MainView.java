@@ -67,7 +67,7 @@ public class MainView {
     /**
      * Called when Search Character button is clicked.
      *
-     * <p>Notify observers the event happened</p>
+     * <p>Notify all observers event happened</p>
      *
      * <p>Expects text field to have non empty string value input.</p>
      */
@@ -127,7 +127,7 @@ public class MainView {
     /**
      * Called when the Send Report button is clicked.
      *
-     * <p>Ask model to generate report based on character data, send report to Pastebin to create new paste</p>
+     * <p>Notify all observers event happened</p>
      */
     @FXML
     public void onSendReport(){
@@ -135,6 +135,18 @@ public class MainView {
         for(int i = 0 ; i < observers.size() ; i++){
             observers.get(i).onSendReport();
         }
+    }
+
+    /**
+     * Called when the Load from cache button is clicked
+     *
+     * <p>Notify all observers event happened</p>
+     *
+     * <p>Expects text field to be non empty when button clicked</p>
+     */
+    @FXML
+    public void onLoadFromCache(){
+
     }
 
     public void updateMessage(String result) {

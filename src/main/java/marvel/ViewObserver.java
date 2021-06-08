@@ -35,4 +35,8 @@ public interface ViewObserver {
      * Performs operation knowing the Send Report button was clicked
      */
     public void onSendReport();
+    /**
+     * Performs operation knwoing the Load from cache button was clicked
+     */
+    public void onLoadFromCache(String name);
 }

@@ -76,4 +76,9 @@ public class OfflineMarvelModel implements InputModel{
         return null;
     }
 
+    @Override
+    public boolean isInfoInCache(String name) {
+        return false;
+    }
+
 }
