@@ -391,4 +391,62 @@ public class ModelImplTest {
             model.isInfoInCache("");
         });
     }
+
+    /**
+     * Testing good path for ModelImpl's loadInfoFromCache()
+     */
+    @Test
+    public void testLoadInfoFromCacheValid(){
+        //GIVEN
+        when(input.getInfoByNameFromCache("spiderman")).thenReturn(spiderman);
+        when(input.isInfoInCache("spiderman")).thenReturn(true);
+
+        //WHEN
+        model.isInfoInCache("spiderman");
+        //THEN
+        verify(input, times(1)).isInfoInCache("spiderman");
+
+        //WHEN
+        model.loadInfoFromCache("spiderman");
+        //THEN
+        verify(input, times(1)).getInfoByNameFromCache("spiderman");
+
+    }
+    /**
+     * Testing no cached data path for ModelImpl's loadInfoFromCache()
+     */
+    @Test
+    public void testLoadInfoFromCacheNoCache(){
+        //GIVEN
+        when(input.getInfoByNameFromCache("spiderman")).thenReturn(spiderman);
+        when(input.isInfoInCache("spiderman")).thenReturn(false);
+
+        //WHEN
+        boolean status = model.isInfoInCache("spiderman");
+        //THEN
+        verify(input, times(1)).isInfoInCache("spiderman");
+        assertFalse(status);
+
+        //WHEN
+        model.loadInfoFromCache("spiderman");
+        //THEN
+        verify(input, times(0)).getInfoByNameFromCache("spiderman");
+
+    }
+
+    /**
+     * Testing exceptions path for ModelImpl's loadInfoFromCache()
+     */
+    @Test
+    public void testLoadInfoFromCacheException(){
+        //WHEN-THEN
+        assertThrows(IllegalArgumentException.class, ()->{
+            model.loadInfoFromCache("");
+        });
+
+        //WHEN-THEN
+        assertThrows(IllegalArgumentException.class, ()->{
+            model.loadInfoFromCache(null);
+        });
+    }
 }

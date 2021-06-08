@@ -305,5 +305,4 @@ public class OnlineMarvelModelTest {
         assertNull(model.getCurrentCharacter());
     }
 
-
 }
