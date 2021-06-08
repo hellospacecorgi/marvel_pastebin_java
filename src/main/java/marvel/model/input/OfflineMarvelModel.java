@@ -68,7 +68,7 @@ public class OfflineMarvelModel implements InputModel{
      */
     @Override
     public void setCacheHandler(CacheHandler handler) {
-
+        this.cacheHandler = handler;
     }
 
     /**
