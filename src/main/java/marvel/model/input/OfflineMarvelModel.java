@@ -21,7 +21,7 @@ import java.util.List;
  * @see InputModel
  */
 public class OfflineMarvelModel implements InputModel{
-    private CacheHandler cache = new CacheHandler();
+    private CacheHandler cacheHandler;
     private String dummyResponseFilePath = "./src/main/resources/marvel/DummyApiResponse.json";
     private ResponseHandler responseHandler;
 
@@ -68,7 +68,7 @@ public class OfflineMarvelModel implements InputModel{
             String dummyResponse = Files.readString(Path.of(dummyResponseFilePath));
             if(dummyResponse != null){
                 CharacterInfo info = responseHandler.parseResponseBody(dummyResponse);
-                cache.saveToCache(name, dummyResponse);
+                cacheHandler.saveToCache(name, dummyResponse);
                 return info;
             }
         }catch(IOException e){
@@ -85,7 +85,7 @@ public class OfflineMarvelModel implements InputModel{
      */
     @Override
     public CharacterInfo getInfoByNameFromCache(String name) {
-        String response = cache.loadFromCache(name);
+        String response = cacheHandler.loadFromCache(name);
 
         if(response != null){
             CharacterInfo info = responseHandler.parseResponseBody(response);
@@ -131,7 +131,7 @@ public class OfflineMarvelModel implements InputModel{
         if(name == null || name.isEmpty()){
             throw new IllegalArgumentException();
         }
-        return cache.isInfoInCache(name);
+        return cacheHandler.isInfoInCache(name);
     }
 
 }

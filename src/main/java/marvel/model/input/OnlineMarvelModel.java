@@ -11,8 +11,7 @@ import java.sql.*;
  */
 public class OnlineMarvelModel implements InputModel{
 
-    private CacheHandler cache = new CacheHandler();
-    private boolean isInfoInCache;
+    private CacheHandler cacheHandler;
 
     /**
      *  Handler that handles requests to web API
@@ -53,7 +52,7 @@ public class OnlineMarvelModel implements InputModel{
 
     @Override
     public void setCacheHandler(CacheHandler handler) {
-
+        this.cacheHandler = handler;
     }
 
     /**
@@ -66,14 +65,14 @@ public class OnlineMarvelModel implements InputModel{
      */
     @Override
     public CharacterInfo getInfoByName(String name) {
-        if(name == null || responseHandler == null || apiHandler == null){
-            return null;
+        if(name == null || responseHandler == null || apiHandler == null || cacheHandler == null){
+            throw new IllegalStateException();
         }
         String response = apiHandler.getCharacterInfoByName(name);
         if(response != null){
             CharacterInfo info = responseHandler.parseResponseBody(response);
             if(info != null){
-                cache.saveToCache(name, response);
+                cacheHandler.saveToCache(name, response);
             }
             return info;
         }
@@ -119,7 +118,7 @@ public class OnlineMarvelModel implements InputModel{
     @Override
     public CharacterInfo getInfoByNameFromCache(String name) {
 
-        String response = cache.loadFromCache(name);
+        String response = cacheHandler.loadFromCache(name);
 
         CharacterInfo info = responseHandler.parseResponseBody(response);
 
@@ -131,7 +130,7 @@ public class OnlineMarvelModel implements InputModel{
         if(name == null || name.isEmpty()){
             throw new IllegalArgumentException();
         }
-        return cache.isInfoInCache(name);
+        return cacheHandler.isInfoInCache(name);
     }
 
 }

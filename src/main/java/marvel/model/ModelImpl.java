@@ -1,6 +1,7 @@
 package marvel.model;
 
 import marvel.model.character.CharacterInfo;
+import marvel.model.input.CacheHandler;
 import marvel.model.input.InputModel;
 import marvel.model.input.MarvelApiHandler;
 import marvel.model.input.ResponseHandler;
@@ -52,7 +53,9 @@ public class ModelImpl implements ModelFacade{
         output.setApiHandler(new PastebinApiHandler(handler.getOutputKey()));
 
         input.setResponseHandler(new ResponseHandler());
+        input.setCacheHandler(new CacheHandler());
         output.setReportService(new ReportService());
+
     }
 
     /**
