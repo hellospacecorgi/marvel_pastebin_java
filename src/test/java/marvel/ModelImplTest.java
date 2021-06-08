@@ -390,10 +390,5 @@ public class ModelImplTest {
         assertThrows(IllegalArgumentException.class, ()->{
             model.isInfoInCache("");
         });
-
-
     }
-
-
-
 }

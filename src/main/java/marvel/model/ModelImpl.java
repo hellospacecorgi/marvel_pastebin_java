@@ -149,7 +149,10 @@ public class ModelImpl implements ModelFacade{
      */
     @Override
     public boolean isInfoInCache(String name) {
-        return false;
+        if(name == null || name.isEmpty()){
+            throw new IllegalArgumentException();
+        }
+        return input.isInfoInCache(name);
     }
 
     /**
