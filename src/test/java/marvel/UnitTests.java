@@ -5,8 +5,10 @@ import marvel.model.ModelFacade;
 import marvel.model.ModelImpl;
 import marvel.model.ModelObserver;
 import marvel.model.character.CharacterInfo;
+import marvel.model.character.Thumbnail;
 import marvel.model.input.InputModel;
 import marvel.model.input.OfflineMarvelModel;
+import marvel.model.input.OnlineMarvelModel;
 import marvel.model.output.OfflinePastebinModel;
 import marvel.model.output.OutputModel;
 import org.junit.Test;
@@ -75,6 +77,9 @@ public class UnitTests {
         assertNull(path);
     }
 
+    /**
+     * Testing for dummy URL retrieved from offline pastebin model.
+     */
     @Test
     public void testOfflinePastebinGetReportUrl(){
         //GIVEN
@@ -86,6 +91,9 @@ public class UnitTests {
         assertEquals("dummy-report-output-url", model.getReportUrl());
     }
 
+    /**
+     * Testing for dummy data retrieved from offline marvel model
+     */
     @Test
     public void testOfflineMarvelModelGetCharacter(){
         //GIVEN
@@ -105,5 +113,26 @@ public class UnitTests {
         assertEquals(info.getNStories(), 2);
         assertEquals(info.getNEvents(), 4);
         assertEquals(info.getUrls().size(), 3);
+    }
+
+    /**
+     * Testing for path construction in OnlineMarveModel's getThumbnailFullPath()
+     */
+    @Test
+    public void testOnlineGetThumbnailPath(){
+        input = new OnlineMarvelModel();
+        output = mock(OutputModel.class);
+
+        //GIVEN
+        CharacterInfo info = new CharacterInfo(3, "dummy","description","2222");
+        info.setThumbnail(new Thumbnail("dummy", "jpg"));
+        String expected = "dummy/standard_large.jpg";
+
+        //WHEN
+        String path = input.getThumbnailFullPath(info);
+
+        //THEN
+        assertEquals(expected, path);
+
     }
 }

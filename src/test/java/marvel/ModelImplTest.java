@@ -177,6 +177,43 @@ public class ModelImplTest {
 
     }
 
+    /**
+     * Testing that input model's getThumbnailFullPath() won't be called if CharacterInfo passed in is null
+     */
+    @Test
+    public void testGetImagePathNullInfo(){
+        //GIVEN
+        when(input.getThumbnailFullPath(spiderman)).thenReturn("failed");
+
+        //WHEN
+        String path = model.getImagePathByInfo(null);
+
+        //THEN
+        verify(input, times(0)).getThumbnailFullPath(spiderman);
+        assertNull(path);
+    }
+
+    /**
+     * Test getCharacterInfo on empty or null name passed in
+     */
+    @Test
+    public void testGetCharacterInfoExceptions(){
+        //GIVEN
+        when(input.getInfoByName(anyString())).thenReturn(spiderman);
+
+        //WHEN
+        assertThrows(NullPointerException.class, () ->{
+            model.getCharacterInfo(null);
+        });
+        assertThrows(IllegalArgumentException.class, () -> {
+            model.getCharacterInfo("");
+        });
+
+        //THEN
+        verify(input, times(0)).getInfoByName(anyString());
+        assertNull(model.getCurrentCharacter());
+    }
+
 
 
     /**
