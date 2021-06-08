@@ -18,6 +18,13 @@ public interface OutputModel {
     public void setApiHandler(PastebinApiHandler handler);
 
     /**
+     * Sets a helper class to generate the report string for sending to pastebin
+     *
+     * @param service ReportService instance that creates report from CharacterInfo object
+     */
+    public void setReportService(ReportService service);
+
+    /**
      * Generate a report based on given CharacterInfo, sends report to output API
      *
      * @param info CharacterInfo object containing data to generate report on

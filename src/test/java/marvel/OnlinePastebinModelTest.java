@@ -11,6 +11,7 @@ import marvel.model.input.InputModel;
 import marvel.model.output.OnlinePastebinModel;
 import marvel.model.output.OutputModel;
 import marvel.model.output.PastebinApiHandler;
+import marvel.model.output.ReportService;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThrows;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
@@ -168,6 +170,75 @@ public class OnlinePastebinModelTest {
         //THEN
         verify(handler, times(1)).getOutputUrl();
         assertNull(url);
+    }
+
+    /**
+     * Testing model interaction with service when null handler set
+     */
+    @Test
+    public void testReportServiceGenerateReportNullHandler(){
+        //GIVEN
+        ConfigHandler handler = new ConfigHandler(configFilePath);
+        output = new OnlinePastebinModel();
+        model = new ModelImpl(input, output, handler);
+        ReportService service = mock(ReportService.class);
+        PastebinApiHandler pastebinHandler = mock(PastebinApiHandler.class);
+        model.getOutputSubModel().setApiHandler(null);
+        model.getOutputSubModel().setReportService(service);
+
+        //WHEN-THEN
+        //no api handler set - exception
+        assertThrows(IllegalStateException.class, ()->{
+            model.sendReport(spiderman);
+        });
+    }
+
+    /**
+     * Testing model interaction with service when null service passed in
+     */
+    @Test
+    public void testReportServiceGenerateReportNullService(){
+        //GIVEN
+        ConfigHandler handler = new ConfigHandler(configFilePath);
+        output = new OnlinePastebinModel();
+        model = new ModelImpl(input, output, handler);
+        ReportService service = mock(ReportService.class);
+        when(service.generateReport(null)).thenReturn(null);
+        when(service.generateReport(spiderman)).thenReturn("report");
+
+        PastebinApiHandler pastebinHandler = mock(PastebinApiHandler.class);
+        model.getOutputSubModel().setApiHandler(pastebinHandler);
+        model.getOutputSubModel().setReportService(null);
+
+        //WHEN-THEN
+        //no report service set - exception
+        assertThrows(IllegalStateException.class, ()->{
+            model.sendReport(spiderman);
+        });
+    }
+
+    /**
+     * Testing model uses report service to prepare report for sending
+     */
+    @Test
+    public void testReportServiceGenerateReportValid(){
+        //GIVEN
+        ConfigHandler handler = new ConfigHandler(configFilePath);
+        output = new OnlinePastebinModel();
+        model = new ModelImpl(input, output, handler);
+        ReportService service = mock(ReportService.class);
+        model.getOutputSubModel().setReportService(service);
+        PastebinApiHandler pastebinHandler = mock(PastebinApiHandler.class);
+        model.getOutputSubModel().setApiHandler(pastebinHandler);
+        when(service.generateReport(null)).thenReturn(null);
+        when(service.generateReport(spiderman)).thenReturn("report");
+
+        //WHEN
+        model.sendReport(spiderman);
+
+        //THEN
+        verify(pastebinHandler, times(1)).sendReport(anyString(), anyString());
+        verify(service, times(1)).generateReport(spiderman);
     }
 
 }

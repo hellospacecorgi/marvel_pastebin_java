@@ -17,6 +17,11 @@ public class OfflinePastebinModel implements OutputModel{
     @Override
     public void setApiHandler(PastebinApiHandler handler) { }
 
+    @Override
+    public void setReportService(ReportService service) {
+
+    }
+
     /**
      * Simulate send report request is processed by returning boolean value.
      *

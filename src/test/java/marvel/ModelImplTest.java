@@ -7,6 +7,7 @@ import marvel.model.character.Thumbnail;
 import marvel.model.input.InputModel;
 import marvel.model.output.OfflinePastebinModel;
 import marvel.model.output.OutputModel;
+import marvel.model.output.ReportService;
 import org.junit.Before;
 import org.junit.Test;
 

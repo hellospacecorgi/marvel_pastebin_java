@@ -23,6 +23,11 @@ public class OnlinePastebinModel implements OutputModel{
         this.handler = handler;
     }
 
+    @Override
+    public void setReportService(ReportService service) {
+
+    }
+
     /**
      * Generate a report based on given CharacterInfo, sends report to pastebin
      *
