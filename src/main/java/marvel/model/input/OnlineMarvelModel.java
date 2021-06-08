@@ -51,6 +51,11 @@ public class OnlineMarvelModel implements InputModel{
         this.responseHandler = handler;
     }
 
+    @Override
+    public void setCacheHandler(CacheHandler handler) {
+
+    }
+
     /**
      * Sends and process GET request for retrieving information about character given name.
      *

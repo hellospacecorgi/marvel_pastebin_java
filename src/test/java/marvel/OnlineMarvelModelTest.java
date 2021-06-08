@@ -7,10 +7,7 @@ import marvel.model.ModelObserver;
 import marvel.model.character.CharacterInfo;
 import marvel.model.character.ResourceUrl;
 import marvel.model.character.Thumbnail;
-import marvel.model.input.InputModel;
-import marvel.model.input.MarvelApiHandler;
-import marvel.model.input.OnlineMarvelModel;
-import marvel.model.input.ResponseHandler;
+import marvel.model.input.*;
 import marvel.model.output.OutputModel;
 import net.bytebuddy.agent.VirtualMachine;
 import org.junit.Before;
@@ -19,8 +16,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
 
@@ -120,12 +116,14 @@ public class OnlineMarvelModelTest {
         input = new OnlineMarvelModel();
         MarvelApiHandler handler = mock(MarvelApiHandler.class);
         ResponseHandler responseHandler = mock(ResponseHandler.class);
+        CacheHandler chandler = mock(CacheHandler.class);
 
         //GIVEN
         ConfigHandler config = new ConfigHandler(configFilePath);
         model = new ModelImpl(input, output, config);
         model.getInputSubModel().setApiHandler(handler);
         model.getInputSubModel().setResponseHandler(responseHandler);
+        model.getInputSubModel().setCacheHandler(chandler);
 
         //GIVEN
         List<ResourceUrl> urls = new ArrayList<>();
@@ -146,6 +144,7 @@ public class OnlineMarvelModelTest {
         //THEN
         verify(handler, times(1)).getCharacterInfoByName("spider-man");
         verify(responseHandler, times(1)).parseResponseBody(dummyResponseBody);
+        verify(chandler, times(1)).saveToCache(anyString(), anyString());
 
         assertEquals(spiderman.getName(), model.getCurrentCharacter().getName());
         assertEquals(spiderman.getDescription(), model.getCurrentCharacter().getDescription());
@@ -168,12 +167,14 @@ public class OnlineMarvelModelTest {
         input = new OnlineMarvelModel();
         MarvelApiHandler handler = mock(MarvelApiHandler.class);
         ResponseHandler responseHandler = mock(ResponseHandler.class);
+        CacheHandler chandler = mock(CacheHandler.class);
 
         //GIVEN
         ConfigHandler config = new ConfigHandler(configFilePath);
         model = new ModelImpl(input, output, config);
         model.getInputSubModel().setApiHandler(handler);
         model.getInputSubModel().setResponseHandler(responseHandler);
+        model.getInputSubModel().setCacheHandler(chandler);
 
         //GIVEN
         when(handler.getCharacterInfoByName("invalid")).thenReturn(null);
@@ -184,6 +185,7 @@ public class OnlineMarvelModelTest {
         //THEN
         verify(handler, times(1)).getCharacterInfoByName("invalid");
         verify(responseHandler, times(0)).parseResponseBody(anyString());
+        verify(chandler, times(0)).saveToCache(anyString(), anyString());
 
     }
 
@@ -191,7 +193,7 @@ public class OnlineMarvelModelTest {
     /**
      * Testing expected CharacterInfo returned from input model after search.
      *
-     * <p>MarvelApiHandler is mocked using Mockito.</p>
+     * <p>Handlers are mocked using Mockito.</p>
      */
     @Test
     public void testInputModelGetInfoNullList(){
@@ -199,12 +201,14 @@ public class OnlineMarvelModelTest {
         input = new OnlineMarvelModel();
         MarvelApiHandler handler = mock(MarvelApiHandler.class);
         ResponseHandler responseHandler = mock(ResponseHandler.class);
+        CacheHandler chandler = mock(CacheHandler.class);
 
         //GIVEN
         ConfigHandler config = new ConfigHandler(configFilePath);
         model = new ModelImpl(input, output, config);
         model.getInputSubModel().setApiHandler(handler);
         model.getInputSubModel().setResponseHandler(responseHandler);
+        model.getInputSubModel().setCacheHandler(chandler);
 
         //GIVEN
         CharacterInfo spiderman = new CharacterInfo(1234, "spiderman","Can jump around buildings", "1999-99-99");
@@ -235,21 +239,23 @@ public class OnlineMarvelModelTest {
         //mock marvelApiHandler
         input = new OnlineMarvelModel();
         MarvelApiHandler handler = mock(MarvelApiHandler.class);
+        CacheHandler chandler = mock(CacheHandler.class);
 
         //GIVEN
         ConfigHandler config = new ConfigHandler(configFilePath);
         model = new ModelImpl(input, output, config);
         model.getInputSubModel().setApiHandler(handler);
+        model.getInputSubModel().setCacheHandler(chandler);
         model.getInputSubModel().setResponseHandler(null);
 
-        //GIVEN
-        when(handler.getCharacterInfoByName("spider-man")).thenReturn(dummyErrorResponse);
-
         //WHEN
-        model.getCharacterInfo("spider-man");
+        assertThrows(IllegalStateException.class, ()->{
+            model.getCharacterInfo("dummy");
+        });
 
         //THEN
         verify(handler, times(0)).getCharacterInfoByName("spider-man");
+        verify(chandler, times(0)).saveToCache(anyString(), anyString());
         assertNull(model.getCurrentCharacter());
     }
 
@@ -261,18 +267,48 @@ public class OnlineMarvelModelTest {
         //mock marvelApiHandler
         input = new OnlineMarvelModel();
         ResponseHandler handler = mock(ResponseHandler.class);
+        CacheHandler chandler = mock(CacheHandler.class);
 
         //GIVEN
         ConfigHandler config = new ConfigHandler(configFilePath);
         model = new ModelImpl(input, output, config);
         model.getInputSubModel().setApiHandler(null);
         model.getInputSubModel().setResponseHandler(handler);
+        model.getInputSubModel().setCacheHandler(chandler);
 
         //WHEN
-        model.getCharacterInfo("spider-man");
+        assertThrows(IllegalStateException.class, ()->{
+            model.getCharacterInfo("dummy");
+        });
 
         //THEN
         verify(handler, times(0)).parseResponseBody(anyString());
+        verify(chandler, times(0)).saveToCache(anyString(), anyString());
+        assertNull(model.getCurrentCharacter());
+    }
+
+    @Test
+    public void testNullCacheHandlerSet(){
+        //mock marvelApiHandler
+        input = new OnlineMarvelModel();
+        MarvelApiHandler apiHandler = mock(MarvelApiHandler.class);
+        ResponseHandler handler = mock(ResponseHandler.class);
+
+        //GIVEN
+        ConfigHandler config = new ConfigHandler(configFilePath);
+        model = new ModelImpl(input, output, config);
+        model.getInputSubModel().setApiHandler(apiHandler);
+        model.getInputSubModel().setResponseHandler(handler);
+        model.getInputSubModel().setCacheHandler(null);
+
+        //WHEN
+        assertThrows(IllegalStateException.class, ()->{
+            model.getCharacterInfo("dummy");
+        });
+
+        //THEN
+        verify(handler, times(0)).parseResponseBody(anyString());
+        verify(apiHandler, times(0)).getCharacterInfoByName(anyString());
         assertNull(model.getCurrentCharacter());
     }
 
@@ -285,12 +321,14 @@ public class OnlineMarvelModelTest {
         input = new OnlineMarvelModel();
         MarvelApiHandler handler = mock(MarvelApiHandler.class);
         ResponseHandler responseHandler = mock(ResponseHandler.class);
+        CacheHandler chandler = mock(CacheHandler.class);
 
         //GIVEN
         ConfigHandler config = new ConfigHandler(configFilePath);
         model = new ModelImpl(input, output, config);
         model.getInputSubModel().setApiHandler(handler);
         model.getInputSubModel().setResponseHandler(responseHandler);
+        model.getInputSubModel().setCacheHandler(chandler);
 
         //GIVEN
         when(handler.getCharacterInfoByName("error-string")).thenReturn(dummyErrorResponse);
@@ -302,6 +340,7 @@ public class OnlineMarvelModelTest {
         //THEN
         verify(handler, times(1)).getCharacterInfoByName("error-string");
         verify(responseHandler, times(1)).parseResponseBody(dummyErrorResponse);
+        verify(chandler, times(0)).saveToCache(anyString(), anyString());
         assertNull(model.getCurrentCharacter());
     }
 

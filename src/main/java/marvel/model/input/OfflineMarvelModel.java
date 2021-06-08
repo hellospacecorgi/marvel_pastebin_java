@@ -47,6 +47,11 @@ public class OfflineMarvelModel implements InputModel{
         this.responseHandler = handler;
     }
 
+    @Override
+    public void setCacheHandler(CacheHandler handler) {
+
+    }
+
     /**
      * Simulates a response from successful character name search.
      * Will always return a dummy character

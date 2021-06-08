@@ -25,6 +25,12 @@ public interface InputModel {
     public void setResponseHandler(ResponseHandler handler);
 
     /**
+     * Sets a handler for processing SQL queries to the database for cached responses
+     * @param handler CacheHandler instance
+     */
+    public void setCacheHandler(CacheHandler handler);
+
+    /**
      * Sends and process GET request for retrieving information about character given name.
      *
      * @param name Specified character name to search API with
