@@ -161,7 +161,13 @@ public class ModelImpl implements ModelFacade{
      * @return
      */
     @Override
-    public Character loadInfoFromCache(String name) {
+    public CharacterInfo loadInfoFromCache(String name) {
+        if(name == null || name.isEmpty()){
+            throw new IllegalArgumentException();
+        }
+        if(input.isInfoInCache(name)){
+            return input.getInfoByNameFromCache(name);
+        }
         return null;
     }
 
