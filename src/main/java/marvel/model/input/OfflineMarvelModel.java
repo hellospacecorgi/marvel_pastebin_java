@@ -15,15 +15,19 @@ import java.util.List;
  */
 public class OfflineMarvelModel implements InputModel{
     /**
+     * Set a API handler to this model.
      * Inherited from InputModel interface - no usage in offline model.
      * @param handler MarvelApiHandler that handles live API requests - ignored
      */
     @Override
     public void setApiHandler(MarvelApiHandler handler){ }
 
+    /**
+     * Set a response handler to this model.
+     * @param handler handler to process JSON responses to CharacterInfo objects
+     */
     @Override
     public void setResponseHandler(ResponseHandler handler) {
-
     }
 
     /**

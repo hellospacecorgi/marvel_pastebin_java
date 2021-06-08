@@ -91,9 +91,11 @@ public class App extends Application {
     /**
      *  Starts the JavaFX application.
      *
-     *  <p>Initialise model with sub models based on command line arguments given and path to keys configuration file.</p>
+     *  <p>Initialise a model with sub models based on command line arguments given and path to keys configuration file.</p>
      *
-     *  <p>Sets the scene to Main view with MainPresenter as its JavaFX controller class</p>
+     *  <p>Initialise a presenter with model and view objects</p>
+     *
+     *  <p>Sets scene from Main.fxml and sets view as its JavaFX Controller class</p>
      *
      *  <p>Sets the scene to stage</p>
      *

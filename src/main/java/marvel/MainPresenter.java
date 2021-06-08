@@ -5,18 +5,18 @@ import marvel.model.character.*;
 import marvel.model.ModelFacade;
 
 /**
- * MainPresenter class observes the main view (Main.fxml)
+ * MainPresenter class observes the ModelFacade and MainView object that is passed in through the constructor.
  *
- * <p>Triggers ModelFacade operations upon user events,
- * and ask corresponding view components to update accordingly via manipulating FXML attributes.</p>
+ * <p>Calls operations upon notification from MainView on user events,
+ * retrieves data from the model and ask the view to update accordingly.</p>
  *
- * <p>Listens for notification from ModelFacade as a ModelObserver to perform respective update operations</p>
+ * <p>Listens for user events from the MainView. Listens for requests completion from the ModelFacade</p>
  *
  * @see ModelObserver
  * @see ModelFacade
  * @see MainView
  * @see ViewObserver
- * @version 1.0.0
+ * @version 1.2.0
  */
 public class MainPresenter implements ModelObserver, ViewObserver {
 
@@ -24,6 +24,10 @@ public class MainPresenter implements ModelObserver, ViewObserver {
      * Reference to model for interaction with the input and output APIs
      */
     ModelFacade model;
+
+    /**
+     * Reference to view for updates on data requests.
+     */
     MainView view;
 
     /**
@@ -45,7 +49,6 @@ public class MainPresenter implements ModelObserver, ViewObserver {
      * Called when Search Character button is clicked.
      *
      * <p>Asks model to process searching for character information given String name</p>
-     *
      */
     @Override
     public void onSearch(String name){
@@ -56,7 +59,7 @@ public class MainPresenter implements ModelObserver, ViewObserver {
     /**
      * Called when the Comic button above the table is clicked.
      *
-     * <p>Calls it's own MainView's updateCenterComics() to populate the table.</p>
+     * <p>Calls view's updateCenterComics() to populate the table.</p>
      */
     public void onComics(){
         if(model.getCurrentCharacter() != null){
@@ -68,7 +71,7 @@ public class MainPresenter implements ModelObserver, ViewObserver {
     /**
      * Called when the Url button above the table is clicked.
      *
-     * <p>Displays list of URLs for public websites tha has character information</p>
+     * <p>Ask view to display list of URLs for public websites tha has character information</p>
      */
     public void onUrl(){
         if(model.getCurrentCharacter() != null){
@@ -79,7 +82,7 @@ public class MainPresenter implements ModelObserver, ViewObserver {
     /**
      * Called when the Stories button above the table is clicked.
      *
-     * <p>Displays list of Stories that the character appears</p>
+     * <p>Ask view to display list of Stories that the character appears</p>
      */
     public void onStories(){
         if(model.getCurrentCharacter() != null){
@@ -89,7 +92,7 @@ public class MainPresenter implements ModelObserver, ViewObserver {
     /**
      * Called when the Events button above the table is clicked.
      *
-     * <p>Displays list of events that the character appears</p>
+     * <p>Ask view to display list of events that the character appears</p>
      */
     public void onEvents(){
         if(model.getCurrentCharacter() != null){
@@ -99,7 +102,7 @@ public class MainPresenter implements ModelObserver, ViewObserver {
     /**
      * Called when the Series button above the table is clicked.
      *
-     * <p>Displays list of series that the character appears</p>
+     * <p>Ask view to display list of series that the character appears</p>
      */
     public void onSeries(){
         if(model.getCurrentCharacter() != null){
@@ -128,7 +131,7 @@ public class MainPresenter implements ModelObserver, ViewObserver {
     /**
      * Performs action upon knowing CharacterInfo is built in model
      *
-     * <p>Display character summary on lower left text area,
+     * <p>Ask view to display character summary on lower left text area,
      * display list of comics in table by default (calling updateCenterComic() )
      * display thumbnail image of character in top right ImageView</p>
      */
@@ -160,7 +163,7 @@ public class MainPresenter implements ModelObserver, ViewObserver {
     /**
      * Performs action upon knowing paste report URL is obtained in model
      *
-     * <p>Display paste report URL in lower left text area</p>
+     * <p>Ask view to display paste report URL in lower left text area</p>
      */
     @Override
     public void updateReportUrl() {
