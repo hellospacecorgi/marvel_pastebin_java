@@ -22,7 +22,7 @@
         },
         "resourceURI": "dummy.com",
         "comics": {
-          "available": 1111,
+          "available": 1,
           "collectionURI": "invalid",
           "items": [
             {
@@ -33,7 +33,7 @@
           "returned": 1
         },
         "series": {
-          "available": 2222,
+          "available": 3,
           "collectionURI": "invalid-url",
           "items": [
             {
@@ -52,7 +52,7 @@
           "returned": 3
         },
         "stories": {
-          "available": 2571,
+          "available": 2,
           "collectionURI": "invalid",
           "items": [
             {
@@ -69,7 +69,7 @@
           "returned": 2
         },
         "events": {
-          "available": 26,
+          "available": 4,
           "collectionURI": "invalid",
           "items": [
             {

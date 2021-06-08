@@ -66,7 +66,7 @@ public class App extends Application {
     public static void main(String[] args) {
 
         if(args.length < 1){
-            System.out.println("Give --args=\"offline\" to switch to offline mode.\nRunning online mode by default.");
+            System.out.println("Give --args=\"offline offline\" to switch to offline mode.\nRunning online mode by default.");
         } else {
             if(args[0].equals("offline")) {
                 offlineInput = true;

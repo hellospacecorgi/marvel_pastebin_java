@@ -1,10 +1,14 @@
 package marvel.model.input;
 
-import javafx.scene.image.Image;
 import marvel.model.character.*;
+import org.json.JSONException;
+import org.json.JSONTokener;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +18,7 @@ import java.util.List;
  * @see InputModel
  */
 public class OfflineMarvelModel implements InputModel{
+    String dummyResponsePath = "./src/main/resources/marvel/DummyApiResponse.json";
     /**
      * Set a API handler to this model.
      * Inherited from InputModel interface - no usage in offline model.
@@ -27,7 +32,8 @@ public class OfflineMarvelModel implements InputModel{
      * @param handler handler to process JSON responses to CharacterInfo objects
      */
     @Override
-    public void setResponseHandler(ResponseHandler handler) {
+    public void setResponseHandler(ResponseHandler handler){
+
     }
 
     /**
@@ -39,39 +45,76 @@ public class OfflineMarvelModel implements InputModel{
      */
     @Override
     public CharacterInfo getInfoByName(String name) {
-        List<ResourceUrl> urls = new ArrayList<>();
-        urls.add(new ResourceUrl("wiki", "dummy-url.com"));
-        urls.add(new ResourceUrl("blog", "another-dummy.com"));
+        JSONParser parser = new JSONParser();
+        CharacterInfo dummy;
+        try {
+            Object object = parser.parse(new FileReader(dummyResponsePath));
+            JSONObject response = (JSONObject) object;
+            JSONObject data = (JSONObject) response.get("data");
+            JSONArray results = (JSONArray) data.get("results");
+            for(int i = 0 ; i < results.size(); i++){
+                JSONObject dummyCharacter = (JSONObject) results.get(i);
+                dummy = new CharacterInfo(Integer.parseInt(dummyCharacter.get("id").toString()), dummyCharacter.get("name").toString(), dummyCharacter.get("description").toString(), dummyCharacter.get("modified").toString());
+                JSONObject thumbnail = (JSONObject) dummyCharacter.get("thumbnail");
+                dummy.setThumbnail(new Thumbnail(thumbnail.get("path").toString(), thumbnail.get("extension").toString()));
 
-        List<Comic> comics = new ArrayList<>();
-        comics.add(new Comic("One time hero", "comic-not-published.com"));
+                List<ResourceUrl> urls = new ArrayList<>();
+                JSONArray list = (JSONArray) dummyCharacter.get("urls");
+                for(int j = 0 ; j < list.size() ; j ++){
+                    JSONObject u = (JSONObject) list.get(j);
+                    urls.add(new ResourceUrl(u.get("type").toString(), u.get("url").toString()));
+                }
+                dummy.setUrls(urls);
 
-        List<Event> events = new ArrayList<>();
-        events.add(new Event("Very important event", "dummy-path"));
-        events.add(new Event("Another very important event", "dummy-path"));
+                List<Comic> comics = new ArrayList<>();
+                JSONObject resource = (JSONObject)dummyCharacter.get("comics");
+                list = (JSONArray) resource.get("items");
+                for(int j = 0 ; j < list.size() ; j ++){
+                    JSONObject u = (JSONObject) list.get(j);
+                    comics.add(new Comic(u.get("name").toString(), u.get("resourceURI").toString()));
+                }
+                dummy.setNComics(Integer.parseInt(resource.get("available").toString()));
 
-        List<Story> stories = new ArrayList<>();
-        stories.add(new Story("Once upon a time", "Horror","dummy-path"));
-        stories.add(new Story("Tale as old as time", "Sci-Fi","dummy-path"));
 
-        List<Series> series = new ArrayList<>();
-        series.add(new Series("Time series", "math-9999-edu-au"));
+                List<Story> stories = new ArrayList<>();
+                resource = (JSONObject)dummyCharacter.get("stories");
+                list = (JSONArray) resource.get("items");
+                for(int j = 0 ; j < list.size() ; j ++){
+                    JSONObject u = (JSONObject) list.get(j);
+                    stories.add(new Story(u.get("name").toString(), u.get("type").toString(), u.get("resourceURI").toString()));
+                }
+                dummy.setNStories(Integer.parseInt(resource.get("available").toString()));
 
-        Thumbnail thb = new Thumbnail("./src/main/resources/marvel/dummy.png", "png");
-        CharacterInfo dummy = new CharacterInfo(2222, name, "A hero that is created for the sake of dummy version.", "1999-999-9999");
-        dummy.setUrls(urls);
-        dummy.setThumbnail(thb);
-        dummy.setComicList(comics);
-        dummy.setStoryList(stories);
-        dummy.setEventList(events);
-        dummy.setSeriesList(series);
-        dummy.setNEvents(234);
-        dummy.setNStories(144);
-        dummy.setNComics(1);
-        dummy.setNSeries(53);
+                List<Event> events = new ArrayList<>();
+                resource = (JSONObject)dummyCharacter.get("events");
+                list = (JSONArray) resource.get("items");
+                for(int j = 0 ; j < list.size() ; j ++){
+                    JSONObject u = (JSONObject) list.get(j);
+                    events.add(new Event(u.get("name").toString(), u.get("resourceURI").toString()));
+                }
+                dummy.setNEvents(Integer.parseInt(resource.get("available").toString()));
 
-        return dummy;
+                List<Series> series = new ArrayList<>();
+                resource = (JSONObject)dummyCharacter.get("series");
+                list = (JSONArray) resource.get("items");
+                for(int j = 0 ; j < list.size() ; j ++){
+                    JSONObject u = (JSONObject) list.get(j);
+                    series.add(new Series(u.get("name").toString(), u.get("resourceURI").toString()));
+                }
+                dummy.setNSeries(Integer.parseInt(resource.get("available").toString()));
 
+                dummy.setComicList(comics);
+                dummy.setStoryList(stories);
+                dummy.setEventList(events);
+                dummy.setSeriesList(series);
+
+                return dummy;
+            }
+
+        } catch (ParseException | IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**
