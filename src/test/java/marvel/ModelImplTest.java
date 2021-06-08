@@ -345,4 +345,55 @@ public class ModelImplTest {
 
     }
 
+    /**
+     * Testing for return value from InputModel when there is no matching data is found
+     */
+    @Test
+    public void testIsInfoInCacheNotFound(){
+        //GIVEN
+        when(input.isInfoInCache("notloaded")).thenReturn(false);
+
+        //WHEN
+        boolean status = model.isInfoInCache("notloaded");
+
+        //THEN
+        verify(input, times(1)).isInfoInCache("notloaded");
+        assertFalse(status);
+    }
+
+    /**
+     * Testing for return value from InputModel when there is matching data found
+     */
+    @Test
+    public void testIsInfoInCacheFound(){
+        //GIVEN
+        when(input.isInfoInCache("match")).thenReturn(true);
+
+        //WHEN
+        boolean status = model.isInfoInCache("match");
+
+        //THEN
+        verify(input, times(1)).isInfoInCache("match");
+        assertTrue(status);
+    }
+
+    /**
+     * Testing for exceptions from ModelImpl on error cases
+     */
+    @Test
+    public void testIsInfoInCacheExceptions(){
+        //WHEN-THEN
+        assertThrows(IllegalArgumentException.class, ()->{
+            model.isInfoInCache(null);
+        });
+
+        assertThrows(IllegalArgumentException.class, ()->{
+            model.isInfoInCache("");
+        });
+
+
+    }
+
+
+
 }
