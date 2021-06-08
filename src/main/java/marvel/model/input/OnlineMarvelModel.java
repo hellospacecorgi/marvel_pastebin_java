@@ -14,6 +14,11 @@ public class OnlineMarvelModel implements InputModel{
     private MarvelApiHandler apiHandler;
 
     /**
+     *  Handler that handles processing JSON response to model objects and vice versa
+     */
+    private ResponseHandler responseHandler;
+
+    /**
      * Default constructor for OnlineMarvelModel
      */
     public OnlineMarvelModel(){
@@ -29,9 +34,14 @@ public class OnlineMarvelModel implements InputModel{
         this.apiHandler = handler;
     }
 
+    /**
+     * Sets a handler for processing JSON responses to model objects and vice versa
+     *
+     * @param handler ResponseHandler instance
+     */
     @Override
     public void setResponseHandler(ResponseHandler handler) {
-
+        this.responseHandler = handler;
     }
 
     /**
@@ -44,8 +54,12 @@ public class OnlineMarvelModel implements InputModel{
      */
     @Override
     public CharacterInfo getInfoByName(String name) {
-        apiHandler.getCharacterInfoByName(name);
-        return null;
+        if(name == null || responseHandler == null || apiHandler == null){
+            return null;
+        }
+        String response = apiHandler.getCharacterInfoByName(name);
+        CharacterInfo info = responseHandler.parseResponseBody(response);
+        return info;
     }
 
     /**

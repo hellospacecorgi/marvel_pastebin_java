@@ -105,10 +105,10 @@ public class MarvelApiHandler {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             if(response.statusCode() > 400){
                 System.out.println("Error searching for character info\n");
-                return null;
+                return response.body();
 
             } else if(response.statusCode() == 200){
-                return null;
+                return response.body();
             }
         } catch (IOException | InterruptedException e){
             e.printStackTrace();
