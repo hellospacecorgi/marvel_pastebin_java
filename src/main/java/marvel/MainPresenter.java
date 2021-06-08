@@ -31,6 +31,13 @@ public class MainPresenter implements ModelObserver, ViewObserver {
     MainView view;
 
     /**
+     * Used for tracking if search is clicked twice on same name.
+     *
+     * <p>Doing so confirms to retrieve information from API instead of cache.</p>
+     */
+    String lastSearched = "";
+
+    /**
      * Takes in a ModelFacade object with non null InputModel and OutputModel,
      * takes in a MainView object,
      * and adds itself to the model and view's observer list.
@@ -52,15 +59,24 @@ public class MainPresenter implements ModelObserver, ViewObserver {
      */
     @Override
     public void onSearch(String name){
+        if(lastSearched.equals(name)){
+            //ask model to get info from API
+            model.getCharacterInfo(name);
+            return;
+        }
+
         //Check if there is cached data in database
         if(model.isInfoInCache(name)){
             //If cache exists - ask user for option to load from API or cache
             view.updateMessage("Found information on " + name + " in cache, " +
                     "\nclick <Load from cache> to get information from cache," +
                     "\nclick <Search character> to get information from API");
+            lastSearched = name;
+
         } else {
             //ask model to get info from API
             model.getCharacterInfo(name);
+            lastSearched = "";
         }
     }
 
@@ -149,6 +165,7 @@ public class MainPresenter implements ModelObserver, ViewObserver {
         }
 
         model.loadInfoFromCache(name);
+        lastSearched = "";
     }
 
     /**

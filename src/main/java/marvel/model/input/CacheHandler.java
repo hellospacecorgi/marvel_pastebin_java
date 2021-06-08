@@ -34,7 +34,6 @@ public class CacheHandler {
     }
 
     public String loadFromCache(String name){
-        System.out.println("CacheHandler loadFromCache");
         String query = "SELECT * from Character where Name = ?;";
 
         try{
@@ -44,7 +43,6 @@ public class CacheHandler {
             ResultSet rs = pr.executeQuery();
 
             if(rs.next()){
-                System.out.println("Result set");
                 return rs.getString("Response");
             }
 

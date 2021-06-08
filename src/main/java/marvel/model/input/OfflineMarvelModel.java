@@ -21,8 +21,7 @@ import java.util.List;
  * @see InputModel
  */
 public class OfflineMarvelModel implements InputModel{
-    private static Connection connection = null;
-    private boolean isInfoInCache;
+    private CacheHandler cache = new CacheHandler();
     private String dummyResponseFilePath = "./src/main/resources/marvel/DummyApiResponse.json";
     private ResponseHandler responseHandler;
 
@@ -30,13 +29,6 @@ public class OfflineMarvelModel implements InputModel{
      * Constructor for OfflineMarvelModel
      */
     public OfflineMarvelModel(){
-        try{
-            Class.forName("org.sqlite.JDBC");
-            connection = DriverManager.getConnection("jdbc:sqlite:MarvelCache.sqlite");
-
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-        }
     }
     /**
      * Set a API handler to this model.
@@ -71,7 +63,7 @@ public class OfflineMarvelModel implements InputModel{
             String dummyResponse = Files.readString(Path.of(dummyResponseFilePath));
             if(dummyResponse != null){
                 CharacterInfo info = responseHandler.parseResponseBody(dummyResponse);
-                saveToCache(info.getName(), dummyResponse);
+                cache.saveToCache(name, dummyResponse);
                 return info;
             }
         }catch(IOException e){
@@ -88,8 +80,7 @@ public class OfflineMarvelModel implements InputModel{
      */
     @Override
     public CharacterInfo getInfoByNameFromCache(String name) {
-        String response = loadFromCache(name);
-        System.out.println(response);
+        String response = cache.loadFromCache(name);
 
         if(response != null){
             CharacterInfo info = responseHandler.parseResponseBody(response);
@@ -102,12 +93,32 @@ public class OfflineMarvelModel implements InputModel{
      * Simulates accessor call for retrieving full path to thumbnail image from CharacterInfo
      * Since this is a dummy version, return null will let Presenter load default dummy image to display as thumbnail.
      *
+     * <p>If thumbnail exists for info, expects valid image path (no dummy path)</p>
+     *
+     * <p>If info has no thumbnail, return null</p>
+     *
      * @param info CharacterInfo object that contains
-     * @return String - always return null in dummy version
+     * @return String - Full URL path to thumbnail, otherwise return null
      */
     @Override
     public String getThumbnailFullPath(CharacterInfo info) {
-        return null;
+        if(info == null){
+            return null;
+        }
+        if(info.getThumbnail() == null){
+            return null;
+        }
+        if(info.getThumbnail().getPath() == null){
+            return null;
+        }
+
+        String path = info.getThumbnail().getPath();
+        if(path.equals("dummy")){
+            return null;
+        }
+        path = path.concat("/standard_large.");
+        path = path.concat(info.getThumbnail().getExtension());
+        return path;
     }
 
     @Override
@@ -115,65 +126,7 @@ public class OfflineMarvelModel implements InputModel{
         if(name == null || name.isEmpty()){
             throw new IllegalArgumentException();
         }
-        return searchCache(name);
-    }
-
-    private boolean searchCache(String name){
-        String query = "SELECT Response from Character where Name = ?;";
-        try{
-            PreparedStatement pr = connection.prepareStatement(query);
-            pr.setString(1, name);
-            ResultSet rs = pr.executeQuery();
-
-            if(rs.next()){
-                System.out.println(name + "is in cache!");
-                return true;
-            }
-            return false;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    private void saveToCache(String name, String response){
-
-        String query = "INSERT INTO Character (Name, Response) \nVALUES(?, ?)";
-
-        try{
-            PreparedStatement pr = connection.prepareStatement(query);
-            System.out.println("saved to cache : " + name);
-            pr.setString(1, name);
-            pr.setString(2, response);
-            pr.execute();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    private String loadFromCache(String name){
-        System.out.println("CacheHandler loadFromCache");
-        String query = "SELECT * from Character where Name = ?;";
-
-        try{
-            PreparedStatement pr = connection.prepareStatement(query);
-            pr.setString(1, name);
-
-            ResultSet rs = pr.executeQuery();
-
-            if(rs.next()){
-                System.out.println("Result set");
-                System.out.println(rs.getString("Response"));
-                return rs.getString("Response");
-            }
-
-            return null;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return cache.isInfoInCache(name);
     }
 
 }

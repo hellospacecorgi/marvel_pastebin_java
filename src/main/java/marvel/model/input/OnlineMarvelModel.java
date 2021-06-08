@@ -65,11 +65,14 @@ public class OnlineMarvelModel implements InputModel{
             return null;
         }
         String response = apiHandler.getCharacterInfoByName(name);
-        CharacterInfo info = responseHandler.parseResponseBody(response);
-        if(info != null){
-            cache.saveToCache(name, response);
+        if(response != null){
+            CharacterInfo info = responseHandler.parseResponseBody(response);
+            if(info != null){
+                cache.saveToCache(name, response);
+            }
+            return info;
         }
-        return info;
+        return null;
     }
 
     /**
@@ -94,6 +97,9 @@ public class OnlineMarvelModel implements InputModel{
         }
 
         String path = info.getThumbnail().getPath();
+        if(path.equals("dummy")){
+            return null;
+        }
         path = path.concat("/standard_large.");
         path = path.concat(info.getThumbnail().getExtension());
         return path;
@@ -109,6 +115,7 @@ public class OnlineMarvelModel implements InputModel{
     public CharacterInfo getInfoByNameFromCache(String name) {
 
         String response = cache.loadFromCache(name);
+
         CharacterInfo info = responseHandler.parseResponseBody(response);
 
         return info;

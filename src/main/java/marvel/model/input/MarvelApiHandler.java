@@ -73,15 +73,19 @@ public class MarvelApiHandler {
      *
      * Uses ResponseHandler to parse JSON response and build CharacterInfo object
      *
-     * @param name String of character name to send GET request with
+     * @param name String of character name to send GET request with, no spaces within string
      * @return String - return response body from API, return null if keys are null or empty
      */
     public String getCharacterInfoByName(String name){
+
         if(publicKey == null || privateKey == null){
             return null;
         }
 
         if(publicKey.equals("") || publicKey.isEmpty() || privateKey.equals("") || privateKey.isEmpty()){
+            return null;
+        }
+        if(name.contains(" ")){
             return null;
         }
 
