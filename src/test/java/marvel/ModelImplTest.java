@@ -430,6 +430,7 @@ public class ModelImplTest {
         //WHEN
         model.loadInfoFromCache("spiderman");
         //THEN
+        verify(input, times(2)).isInfoInCache("spiderman");
         verify(input, times(0)).getInfoByNameFromCache("spiderman");
 
     }
