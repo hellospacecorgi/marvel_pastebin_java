@@ -3,6 +3,7 @@ package marvel.model;
 import marvel.model.character.CharacterInfo;
 import marvel.model.input.InputModel;
 import marvel.model.input.MarvelApiHandler;
+import marvel.model.input.ResponseHandler;
 import marvel.model.output.OutputModel;
 import marvel.model.output.PastebinApiHandler;
 
@@ -48,6 +49,8 @@ public class ModelImpl implements ModelFacade{
 
         input.setApiHandler(new MarvelApiHandler(handler.getInputPublicKey(), handler.getInputPrivateKey()));
         output.setApiHandler(new PastebinApiHandler(handler.getOutputKey()));
+
+        input.setResponseHandler(new ResponseHandler());
     }
 
     /**
