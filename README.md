@@ -74,7 +74,7 @@ Note to marker:
 
 <p>1.2. Some RED-GREEN processes were submerged within a commit (as a mistake of not correctly tracking RED-GREEN-RED-GREEN-REFACTORs where modification to existing tests were done before refactoring), after consulting Josh, it was adviced to still list them. </p>
   
-<p>3. Pass set 6-10 and credit set 1-3 are much cleaner commits.</p>
+<p>3. <b>Pass set 6-10 and credit set 1-3</b> are much cleaner commits.</p>
 
 ### Commits during development of pass requirement features
 * [Pass set 1](#pass-set-1) , [Pass set 2 - RED-GREEN-REFACTOR](#pass-set-2) , [Pass set 3](#pass-set-3), [Pass set 4](#pass-set-4), [Pass set 5](#pass-set-5), [Pass set 6 - Clean RED-GREEN](#pass-set-6), 
