@@ -77,7 +77,7 @@ Note to marker:
 <p>3. Pass set 6-10 and credit set 1-3 are much cleaner commits.</p>
 
 ### Commits during development of pass requirement features
-* [Pass set 1](#pass-set-1) , [Pass set 2 - RED-GREEN-REFACTOR](#pass-set-2) , [Pass set 3](#pass-set-3), [Pass set 4 - Clean RED-GREEN](#pass-set-4), [Pass set 5](#pass-set-5), [Pass set 6 - Clean RED-GREEN](#pass-set-6), 
+* [Pass set 1](#pass-set-1) , [Pass set 2 - RED-GREEN-REFACTOR](#pass-set-2) , [Pass set 3](#pass-set-3), [Pass set 4](#pass-set-4), [Pass set 5](#pass-set-5), [Pass set 6 - Clean RED-GREEN](#pass-set-6), 
 
 ### Commits during refactoring of pass requirement version
 * [Pass set 7 - Clean RED-GREEN](#pass-set-7), [Pass set 8 - Clean RED-GREEN](#pass-set-8), [Pass set 9 - Clean RED-GREEN-REFACTOR](#pass-set-9), [Pass set 10 - Clean RED-GREEN](#pass-set-10)
@@ -143,7 +143,7 @@ Relevant tests: testGetImageViaModelFacade() [Mock InputModel] testInputModelGet
 
 ### Pass set 4
 
-RED-GREEN-FACTOR, please ignore commit messages and see commit comments for details.
+(relatively clean RED-GREEN), please ignore commit messages and see commit comments for details.
 
 Relevant tests: testSendReportFacade() [Mocked OutputModel], testGetReportUrlFacade() [Mocked OutputModel]
 
@@ -157,7 +157,7 @@ Methods: getReportUrl() in ModelFacade and getReportUrl() in OutputModel
 
 See commit comments.
 
-**REFACTOR** (Relevant tests unchanged and passed - however test suite fails because commit ) Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/face90c6efe6c72344c380a214ad5130910626d6">face90c6efe6c72344c380a214ad5130910626d6</a>
+**REFACTOR** (Relevant tests unchanged and passed - however test suite fails because commit) Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/face90c6efe6c72344c380a214ad5130910626d6">face90c6efe6c72344c380a214ad5130910626d6</a>
 
 ---
 
