@@ -91,6 +91,9 @@ public class OnlinePastebinModel implements OutputModel{
      */
     @Override
     public String getReportUrl() {
-        return handler.getOutputUrl();
+        if(handler.getOutputUrl() != null){
+            return handler.getOutputUrl();
+        }
+        return null;
     }
 }

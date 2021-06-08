@@ -56,6 +56,7 @@ public interface ModelFacade {
      * @return String - Full URL path to retrieve thumbnail image
      */
     public String getImagePathByInfo(CharacterInfo info);
+
     /**
      * Retrieve pastebin URL for paste generated for last report sent
      *

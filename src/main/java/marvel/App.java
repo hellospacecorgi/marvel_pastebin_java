@@ -49,6 +49,9 @@ public class App extends Application {
      */
     OutputModel output;
 
+    MainView view;
+    MainPresenter presenter;
+
     /**
      * The application main method.
      *
@@ -116,11 +119,13 @@ public class App extends Application {
 
         ConfigHandler config = new ConfigHandler(configFilePath);
         model = new ModelImpl(input, output, config);
+        view = new MainView();
+        presenter = new MainPresenter(model, view);
 
         Parent root = null;
         try{
             FXMLLoader viewLoader = new FXMLLoader(App.class.getResource("Main.fxml"));
-            viewLoader.setController(new MainPresenter(model));
+            viewLoader.setController(view);
             root = viewLoader.load();
             scene.setRoot(root);
 

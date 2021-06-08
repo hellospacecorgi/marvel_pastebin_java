@@ -1,21 +1,8 @@
 package marvel;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import marvel.model.ModelObserver;
 import marvel.model.character.*;
 import marvel.model.ModelFacade;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 
 /**
  * MainPresenter class observes the main view (Main.fxml)
@@ -27,92 +14,51 @@ import java.io.FileNotFoundException;
  *
  * @version 1.0.0
  */
-public class MainPresenter implements ModelObserver {
-    /**
-     *  Takes in user input to generate search enquiry for character information.
-     */
-    @FXML
-    TextField characterName;
-
-    /**
-     *  Lower left panel where response messages are printed.
-     *  Response messages can be request results (character information, link to output report paste), error messages, instructions
-     */
-    @FXML
-    TextArea message;
-
-    /**
-     * Table for displaying lists of resources for character
-     */
-    @FXML
-    TableView centerTable;
-
-    /**
-     * Displays thumbnail image of character
-     */
-    @FXML
-    ImageView thumbnail;
+public class MainPresenter implements ModelObserver, ViewObserver {
 
     /**
      * Reference to model for interaction with the input and output APIs
      */
     ModelFacade model;
+    MainView view;
 
     /**
-     * Takes in a ModelFacade object with non null InputModel and OutputModel
-     * and adds itself to the object's observer list.
+     * Takes in a ModelFacade object with non null InputModel and OutputModel,
+     * takes in a MainView object,
+     * and adds itself to the model and view's observer list.
      *
-     * @param model
+     * @param model Interface for retrieving and posting data on character information
+     * @param view Manages UI components and display contents
      */
-    public MainPresenter(ModelFacade model){
+    public MainPresenter(ModelFacade model, MainView view){
         this.model = model;
+        this.view = view;
         //adds itself to be an observer
         model.addObserver(this);
+        view.addObserver(this);
     }
-
     /**
      * Called when Search Character button is clicked.
      *
      * <p>Asks model to process searching for character information given String name</p>
      *
-     * <p>Expects text field to have non empty string value input.</p>
      */
-    @FXML
-    public void onSearch() {
-        if(characterName.getText().equals("") || characterName.getText().isEmpty()){
-            message.setText("Input field is empty - enter name for searching.");
-            return;
-        }
-
+    @Override
+    public void onSearch(String name){
         //Ask model to process request
-        model.getCharacterInfo(characterName.getText());
+        model.getCharacterInfo(name);
     }
 
     /**
      * Called when the Comic button above the table is clicked.
      *
-     * <p>Calls updateCenterComics() to populate the table.</p>
+     * <p>Calls it's own MainView's updateCenterComics() to populate the table.</p>
      */
-    @FXML
     public void onComics(){
-        updateCenterComics();
-    }
+        if(model.getCurrentCharacter() != null){
+            view.updateTableViewComics(model.getCurrentCharacter().getComicList());
+        }
 
-    /**
-     * Update the center table TableView to display list of comics which features character
-     */
-    public void updateCenterComics(){
-        ObservableList<Comic> clist = FXCollections.observableArrayList(model.getCurrentCharacter().getComicList());
-
-        TableColumn<ResourceUrl, String> name = new TableColumn<>("Comic Name");
-        name.setCellValueFactory(new PropertyValueFactory<>("name"));
-        TableColumn<ResourceUrl, String> path = new TableColumn<>("URL Path");
-        path.setCellValueFactory(new PropertyValueFactory<>("resourcePath"));
-
-        centerTable.getItems().clear();
-        centerTable.getColumns().clear();
-        centerTable.setItems(clist);
-        centerTable.getColumns().addAll(name, path);
     }
 
     /**
@@ -120,20 +66,10 @@ public class MainPresenter implements ModelObserver {
      *
      * <p>Displays list of URLs for public websites tha has character information</p>
      */
-    @FXML
     public void onUrl(){
-        ObservableList<ResourceUrl> rlist = FXCollections.observableArrayList(model.getCurrentCharacter().getUrls());
-
-        TableColumn<ResourceUrl, String> type = new TableColumn<>("Type");
-        type.setCellValueFactory(new PropertyValueFactory<>("type"));
-        TableColumn<ResourceUrl, String> path = new TableColumn<>("URL Path");
-        path.setCellValueFactory(new PropertyValueFactory<>("url"));
-
-        centerTable.getItems().clear();
-        centerTable.getColumns().clear();
-        centerTable.setItems(rlist);
-        centerTable.getColumns().addAll(type, path);
-
+        if(model.getCurrentCharacter() != null){
+            view.updateTableViewResourceUrls(model.getCurrentCharacter().getUrls());
+        }
     }
 
     /**
@@ -141,71 +77,49 @@ public class MainPresenter implements ModelObserver {
      *
      * <p>Displays list of Stories that the character appears</p>
      */
-    @FXML
     public void onStories(){
-        ObservableList<Story> clist = FXCollections.observableArrayList(model.getCurrentCharacter().getStoryList());
-
-        TableColumn<Story, String> name = new TableColumn<>("Story Name");
-        name.setCellValueFactory(new PropertyValueFactory<>("name"));
-
-        TableColumn<Story, String> type = new TableColumn<>("Type");
-        type.setCellValueFactory(new PropertyValueFactory<>("type"));
-
-        TableColumn<Story, String> path = new TableColumn<>("URL Path");
-        path.setCellValueFactory(new PropertyValueFactory<>("resourcePath"));
-
-        centerTable.getItems().clear();
-        centerTable.getColumns().clear();
-        centerTable.setItems(clist);
-        centerTable.getColumns().addAll(name, type, path);
+        if(model.getCurrentCharacter() != null){
+            view.updateTableViewStories(model.getCurrentCharacter().getStoryList());
+        }
     }
     /**
      * Called when the Events button above the table is clicked.
      *
      * <p>Displays list of events that the character appears</p>
      */
-    @FXML
     public void onEvents(){
-        ObservableList<Event> clist = FXCollections.observableArrayList(model.getCurrentCharacter().getEventList());
-
-        TableColumn<Event, String> name = new TableColumn<>("Event Name");
-        name.setCellValueFactory(new PropertyValueFactory<>("name"));
-
-        TableColumn<Event, String> path = new TableColumn<>("URL Path");
-        path.setCellValueFactory(new PropertyValueFactory<>("resourcePath"));
-
-        centerTable.getItems().clear();
-        centerTable.getColumns().clear();
-        centerTable.setItems(clist);
-        centerTable.getColumns().addAll(name, path);
+        if(model.getCurrentCharacter() != null){
+            view.updateTableViewEvents(model.getCurrentCharacter().getEventList());
+        }
     }
     /**
      * Called when the Series button above the table is clicked.
      *
      * <p>Displays list of series that the character appears</p>
      */
-    @FXML
     public void onSeries(){
-        ObservableList<Series> clist = FXCollections.observableArrayList(model.getCurrentCharacter().getSeriesList());
-
-        TableColumn<Series, String> name = new TableColumn<>("Comic Name");
-        name.setCellValueFactory(new PropertyValueFactory<>("name"));
-        TableColumn<Series, String> path = new TableColumn<>("URL Path");
-        path.setCellValueFactory(new PropertyValueFactory<>("resourcePath"));
-
-        centerTable.getItems().clear();
-        centerTable.getColumns().clear();
-        centerTable.setItems(clist);
-        centerTable.getColumns().addAll(name, path);
+        if(model.getCurrentCharacter() != null){
+            view.updateTableViewSeries(model.getCurrentCharacter().getSeriesList());
+        }
     }
+
+    @Override
+    public void onUrls() {
+        if(model.getCurrentCharacter() != null){
+            view.updateTableViewResourceUrls(model.getCurrentCharacter().getUrls());
+        }
+    }
+
     /**
      * Called when the Send Report button is clicked.
      *
      * <p>Ask model to generate report based on character data, send report to Pastebin to create new paste</p>
      */
-    @FXML
+    @Override
     public void onSendReport(){
-        model.sendReport(model.getCurrentCharacter());
+        if(model.getCurrentCharacter() != null){
+            model.sendReport(model.getCurrentCharacter());
+        }
     }
     /**
      * Performs action upon knowing CharacterInfo is built in model
@@ -216,11 +130,10 @@ public class MainPresenter implements ModelObserver {
      */
     @Override
     public void updateCharacterInfo() {
-
         //Retrieve updated data in CharacterInfo
         CharacterInfo info = model.getCurrentCharacter();
         if(info == null){
-            message.setText("Search returned no character information with provided name.");
+            view.updateMessage("Search returned no character information with provided name.");
             return;
         }
         String result = "Character Summary \n";
@@ -232,24 +145,13 @@ public class MainPresenter implements ModelObserver {
         result = result.concat("\nNumber of Events: ").concat(String.valueOf(info.getNEvents()));
         result = result.concat("\nNumber of Series: ").concat(String.valueOf(info.getNSeries()));
         result = result.concat("\nLast modified: ").concat(info.getModified());
-        message.setText(result);
+
+        view.updateMessage(result);
 
         //Update view with response
-        updateCenterComics(); //show list of comics by default
+        view.updateTableViewComics(model.getCurrentCharacter().getComicList()); //show list of comics by default
+        view.updateThumbnail(model.getImagePathByInfo(info));
 
-        //Update thumbnail view
-        Image img = null;
-        if(model.getImagePathByInfo(info) != null){
-            img = new Image(model.getImagePathByInfo(info));
-            thumbnail.setImage(img);
-        } else {
-            try{
-                img = new Image(new FileInputStream("./src/main/resources/marvel/dummy.png"));
-                thumbnail.setImage(img);
-            } catch(FileNotFoundException e) {
-                e.printStackTrace();
-            }
-        }
     }
     /**
      * Performs action upon knowing paste report URL is obtained in model
@@ -260,9 +162,9 @@ public class MainPresenter implements ModelObserver {
     public void updateReportUrl() {
         String url = model.getReportUrl();
         if(url != null){
-            message.setText("Output Report URL: " + model.getReportUrl());
+            view.updateMessage("Output Report URL: " + model.getReportUrl());
         } else {
-            message.setText("Failed sending report - check if last search is valid and loaded results.");
+            view.updateMessage("Failed sending report - check if last search is valid and loaded results.");
         }
     }
 }

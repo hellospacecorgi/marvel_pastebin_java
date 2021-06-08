@@ -120,6 +120,9 @@ public class ModelImpl implements ModelFacade{
      */
     @Override
     public void sendReport(CharacterInfo info) {
+        if(info == null){
+            return;
+        }
         output.sendReport(info);
         notifyObserversSendReportComplete();
     }
