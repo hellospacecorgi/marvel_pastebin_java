@@ -17,10 +17,13 @@ public class OfflinePastebinModel implements OutputModel{
     @Override
     public void setApiHandler(PastebinApiHandler handler) { }
 
+    /**
+     * Inherited from OutputModel interface - no usage in offline model.
+     *
+     * @param service service for generating report based on CharacterInfo - ignored
+     */
     @Override
-    public void setReportService(ReportService service) {
-
-    }
+    public void setReportService(ReportService service) { }
 
     /**
      * Simulate send report request is processed by returning boolean value.

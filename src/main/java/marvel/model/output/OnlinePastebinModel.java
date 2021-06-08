@@ -14,6 +14,11 @@ public class OnlinePastebinModel implements OutputModel{
     private PastebinApiHandler handler;
 
     /**
+     * Service for generating report based on CharacterInfo given
+     */
+    private ReportService service;
+
+    /**
      * Sets a handler for processing POST requests and responses to the API
      *
      * @param handler PastebinApiHandler instance
@@ -23,9 +28,13 @@ public class OnlinePastebinModel implements OutputModel{
         this.handler = handler;
     }
 
+    /**
+     * Sets service for generating a report baesd on CharacterInfo object
+     * @param service ReportService instance that creates report from CharacterInfo object
+     */
     @Override
     public void setReportService(ReportService service) {
-
+        this.service = service;
     }
 
     /**
@@ -38,53 +47,14 @@ public class OnlinePastebinModel implements OutputModel{
      */
     @Override
     public boolean sendReport(CharacterInfo info) {
+        if(this.handler == null || this.service == null){
+            throw new IllegalStateException();
+        }
         if(info == null){
             return false;
         }
-        String report = "Summary report for Marvel Character";
-        report = report.concat("\nName: ").concat(info.getName());
-        report = report.concat("\nID: ").concat(String.valueOf(info.getId()));
-        report = report.concat("\nDescription: ").concat(info.getDescription());
-        report = report.concat("\n\nThumbnail : ").concat(info.getThumbnail().getPath().concat("/standard_medium.").concat(info.getThumbnail().getExtension()));
-        report = report.concat("\nResource last modified: ").concat(info.getModified());
 
-        report = report.concat("\n\nURLs to public websites containing character information");
-        for(int i = 0; i < info.getUrls().size(); i ++){
-            report = report.concat("\n\tType: ").concat(info.getUrls().get(i).getType());
-            report = report.concat(" URL: ").concat(info.getUrls().get(i).getUrl());
-        }
-
-        report = report.concat("\n\nNumber of Comics which feature this character: ").concat(String.valueOf(info.getNComics()));
-        report = report.concat("\nNumber of Stories which this character appears: ").concat(String.valueOf(info.getNStories()));
-        report = report.concat("\nNumber of Events which this character appears: ").concat(String.valueOf(info.getNEvents()));
-        report = report.concat("\nNumber of Series which this character appears: ").concat(String.valueOf(info.getNSeries()));
-
-        report = report.concat("\n\nComics List:");
-        for(int i = 0 ; i < info.getComicList().size() ; i++){
-            report = report.concat("\n\tName: ").concat(info.getComicList().get(i).getName());
-            report = report.concat(" Resource URI: ").concat(info.getComicList().get(i).getResourcePath());
-        }
-
-        report = report.concat("\n\nStories List:");
-        for(int i = 0 ; i < info.getStoryList().size() ; i++){
-            report = report.concat("\n\tName: ").concat(info.getStoryList().get(i).getName());
-            report = report.concat(" Type: ").concat(info.getStoryList().get(i).getType());
-            report = report.concat(" Resource URI: ").concat(info.getStoryList().get(i).getResourcePath());
-        }
-
-        report = report.concat("\n\nEvents List:");
-        for(int i = 0 ; i < info.getEventList().size() ; i++){
-            report = report.concat("\n\tName: ").concat(info.getEventList().get(i).getName());
-            report = report.concat(" Resource URI: ").concat(info.getEventList().get(i).getResourcePath());
-        }
-
-        report = report.concat("\n\nSeries List:");
-        for(int i = 0 ; i < info.getSeriesList().size() ; i++){
-            report = report.concat("\n\tName: ").concat(info.getSeriesList().get(i).getName());
-            report = report.concat(" Resource URI: ").concat(info.getSeriesList().get(i).getResourcePath());
-        }
-
-        report = report.concat("\n\nData provided by Marvel. 2021 MARVEL");
+        String report = service.generateReport(info);
 
         return handler.sendReport(info.getName(), report);
     }
