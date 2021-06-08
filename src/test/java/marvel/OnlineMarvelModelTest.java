@@ -216,13 +216,13 @@ public class OnlineMarvelModelTest {
         spiderman.setStoryList(null);
 
         //GIVEN
-        when(handler.getCharacterInfoByName("spider-man")).thenReturn(dummyResponseBody);
+        when(handler.getCharacterInfoByName("dummy")).thenReturn(dummyResponseBody);
         when(responseHandler.parseResponseBody(dummyResponseBody)).thenReturn(spiderman);
         //WHEN
-        model.getCharacterInfo("spider-man");
+        model.getCharacterInfo("dummy");
 
         //THEN
-        verify(handler, times(1)).getCharacterInfoByName("spider-man");
+        verify(handler, times(1)).getCharacterInfoByName("dummy");
 
         assertEquals(spiderman.getName(), model.getCurrentCharacter().getName());
         assertEquals(spiderman.getDescription(), model.getCurrentCharacter().getDescription());
