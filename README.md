@@ -286,10 +286,25 @@ Tests done using OnlinePastebinModel with mocked ReportService and mocked Pasteb
 
 ---
 
-<p>The commits listed above are ones closely related to the interaction of ModelImpl with InputModel (mocked) and OutputModel (mocked),
-the interaction of OnlineMarvelModel and MarvelApiHandler (mocked), and the interaction of OutputModel and PastebinApiHandler (mocked).</p>
+### Credit set 1
 
-The test suite also covered some unit testing of concrete model classes to assert for expected behaviours.
+**RED** Commits URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/8feccabae0ccf06b732ec6d9a624988a2e5a89a3">8feccabae0ccf06b732ec6d9a624988a2e5a89a3</a>
+
+**GREEN** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/39e906accc903c17d705e88cb580d5aa54d5d781">39e906accc903c17d705e88cb580d5aa54d5d781</a>
+
+### Credit set 2
+
+**RED** Commits URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/1fabc210c92c81b3a63da7489fab4f388b5115dc">1fabc210c92c81b3a63da7489fab4f388b5115dc</a>
+
+**GREEN** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/378fae3011a2a51a276121efe7b3133f7ac08607">378fae3011a2a51a276121efe7b3133f7ac08607</a>
+
+**REFACTOR** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/86acae014038ecfbbbed9648f7bcc47777ccf163">86acae014038ecfbbbed9648f7bcc47777ccf163</a>
+
+### Credit set 3
+
+**RED** Commits URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/4e61a525d35160dff01a444649bb7b2fc3017e78">4e61a525d35160dff01a444649bb7b2fc3017e78</a>
+
+**GREEN** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/e341c8fbe0d413963d85c903dea2ba643143dbe1">e341c8fbe0d413963d85c903dea2ba643143dbe1</a>
 
 ---
 
