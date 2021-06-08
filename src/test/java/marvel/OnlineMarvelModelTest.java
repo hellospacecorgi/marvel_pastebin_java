@@ -254,6 +254,29 @@ public class OnlineMarvelModelTest {
     }
 
     /**
+     * Test for getCharacterInfo return value and interaction when no MarvelApiHandler is set to InputModel
+     */
+    @Test
+    public void testNullApiHandlerSet(){
+        //mock marvelApiHandler
+        input = new OnlineMarvelModel();
+        ResponseHandler handler = mock(ResponseHandler.class);
+
+        //GIVEN
+        ConfigHandler config = new ConfigHandler(configFilePath);
+        model = new ModelImpl(input, output, config);
+        model.getInputSubModel().setApiHandler(null);
+        model.getInputSubModel().setResponseHandler(handler);
+
+        //WHEN
+        model.getCharacterInfo("spider-man");
+
+        //THEN
+        verify(handler, times(0)).parseResponseBody(anyString());
+        assertNull(model.getCurrentCharacter());
+    }
+
+    /**
      * Test for return value and interactions from getCharacterInfo() when error from API
      */
     @Test
