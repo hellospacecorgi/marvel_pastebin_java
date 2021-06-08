@@ -57,18 +57,17 @@ The version where this is fully completed and tested in tagged with version `v1.
 ## RED-GREEN-REFACTOR Commits
 
 Note to marker: 
-<p>1. While there was effort to keep track of TDD through commit messages, they do not reflect all the changes for each commit, 
-please refer to <b>commit comments</b> where some commits might be used for both RED and REFACTOR 
-(where new tests were added for feature to be implemented (RED for new commit set), and previous features were modified for better code structure (REFACTOR for previous commit set) )</p>
+<p>1. <b>Pass set 1-7</b> lists commits in early development stages, while there was effort to keep track of TDD through commit messages, commit history was unfortunately messy and require looking into files to compare changes (For example, ModelImplTest file might show up as modified but the change was done to a test method that is different to the ones added in the RED stage), to make marking easier I have added <b>commit comments</b> on the sets and individual commits to explain the changes</p>
 
 <p>2. While Git commit might show the ModelImplTest file as modified in a GREEN commit, changes might have been made to a test method that is different to what the commit set is referring to (GREEN for tests for feature A but tests for feature B was modified), I have added <b>commit comments</b> to help illustrate which tests and features are relevant to the commit set</p>
 
-<p>3. Some RED-GREEN processes were submerged within a commit (as a mistake of not correctly tracking RED-GREEN-RED-GREEN-REFACTORs where modification to existing tests were done before refactoring), after consulting Josh, it was adviced to still list them, <b>Pass set 2</b> is a clean RED-GREEN-REFACTOR set and <b>Pass set 1, 4, 6, 7</b> shows clean RED-GREEN, and much cleaner commits were listed for the CREDIT feature implementations.</p>
+<p>3. Some RED-GREEN processes were submerged within a commit (as a mistake of not correctly tracking RED-GREEN-RED-GREEN-REFACTORs where modification to existing tests were done before refactoring), after consulting Josh, it was adviced to still list them. <b>Pass set 9</b> is a clean RED-GREEN-REFACTOR set and <b>Pass set 6, 7, 8, 10</b> shows clean RED-GREEN process</p>
 
-<p>The issue was identified after implementing the PASS requirements, and more careful version control was adopted in the Credit implementation (hence credit TDD commits are more clean)</p>
+###Commits during development and refactoring pass requirement features
+* [Pass set 1](#pass-set-1) , [Pass set 2 - RED-GREEN-REFACTOR](#pass-set-2) , [Pass set 3](#pass-set-3), [Pass set 4 - Clean RED-GREEN](#pass-set-4), [Pass set 5](#pass-set-5), [Pass set 6 - Clean RED-GREEN](#pass-set-6), [Pass set 7 - Clean RED-GREEN](#pass-set-7), [Pass set 8 - Clean RED-GREEN](#pass-set-8), [Pass set 9 - Clean RED-GREEN-REFACTOR](#pass-set-9), [Pass set 10 - Clean RED-GREEN](#pass-set-10)
 
-* [Pass set 1 - Clean RED-GREEN](#pass-set-1) , [Pass set 2 - CLEAN](#pass-set-2) , [Pass set 3](#pass-set-3), [Pass set 4 - Clean RED-GREEN](#pass-set-4), [Pass set 5](#pass-set-5), [Pass set 6 - Clean RED-GREEN](#pass-set-6), [Pass set 7 - Clean RED-GREEN](#pass-set-7)
-* [Credit set](#credit-set)
+###Commits during development for credit requirement features
+* [Credit set 1](#credit-set-1)
 
 ### Pass set 1
 
@@ -90,7 +89,9 @@ testInvalidCharacterName() [Mocked InputModel]
 
 ---
 ### Pass set 2
-### CLEAN RED-GREEN-REFACTOR
+
+RED-GREEN-REFACTOR
+
 Relevant tests : 
 
 testInputModelGetInfoByNameInvalid() [Mocked MarvelApiHandler]
@@ -140,7 +141,7 @@ testInputModelGetThumbnailImage() [Mock InputModel]
 
 ### Pass set 4
 
-CLEAN RED-GREEN-FACTOR, please ignore commit messages and see commit comments for details.
+RED-GREEN-FACTOR, please ignore commit messages and see commit comments for details.
 
 Relevant tests:
 
@@ -214,7 +215,7 @@ ModelFacade's addObserver(), sendReport() and ModelObserver's updateReportUrl()
 
 ---
 
-### Credit set 1
+### Pass set 8
 
 Tests: (Mocked MarvelApiHandler and ResponseHandler to verify OnlineMarvelModel method calls)
 
@@ -236,7 +237,52 @@ Feature done:
 
 **GREEN** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/1b28bcac427811dddc9209860b92bd6c15e44f40">1b28bcac427811dddc9209860b92bd6c15e44f40</a>
 
+### Pass set 9
 
+***CLEAN RED-GREEN-REFACTOR***
+
+Tests: testOfflineMarvelModelGetCharacter()
+
+Feature: 
+
+<p>Using dummy data loaded from JSON file to create more convincing dummy data instead of in method construction.</p>
+
+<p>Method : OfflineMarvelModel getInfoByName()</p>
+
+**RED** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/66b6b19362b41ff69dfe7f2de8cce623d6ac3c3f">66b6b19362b41ff69dfe7f2de8cce623d6ac3c3f</a>
+
+**GREEN** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/ccfdd36a5bcb4c0ebe3e32ffd2cf8ce2b8fc23a6">ccfdd36a5bcb4c0ebe3e32ffd2cf8ce2b8fc23a6</a>
+
+Refactoring:
+
+<p>Uses new method setResponseHandler in OutputModel, allow both online and offline model to use ResponseHandler as a JSON - CharacterInfo parser.</p>
+
+<p>OfflineMarvelModel's getInfoByName() now delegates to the handler class to create CharacterInfo object.</p>
+
+**REFACTOR** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/d43e63ca82f456f2842b2c91c0fb89381af0cb6f">d43e63ca82f456f2842b2c91c0fb89381af0cb6f</a>
+
+### Pass set 10
+
+Tests: (Mocked MarvelApiHandler and ResponseHandler to verify OnlineMarvelModel method calls)
+
+testReportServiceGenerateReportNullHandler()
+
+testReportServiceGenerateReportNullService()
+
+testReportServiceGenerateReportValid()
+
+testOutputModelSendReport() - modified existing test 10c90071dfdfb04669d25958fafadbc92cddb921
+
+Feature done: Restructured how the report string is created - added new ReportService class and setReportService() in OutputModel interface.
+
+Tests done using OnlinePastebinModel with mocked ReportService and mocked PastebinApiHandler to test generateReport() and sendReport() was called.
+
+<p>Added setResponseHandler() to InputModel, have InputModel coordinate passing response body string to ResponseHandler on getCharacterInfo(), return null on null handlers set.</p>
+
+**RED** Commits URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/ff8fa0cb6ec6f73fa4bc051bb7026733dc31e989">ff8fa0cb6ec6f73fa4bc051bb7026733dc31e989</a>
+<a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/10c90071dfdfb04669d25958fafadbc92cddb921">10c90071dfdfb04669d25958fafadbc92cddb921</a>
+
+**GREEN** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/258d3d06826cdb97c2ac5b2f4ef109852b5fd624">258d3d06826cdb97c2ac5b2f4ef109852b5fd624</a>
 
 ---
 
