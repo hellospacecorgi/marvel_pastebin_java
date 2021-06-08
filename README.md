@@ -1,7 +1,8 @@
 # SOFT3202 Exam Pre-work README
 ** Simple Extension of 2 Days applied**
+
 * [How to run application](#how-to-run-application)
-* [Feature claim - PASS](#feature-claim)
+* [Feature claim - CREDIT](#feature-claim)
 * [RED-GREEN-REFACTOR commits](#red-green-refactor-commits)
 
 ## Assigned APIs
@@ -50,32 +51,43 @@ will run the application using  live (requests hitting the web) input API and of
 
 - Produce report related to character information entity built from input Marvel API for output Pastebin API
 
-The version where this is fully completed and tested in tagged with version `v1.2`.
+The version where this is fully completed and tested in tagged with version `v1.2.2`.
+
+### CREDIT requirements feature set
+
+- Cache feature: The input model will automatically cache the JSON response body from a successful character data search request.
+
+- MarvelCache.sqlite is a database with a Character table that has 2 columns "Name" and "Response" which is a key-value pair for caching search strings and their response strings.
+
+- If the user hit search with a text in the text field that corresponds to a cached record, application will ask the user for option to load from cache or hit search again to request data from API.
+
+- Both the online and offline input API models can save and load from cache, valid response saved in a previous session can be loaded in a offline version, and dummy response cached in a offline search will overwrite valid data from a previous live session.
+
+The version where this is fully completed and tested in tagged with version `v1.3`.
 
 ---
 
 ## RED-GREEN-REFACTOR Commits
 
 Note to marker: 
-<p>1. <b>Pass set 1-7</b> lists commits in early development stages, while there was effort to keep track of TDD through commit messages, commit history was unfortunately messy and require looking into files to compare changes (For example, ModelImplTest file might show up as modified but the change was done to a test method that is different to the ones added in the RED stage), to make marking easier I have added <b>commit comments</b> on the sets and individual commits to explain the changes</p>
+<p>1. <b>Pass set 1-7</b> lists commits in early development stages, while there was effort to keep track of TDD through commit messages, commit history was unfortunately messy and require looking into files to compare changes (For example, ModelImplTest file might show up as modified but the change was done to a test method that is different to the ones added in the RED stage), to make marking easier I have added <b>commit comments</b> on the sets and individual commits to explain</p>
 
-<p>2. While Git commit might show the ModelImplTest file as modified in a GREEN commit, changes might have been made to a test method that is different to what the commit set is referring to (GREEN for tests for feature A but tests for feature B was modified), I have added <b>commit comments</b> to help illustrate which tests and features are relevant to the commit set</p>
+<p>1.2. Some RED-GREEN processes were submerged within a commit (as a mistake of not correctly tracking RED-GREEN-RED-GREEN-REFACTORs where modification to existing tests were done before refactoring), after consulting Josh, it was adviced to still list them. </p>
+  
+<p>3. Pass set 6-10 and credit set 1-3 are much cleaner commits.</p>
 
-<p>3. Some RED-GREEN processes were submerged within a commit (as a mistake of not correctly tracking RED-GREEN-RED-GREEN-REFACTORs where modification to existing tests were done before refactoring), after consulting Josh, it was adviced to still list them. <b>Pass set 9</b> is a clean RED-GREEN-REFACTOR set and <b>Pass set 6, 7, 8, 10</b> shows clean RED-GREEN process</p>
+### Commits during development of pass requirement features
+* [Pass set 1](#pass-set-1) , [Pass set 2 - RED-GREEN-REFACTOR](#pass-set-2) , [Pass set 3](#pass-set-3), [Pass set 4 - Clean RED-GREEN](#pass-set-4), [Pass set 5](#pass-set-5), [Pass set 6 - Clean RED-GREEN](#pass-set-6), 
 
-###Commits during development and refactoring pass requirement features
-* [Pass set 1](#pass-set-1) , [Pass set 2 - RED-GREEN-REFACTOR](#pass-set-2) , [Pass set 3](#pass-set-3), [Pass set 4 - Clean RED-GREEN](#pass-set-4), [Pass set 5](#pass-set-5), [Pass set 6 - Clean RED-GREEN](#pass-set-6), [Pass set 7 - Clean RED-GREEN](#pass-set-7), [Pass set 8 - Clean RED-GREEN](#pass-set-8), [Pass set 9 - Clean RED-GREEN-REFACTOR](#pass-set-9), [Pass set 10 - Clean RED-GREEN](#pass-set-10)
+### Commits during refactoring of pass requirement version
+* [Pass set 7 - Clean RED-GREEN](#pass-set-7), [Pass set 8 - Clean RED-GREEN](#pass-set-8), [Pass set 9 - Clean RED-GREEN-REFACTOR](#pass-set-9), [Pass set 10 - Clean RED-GREEN](#pass-set-10)
 
-###Commits during development for credit requirement features
-* [Credit set 1](#credit-set-1)
+### Commits during development for credit requirement features
+* [Credit set 1](#credit-set-1), [Credit set 2](#credit-set-2), [Credit set 3](#credit-set-3)
 
 ### Pass set 1
 
-Relevant tests : 
-
-testValidCharacterName() [Mocked InputModel] 
-
-testInvalidCharacterName() [Mocked InputModel]
+Relevant tests : testValidCharacterName() [Mocked InputModel] , testInvalidCharacterName() [Mocked InputModel]
 
 <p>Methods: getCharacterInfo() method in ModelFacade and getInfoByName() method in InputModel</p>
 
@@ -92,13 +104,7 @@ testInvalidCharacterName() [Mocked InputModel]
 
 RED-GREEN-REFACTOR
 
-Relevant tests : 
-
-testInputModelGetInfoByNameInvalid() [Mocked MarvelApiHandler]
-
-testInputModelGetInfoByNameValid() [Mocked MarvelApiHandler]
-
-testInptModelGetInfoNullList() [Mocked MarvelApiHandler]
+Relevant tests : testInputModelGetInfoByNameInvalid() [Mocked MarvelApiHandler], testInputModelGetInfoByNameValid() [Mocked MarvelApiHandler], testInptModelGetInfoNullList() [Mocked MarvelApiHandler]
 
 <p>Methods: getCharacterInfo() in ModelFacade, getInfoByName() in InputModel and getCharacterInfoByName() in MarvelApiHandler</p>
 
@@ -121,11 +127,7 @@ Tests for InputModel still passes after this refactoring (interaction between On
 
 ### Pass set 3
 
-Relevant tests:
-
-testGetImageViaModelFacade() [Mock InputModel]
-
-testInputModelGetThumbnailImage() [Mock InputModel]
+Relevant tests: testGetImageViaModelFacade() [Mock InputModel] testInputModelGetThumbnailImage() [Mock InputModel]
 
 **RED** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/1b6354243320e8cfd76c6a9a8c367c3875f0761e">1b6354243320e8cfd76c6a9a8c367c3875f0761e</a>
 
@@ -143,11 +145,7 @@ testInputModelGetThumbnailImage() [Mock InputModel]
 
 RED-GREEN-FACTOR, please ignore commit messages and see commit comments for details.
 
-Relevant tests:
-
-testSendReportFacade() [Mocked OutputModel]
-
-testGetReportUrlFacade() [Mocked OutputModel]
+Relevant tests: testSendReportFacade() [Mocked OutputModel], testGetReportUrlFacade() [Mocked OutputModel]
 
 Methods: sendReport() in ModelFacade and sendReport() in OutputModel
 
@@ -164,11 +162,7 @@ See commit comments.
 ---
 
 ### Pass set 5
-Relevant tests:
-
-testOutputModelSendReport()
-
-testOutputModelGetReportUrl()
+Relevant tests: testOutputModelSendReport(), testOutputModelGetReportUrl()
 
 Methods: sendReport() in ModelFacade and sendReport() in OutputModel
 
@@ -265,11 +259,7 @@ Refactoring:
 
 Tests: (Mocked MarvelApiHandler and ResponseHandler to verify OnlineMarvelModel method calls)
 
-testReportServiceGenerateReportNullHandler()
-
-testReportServiceGenerateReportNullService()
-
-testReportServiceGenerateReportValid()
+testReportServiceGenerateReportNullHandler(), testReportServiceGenerateReportNullService(), testReportServiceGenerateReportValid()
 
 testOutputModelSendReport() - modified existing test 10c90071dfdfb04669d25958fafadbc92cddb921
 
@@ -288,19 +278,33 @@ Tests done using OnlinePastebinModel with mocked ReportService and mocked Pasteb
 
 ### Credit set 1
 
+Tests: testIsInfoInCacheExceptions(), testIsInfoInCacheNotFound(), testIsInfoInCacheFound(), testIsInfoInCacheExceptions()
+
 **RED** Commits URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/8feccabae0ccf06b732ec6d9a624988a2e5a89a3">8feccabae0ccf06b732ec6d9a624988a2e5a89a3</a>
 
 **GREEN** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/39e906accc903c17d705e88cb580d5aa54d5d781">39e906accc903c17d705e88cb580d5aa54d5d781</a>
 
 ### Credit set 2
 
+Tests: testLoadInfoFromCacheNoCache(), testLoadInfoFromCacheValid(), testLoadInfoFromCacheException() [Mocked InputModel]
+
+Method: loadInfoFromCache() in ModelImpl interaction with isInfoInCache() and loadInfoByNameFromCache() in InputModel
+
 **RED** Commits URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/1fabc210c92c81b3a63da7489fab4f388b5115dc">1fabc210c92c81b3a63da7489fab4f388b5115dc</a>
 
 **GREEN** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/378fae3011a2a51a276121efe7b3133f7ac08607">378fae3011a2a51a276121efe7b3133f7ac08607</a>
 
+Refactor: Changing implementation of loadInfoFromCache() (return value changed) and using notifyObserversGetInfoComplete() to notify ModelObserver (presenter)
+
 **REFACTOR** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/86acae014038ecfbbbed9648f7bcc47777ccf163">86acae014038ecfbbbed9648f7bcc47777ccf163</a>
 
 ### Credit set 3
+
+Added new method setCacheHandler() in InputModel interface for refactoring how CacheHandler object is created (from inside class to injection with method). 
+
+Tests: testInputModelGetInfoByNameValid(), testNullApiHandlerSet(), testNullCacheHandlerSet(), testNullResponseHandlerSet()[Mocked handler classes]
+
+Methods: getCharacterInfoByName() in ModelImpl and setCacheHandler() in InputModel
 
 **RED** Commits URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/4e61a525d35160dff01a444649bb7b2fc3017e78">4e61a525d35160dff01a444649bb7b2fc3017e78</a>
 
