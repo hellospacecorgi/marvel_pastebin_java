@@ -64,6 +64,16 @@ public interface ModelFacade {
      */
     public String getReportUrl();
 
+    //Cache features
+    /**
+     * Check if there is character information in cache with key matching given name.
+     *
+     * @param name String to search database for matching record
+     * @return boolean - true if there is corresponding data found in database, otherwise false
+     */
+    public boolean isInfoInCache(String name);
+
+    //Observer pattern methods
     /**
      * Adds observer to list of ModelObserver, to be notified upon API requests completed
      *

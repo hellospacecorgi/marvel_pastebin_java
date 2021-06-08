@@ -140,6 +140,18 @@ public class ModelImpl implements ModelFacade{
     public String getReportUrl() {
         return output.getReportUrl();
     }
+
+    /**
+     * Ask input submodel to search database for record with key matchign given name
+     *
+     * @param name String to search database for matching record
+     * @return boolean - return true if record found, otherwise false
+     */
+    @Override
+    public boolean isInfoInCache(String name) {
+        return false;
+    }
+
     /**
      * Adds an observer to list of ModelObserver, to be notified upon API requests completed
      *
