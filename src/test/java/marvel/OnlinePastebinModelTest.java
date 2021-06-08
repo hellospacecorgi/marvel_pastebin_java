@@ -17,6 +17,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.Assert.assertNull;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
@@ -107,8 +108,8 @@ public class OnlinePastebinModelTest {
     public void testOutputModelSendReport(){
 
         //GIVEN
-        OutputModel output = new OnlinePastebinModel();
-        InputModel input = mock(InputModel.class);
+        output = new OnlinePastebinModel();
+        input = mock(InputModel.class);
         PastebinApiHandler handler = mock(PastebinApiHandler.class);
         output.setApiHandler(handler);
         when(handler.sendReport(anyString(), anyString())).thenReturn(true);
@@ -122,6 +123,51 @@ public class OnlinePastebinModelTest {
         //THEN
         verify(handler, times(1)).sendReport(anyString(), anyString());
 
+    }
+
+    /**
+     * Testing for handler trigger in getReportUrl() when null info passed
+     */
+    @Test
+    public void testGetReportUrlNullInfo(){
+        //GIVEN
+        OutputModel output = new OnlinePastebinModel();
+        PastebinApiHandler handler = mock(PastebinApiHandler.class);
+        output.setApiHandler(handler);
+        when(handler.sendReport(anyString(), anyString())).thenReturn(true);
+
+        ConfigHandler config = new ConfigHandler(configFilePath);
+        model = new ModelImpl(input, output, config);
+        model.getOutputSubModel().setApiHandler(handler);
+
+        //WHEN
+        model.sendReport(null);
+
+        //THEN
+        verify(handler, times(0)).sendReport(anyString(), anyString());
+    }
+
+    /**
+     * Testing for handler trigger in getReportUrl() when no previous report sent
+     */
+    @Test
+    public void testGetReportUrlWithoutSendingFirst(){
+        //GIVEN
+        OutputModel output = new OnlinePastebinModel();
+        PastebinApiHandler handler = mock(PastebinApiHandler.class);
+        output.setApiHandler(handler);
+        when(handler.sendReport(anyString(), anyString())).thenReturn(true);
+
+        ConfigHandler config = new ConfigHandler(configFilePath);
+        model = new ModelImpl(input, output, config);
+        model.getOutputSubModel().setApiHandler(handler);
+
+        //WHEN
+        String url = model.getReportUrl();
+
+        //THEN
+        verify(handler, times(1)).getOutputUrl();
+        assertNull(url);
     }
 
 }
