@@ -2,7 +2,7 @@
 ** Simple Extension of 2 Days applied**
 
 * [How to run application](#how-to-run-application)
-* [Feature claim - CREDIT](#feature-claim)
+* [Feature claim - DISTINCTION](#feature-claim)
 * [RED-GREEN-REFACTOR commits](#red-green-refactor-commits)
 
 ## Assigned APIs
@@ -62,6 +62,14 @@ The version where this is fully completed and tested in tagged with version `v1.
 - If the user hit search with a text in the text field that corresponds to a cached record, application will ask the user for option to load from cache or hit search again to request data from API.
 
 - Both the online and offline input API models can save and load from cache, valid response saved in a previous session can be loaded in a offline version, and dummy response cached in a offline search will overwrite valid data from a previous live session.
+
+The version where this is fully completed and tested in tagged with version `v1.3`.
+
+### DISTINCTION requirements feature set
+
+- Basic concurrency using Task and Platform.runLater, GUI thread is separated out from database and API calls.
+
+- This is done in the MainPresenter file where onSearch() and onLoadFromCache() uses Tasks to call model mutable methods
 
 The version where this is fully completed and tested in tagged with version `v1.3`.
 
