@@ -68,25 +68,4 @@ public class UnitTests {
         //WHEN-THEN
         assertEquals("dummy-report-output-url", model.getReportUrl());
     }
-
-    /**
-     * Testing for path construction in OnlineMarveModel's getThumbnailFullPath()
-     */
-    @Test
-    public void testOnlineGetThumbnailPath(){
-        input = new OnlineMarvelModel();
-        output = mock(OutputModel.class);
-
-        //GIVEN
-        CharacterInfo info = new CharacterInfo(3, "dummy","description","2222");
-        info.setThumbnail(new Thumbnail("dummy", "jpg"));
-        String expected = "dummy/standard_large.jpg";
-
-        //WHEN
-        String path = input.getThumbnailFullPath(info);
-
-        //THEN
-        assertEquals(expected, path);
-
-    }
 }
