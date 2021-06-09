@@ -1,6 +1,8 @@
 # SOFT3202 Exam Pre-work README
 ** Simple Extension of 2 Days applied**
 
+** Best commit to use ff99ec2907adf6b496e837f6b0dcf64934f4e274 **
+
 * [How to run application](#how-to-run-application)
 * [Feature claim - DISTINCTION](#feature-claim)
 * [RED-GREEN-REFACTOR commits](#red-green-refactor-commits)
