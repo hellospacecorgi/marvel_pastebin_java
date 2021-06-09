@@ -3,7 +3,7 @@ package marvel.model.input;
 import java.sql.*;
 
 /**
- * The CacheHandler class is responsible for processing SQL queries to the database for cached responses.
+ * Responsible for processing SQL queries to the database for cached responses.
  *
  * <p>Connects to a SQLite database named MarvelCache.sqlite,
  * which is used for caching JSON responses from previous character information searches.</p>

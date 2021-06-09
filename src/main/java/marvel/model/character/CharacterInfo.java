@@ -5,10 +5,8 @@ import java.util.List;
 
 /**
  * Represents data retrieved on a specific Marvel character from a previous InputModel search.
- * Provides getters and setters for all fields.
  *
- * <p>As all methods in this class are getters and setter,
- * no further description is added for methods as they are self-explanatory.</p>
+ * <p>Provides getters and setters for all fields.</p>
  *
  * <p>Fields description reference Marvel API's interactive documentation.
  * See <a href="https://developer.marvel.com/docs#!/public/getCreatorCollection_get_0">GET /v1/public/characters</a>
@@ -79,7 +77,7 @@ public class CharacterInfo {
     private List<Series> seriesList = new ArrayList<>();
 
     /**
-     * Constructor for creating a CharacterInfo object.
+     * Initialises a CharacterInfo object.
      *
      * <p>All fields are optional as listed on Marvel API documentation response class model for Character.</p>
      *
@@ -98,34 +96,74 @@ public class CharacterInfo {
         this.modified = modified;
     }
 
+    /**
+     * Sets a Thumbnail that represents representative image of the character.
+     *
+     * @param thumbnail Represents representative image for a character
+     */
     public void setThumbnail(Thumbnail thumbnail){
         this.thumbnail = thumbnail;
     }
 
+    /**
+     * Sets list of Comic which features the character
+     *
+     * @param comicList Represents list of comics which features the character
+     */
     public void setComicList(List<Comic> comicList) {
         this.comicList = comicList;
     }
 
+    /**
+     * Sets list of Story which features the character
+     *
+     * @param storyList Represents list of stories which features the character
+     */
     public void setStoryList(List<Story> storyList) {
         this.storyList = storyList;
     }
 
+    /**
+     * Sets list of Event which features the character
+     *
+     * @param eventList Represents list of events which features the character
+     */
     public void setEventList(List<Event> eventList) {
         this.eventList = eventList;
     }
 
+    /**
+     * Sets list of Series which features the character
+     *
+     * @param seriesList Represents list of series which features the character
+     */
     public void setSeriesList(List<Series> seriesList) {
         this.seriesList = seriesList;
     }
 
+    /**
+     * Sets list of ResourceUrls which has information about the character
+     *
+     * @param urlList Represents list of URLs that has information about the character
+     */
     public void setUrls(List<ResourceUrl> urlList){
         this.urls = urlList;
     }
 
+    /**
+     * Returns the unique Marvel character ID for this character
+     *
+     * @return id - unique Marvel character ID for this character
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * Returns the canonical name for this character
+     *
+     * @return String - the official Marvel character name for this character
+     */
     public String getName() {
         return name;
     }

@@ -63,7 +63,15 @@ public class OnlineMarvelModel implements InputModel{
     /**
      * Sends and process GET request for retrieving information about character given name.
      *
+     * <p>Saves the response body string to the cache database upon successful GET request from the API, s</p>
+     *
+     * <p>Throws IllegalStateArgumentException if name is null or empty</p>
+     *
+     * <p>Throws IllegalStateArgumentException if handler classes references are null</p>
+     *
      * <p>Delegates actual sending of HttpRequest to MarvelApiHandler</p>
+     *
+     * <p>Delegates saving response body from a successful search to CacheHandler</p>
      *
      * @param name Specified character name to search API with
      * @return CharacterInfo - object that represents data related to a specified character if name is a valid Marvel character name, null otherwise
@@ -117,7 +125,7 @@ public class OnlineMarvelModel implements InputModel{
     /**
      * Use cached response with key matching given name to create CharacterInfo object.
      *
-     * @param name To be used as key for searching record in database
+     * @param name Key for searching record in database
      * @return CharacterInfo - object created from cached data found, return null on error or cache not found
      */
     @Override
@@ -130,6 +138,14 @@ public class OnlineMarvelModel implements InputModel{
         return info;
     }
 
+    /**
+     * Checks if given name matches a cached response in the database
+     *
+     * <p>Throws IllegalStateArgumentException if name is null or empty</p>
+     *
+     * @param name Key for searching record in database
+     * @return boolean - return true if data matching name given is found, otherwise null
+     */
     @Override
     public boolean isInfoInCache(String name) {
         if(name == null || name.isEmpty()){

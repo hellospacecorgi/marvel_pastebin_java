@@ -99,9 +99,11 @@ public class OfflineMarvelModel implements InputModel{
         return null;
     }
     /**
-     * Load
+     * Returns CharaterInfo created from a cached data with key matching given name.
      *
-     * Uses cached response with key matching given name to create CharacterInfo object.
+     * <p>Returns null if no matching data is found by cache handler</p>
+     *
+     * <p>Uses cached response with key matching given name to create CharacterInfo object.</p>
      *
      * @param name To be used as key for searching record in database
      * @return CharacterInfo - object created from cached data found, return null on error or cache not found
@@ -148,7 +150,14 @@ public class OfflineMarvelModel implements InputModel{
         path = path.concat(info.getThumbnail().getExtension());
         return path;
     }
-
+    /**
+     * Checks if given name matches a cached response in the database
+     *
+     * <p>Throws IllegalStateArgumentException if name is null or empty</p>
+     *
+     * @param name Key for searching record in database
+     * @return boolean - return true if data matching name given is found, otherwise null
+     */
     @Override
     public boolean isInfoInCache(String name) {
         if(name == null || name.isEmpty()){

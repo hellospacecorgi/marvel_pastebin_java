@@ -51,8 +51,12 @@ public class MarvelApiHandler {
     }
 
     /**
-     * Required for sending requests to Marvel web API,
-     * uses MD5 to generate hash from String concatenated from timestamp + private key + public key
+     * Returns the hash value for authorisation in API requests.
+     *
+     * <p>Uses MD5 to generate hash from String concatenated from timestamp + private key + public key
+     * required for sending requests to Marvel web API</p>
+     *
+     * <p>Returns null if public and private keys of this instance are null</p>
      *
      * Precondition: Non null public and private key strings provided via constructor.
      *
@@ -71,7 +75,7 @@ public class MarvelApiHandler {
     /**
      * Sends GET request to Marvel API to retrieve live result for searching character information by name String.
      *
-     * Uses ResponseHandler to parse JSON response and build CharacterInfo object
+     * <p>Uses ResponseHandler to parse JSON response and build CharacterInfo object</p>
      *
      * @param name String of character name to send GET request with, no spaces within string
      * @return String - return response body from API, return null if keys are null or empty

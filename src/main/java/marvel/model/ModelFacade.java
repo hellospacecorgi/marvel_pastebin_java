@@ -74,6 +74,12 @@ public interface ModelFacade {
     public boolean isInfoInCache(String name);
 
     /**
+     * Ask input model to search for record with name as key from cache,
+     *
+     * <p>If found and CharacterInfo created from record,
+     * set current character reference to it</p>
+     *
+     * <p>After input model completed request, notify observers request complete</p>
      *
      * @param name String to search database for matching record
      */

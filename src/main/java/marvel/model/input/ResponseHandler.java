@@ -139,8 +139,7 @@ public class ResponseHandler {
     /**
      * Parses response body from failed request of status code 409.
      *
-     * Used to print error messages on terminal for debugging and error handling purposes.
-     *
+     * <p>Used to print error messages on terminal for debugging and error handling purposes.</p>
      *
      * @param body response body from failed request of status code 409
      * @return String - returns parsed error message, returns null if failed to parse or body is null or empty

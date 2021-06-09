@@ -28,7 +28,7 @@ public class ConfigHandler {
     private String outputKey = "";
 
     /**
-     * Constructor for ConfigHandler, takes in path to KeyConfig.json file
+     * Takes in path to KeyConfig.json file to parse API public and private keys
      *
      * <p>Retrieves and stores the 3 API keys from configuration file.</p>
      *

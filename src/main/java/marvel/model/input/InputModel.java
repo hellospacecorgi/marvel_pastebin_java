@@ -57,8 +57,6 @@ public interface InputModel {
      */
     public String getThumbnailFullPath(CharacterInfo info);
 
-    /**
-     * Checks if given name matches a cached response in the database
-     */
+    /** Checks if given name matches a cached response in the database */
     public boolean isInfoInCache(String name);
 }
