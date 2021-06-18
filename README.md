@@ -1,9 +1,7 @@
 # SOFT3202 Exam Pre-work README
-** Special Considerations approved - sitting replacement exam (10th June extension to be applied for pre-work) **
+** 19th June UPDATE: Special Considerations approved - sitting replacement exam (<a href="https://edstem.org/courses/5417/discussion/513518?comment=1173705"> 10th June extension to be applied for pre-work state)</a> **
 
 ** Simple Extension of 2 Days applied **
-
-** Best commit to use ff99ec2907adf6b496e837f6b0dcf64934f4e274 **
 
 ** Applied for special consideration - continued pushing commits after 8th June **
 
