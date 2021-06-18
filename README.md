@@ -1,7 +1,7 @@
 # SOFT3202 Exam Pre-work README
-** Special Consdierations approved - sitting replacement exam **
+** Special Considerations approved - sitting replacement exam (10th June extension to be applied for pre-work) **
 
-** Simple Extension of 2 Days applied**
+** Simple Extension of 2 Days applied **
 
 ** Best commit to use ff99ec2907adf6b496e837f6b0dcf64934f4e274 **
 
