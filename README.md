@@ -1,4 +1,6 @@
 # SOFT3202 Exam Pre-work README
+** Special Consdierations approved - sitting replacement exam **
+
 ** Simple Extension of 2 Days applied**
 
 ** Best commit to use ff99ec2907adf6b496e837f6b0dcf64934f4e274 **
