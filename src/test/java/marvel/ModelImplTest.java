@@ -468,4 +468,78 @@ public class ModelImplTest {
             model.loadInfoFromCache(null);
         });
     }
+
+    @Test
+    public void testNotifySearchedListUpdate(){
+        //GIVEN
+        observer = mock(ModelObserver.class);
+        model.addObserver(observer);
+        ModelObserver obs2 = mock(ModelObserver.class);
+        model.addObserver(obs2);
+
+        //WHEN
+        model.getCharacterInfo("spider-man");
+        //THEN
+        verify(observer, times(1)).updateSearchedList();
+        verify(obs2, times(1)).updateSearchedList();
+    }
+
+    @Test
+    public void testSearchedListUpdateOne(){
+        //WHEN
+        model.getCharacterInfo("spider-man");
+        //THEN
+        List<String> searchedList = model.getSearchedList();
+        assertEquals(1, searchedList.size());
+        assertEquals("spider-man", searchedList.get(0));
+    }
+
+    @Test
+    public void testSearchedListUpdateMoreThanOne(){
+        //WHEN
+        model.getCharacterInfo("spider-man");
+        model.getCharacterInfo("hulk");
+        //THEN
+        List<String> searchedList = model.getSearchedList();
+        assertEquals(2, searchedList.size());
+        assertEquals("spider-man", searchedList.get(0));
+        assertEquals("hulk", searchedList.get(1));
+
+        model.getCharacterInfo("loki");
+        searchedList = model.getSearchedList();
+        assertEquals(3, searchedList.size());
+        assertEquals("loki", searchedList.get(2));
+    }
+
+    @Test
+    public void testSearchedListReplace(){
+        //WHEN
+        model.getCharacterInfo("spider-man");
+        model.getCharacterInfo("hulk");
+        model.getCharacterInfo("groot");
+        model.setIndexSelected(2);
+        model.getCharacterInfo("loki");
+        //THEN
+        List<String> searchedList = model.getSearchedList();
+        assertEquals(3, searchedList.size());
+        assertEquals("spider-man", searchedList.get(0));
+        assertEquals("hulk", searchedList.get(1));
+        assertEquals("loki", searchedList.get(2));
+    }
+
+    @Test
+    public void testSetIndexSelectedExceptions(){
+        model.setIndexSelected(0);
+        model.setIndexSelected(1);
+        model.setIndexSelected(2);
+        assertThrows(IllegalArgumentException.class, () -> {
+            model.setIndexSelected(3);
+        });
+        assertThrows(IllegalArgumentException.class, () -> {
+            model.setIndexSelected(100);
+        });
+        assertThrows(IllegalArgumentException.class, () -> {
+            model.setIndexSelected(-1);
+        });
+    }
 }
