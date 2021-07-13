@@ -63,6 +63,7 @@ public class ModelImpl implements ModelFacade{
         this.input = input;
         this.output = output;
         this.observers = new ArrayList<>();
+        this.searchedList = new ArrayList<>();
 
         input.setApiHandler(new MarvelApiHandler(handler.getInputPublicKey(), handler.getInputPrivateKey()));
         output.setApiHandler(new PastebinApiHandler(handler.getOutputKey()));
@@ -108,6 +109,15 @@ public class ModelImpl implements ModelFacade{
         }
         currentCharacter = input.getInfoByName(name);
         notifyObserversGetInfoComplete();
+        if (currentCharacter != null) {
+            if(searchedList.size() < 3){
+                searchedList.add(name);
+            } else {
+                searchedList.set(indexSelected, name);
+            }
+            searchCount++;
+            notifyObserversSearchedListUpdated();
+        }
     }
 
     /**
@@ -194,6 +204,15 @@ public class ModelImpl implements ModelFacade{
                 currentCharacter = info;
             }
             notifyObserversGetInfoComplete();
+            if (currentCharacter != null) {
+                if(searchedList.size() < 3){
+                    searchedList.add(name);
+                } else {
+                    searchedList.set(indexSelected, name);
+                }
+                searchCount++;
+                notifyObserversSearchedListUpdated();
+            }
         }
     }
 
@@ -231,7 +250,9 @@ public class ModelImpl implements ModelFacade{
      * Notify all observers to update searched list
      */
     public void notifyObserversSearchedListUpdated(){
-
+        for(int i = 0 ; i < observers.size() ; i++){
+            observers.get(i).updateSearchedList();
+        }
     }
 
     /**
@@ -239,14 +260,17 @@ public class ModelImpl implements ModelFacade{
      * @param index - integer selected by user
      */
     public void setIndexSelected(int index){
-
+        if(index < 0 || index > 2){
+            throw new IllegalArgumentException();
+        }
+        this.indexSelected = index;
     }
     /**
      * Retrieve searched list of names of characters searched
      * @return List<String> - list of names of characters searched
      */
     public List<String> getSearchedList(){
-        return null;
+        return this.searchedList;
     }
 
 

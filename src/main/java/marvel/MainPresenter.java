@@ -6,6 +6,8 @@ import marvel.model.ModelObserver;
 import marvel.model.character.*;
 import marvel.model.ModelFacade;
 
+import java.util.List;
+
 /**
  * MainPresenter class that observes the ModelFacade and MainView object that is passed in through the constructor.
  *
@@ -62,8 +64,6 @@ public class MainPresenter implements ModelObserver, ViewObserver {
     @Override
     public void onSearch(String name){
         if(lastSearched.equals(name)){
-//            //ask model to get info from API
-//            model.getCharacterInfo(name);
             Task<Void> task = new Task<Void>(){
                 @Override
                 protected Void call() throws Exception{
@@ -77,10 +77,17 @@ public class MainPresenter implements ModelObserver, ViewObserver {
             return;
         }
 
+        String instruction = "";
+        //If list is full ask user to choose integer for swapping out character in searched list
+        if(model.getSearchedList().size() == 3){
+            instruction = "List is full \n".concat("Please choose integer for matching index in list for swapping out.\n\n");
+            view.displayIndexList();
+        }
+
         //Check if there is cached data in database
         if(model.isInfoInCache(name)){
             //If cache exists - ask user for option to load from API or cache
-            view.updateMessage("Found information on " + name + " in cache, " +
+            instruction = instruction.concat("Found information on " + name + " in cache, " +
                     "\nclick <Load from cache> to get information from cache," +
                     "\nclick <Search character> to get information from API");
             lastSearched = name;
@@ -95,10 +102,10 @@ public class MainPresenter implements ModelObserver, ViewObserver {
                 }
             };
             Platform.runLater(task);
-            //ask model to get info from API
-            //model.getCharacterInfo(name);
             lastSearched = "";
         }
+
+        view.updateMessage(instruction);
     }
 
     /**
@@ -202,16 +209,27 @@ public class MainPresenter implements ModelObserver, ViewObserver {
         if(name == null || name.isEmpty()){
             throw new IllegalArgumentException();
         }
-        Task<Void> task = new Task<Void>(){
-            @Override
-            protected Void call() throws Exception{
-                model.loadInfoFromCache(name);
-                return null;
-            }
-        };
+        if(lastSearched.equals(name)) {
+            Task<Void> task = new Task<Void>() {
+                @Override
+                protected Void call() throws Exception {
+                    model.loadInfoFromCache(name);
+                    return null;
+                }
+            };
 
-        Platform.runLater(task);
-        lastSearched = "";
+            Platform.runLater(task);
+            lastSearched = "";
+            return;
+        }
+
+        String instruction = "";
+        if(model.getSearchedList().size() == 3){
+            instruction = "List is full \n".concat("Please choose integer for matching index in list for swapping out and click load from cache again\n\n");
+            view.displayIndexList();
+            view.updateMessage(instruction);
+        }
+        lastSearched = name;
     }
 
     /**
@@ -279,7 +297,12 @@ public class MainPresenter implements ModelObserver, ViewObserver {
      *
      * @param index integer chosen as index for matching
      */
+    @Override
     public void onIndexSelected(int index){
+        if(index > 3 || index < 0) {
+            throw new IllegalArgumentException();
+        }
+        model.setIndexSelected(index);
     }
 
     /**
@@ -289,7 +312,18 @@ public class MainPresenter implements ModelObserver, ViewObserver {
      */
     @Override
     public void updateSearchedList() {
-
+        List<String> searchedList = model.getSearchedList();
+        if(searchedList == null){
+            throw new IllegalStateException();
+        }
+        String message = "Searched list: ";
+        for(int i = 0 ; i < searchedList.size() ; i ++){
+            message = message.concat(String.valueOf(i)).concat(" - [");
+            message = message.concat(searchedList.get(i));
+            message = message.concat("] ");
+        }
+        System.out.println(message);
+        view.updateSearchedList(message);
     }
 
 }

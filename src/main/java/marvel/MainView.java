@@ -1,5 +1,7 @@
 package marvel;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -82,6 +84,36 @@ public class MainView {
     private TextArea searchedList;
 
     public MainView() { }
+
+    /**
+     * Display instruction, populate choice box on right hand side with 0-2 and set change listener on selected.
+     *
+     * <p>Populate choice box on right hand side for user to index for swapping out character in list when list is full</p>
+     *
+     * <p>Sets change listener on choice box when integer is selected for index to notify observers integer selected</p>
+     */
+    public void initialize() {
+        //Populate index list with 0-2
+        for(int i = 0; i < 2 + 1 ; i ++){
+            indexList.getItems().add(i);
+        }
+
+        indexList.setVisible(false);
+        listLabel.setVisible(false);
+        searchInstruction.setVisible(false);
+
+        indexList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue observableValue, Object o, Object t1) {
+                //Notify observers the integer selected
+                for(int i = 0 ; i < observers.size() ; i++){
+                    observers.get(i).onIndexSelected(Integer.valueOf((Integer) t1));
+                }
+                System.out.println("Chosen index: [ ".concat(String.valueOf(t1)).concat(" ]"));
+                listLabel.setText("Chosen index: [ ".concat(String.valueOf(t1)).concat(" ]"));
+            }
+        });
+    }
 
     /**
      * Adds a ViewObserver object to this MainView to receive notification when UI events happen.
@@ -346,4 +378,20 @@ public class MainView {
         centerTable.getColumns().addAll(name, path);
     }
 
+    /**
+     * Update searched list maintaining up to 3 characters searched by user
+     * @param list
+     */
+    public void updateSearchedList(String list){
+        searchedList.setText(list);
+    }
+
+    /**
+     * Display the choice box list for choosing index for swapping out character in searched list and instructions
+     */
+    public void displayIndexList(){
+        indexList.setVisible(true);
+        listLabel.setVisible(true);
+        searchInstruction.setVisible(true);
+    }
 }

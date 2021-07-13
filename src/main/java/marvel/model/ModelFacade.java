@@ -109,12 +109,12 @@ public interface ModelFacade {
      */
     public void notifyObserversSearchedListUpdated();
 
-
     /**
      * Sets the integer selected as index in list of searched characters
      * @param index - integer selected by user
      */
     public void setIndexSelected(int index);
+
     /**
      * Retrieve searched list of names of characters searched
      * @return List<String> - list of names of characters searched
