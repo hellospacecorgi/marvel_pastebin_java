@@ -261,13 +261,14 @@ public class MainPresenter implements ModelObserver, ViewObserver {
                 result = result.concat("\nNumber of Series: ").concat(String.valueOf(info.getNSeries()));
                 result = result.concat("\nLast modified: ").concat(info.getModified());
 
-
-
                 view.updateMessage(result);
 
                 //Update view with response
                 view.updateTableViewComics(model.getCurrentCharacter().getComicList()); //show list of comics by default
                 view.updateThumbnail(model.getImagePathByInfo(info));
+
+                //Hide index list to prevent user changing index number before next search
+                view.hideIndexList();
             }
         });
 

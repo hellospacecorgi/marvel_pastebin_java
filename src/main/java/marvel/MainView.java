@@ -394,4 +394,12 @@ public class MainView {
         listLabel.setVisible(true);
         searchInstruction.setVisible(true);
     }
+
+    /**
+     * Hide the choice box list for choosing index for swapping out character in searched list and instructions
+     */
+    public void hideIndexList(){
+        indexList.setVisible(false);
+        searchInstruction.setVisible(false);
+    }
 }
