@@ -282,4 +282,14 @@ public class MainPresenter implements ModelObserver, ViewObserver {
     public void onIndexSelected(int index){
     }
 
+    /**
+     * Performs action upon knowing the searched name list is updated in model
+     *
+     * Ask view to display updated searched list
+     */
+    @Override
+    public void updateSearchedList() {
+
+    }
+
 }
