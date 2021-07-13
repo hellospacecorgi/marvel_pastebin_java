@@ -357,7 +357,7 @@ Changed testOutputModelSendReport(), added testReportServiceGenerateReportArgsOn
 
 Methods: Changed sendReport() in OutputModel and generateReport() in ReportService signatures to take in list of unmatched characters names
 
-**RED** Commits URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/2109741168e136bee4ff3d54f9a0007b1818da398">2109741168e136bee4ff3d54f9a0007b1818da39</a>
+**RED** Commits URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/2109741168e136bee4ff3d54f9a0007b1818da39">2109741168e136bee4ff3d54f9a0007b1818da39</a>
 
 **GREEN** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/46987b6ff221a8af67f6683e494f2c85614f1afb">46987b6ff221a8af67f6683e494f2c85614f1afb</a>
 
