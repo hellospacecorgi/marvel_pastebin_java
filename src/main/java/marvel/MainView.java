@@ -3,10 +3,7 @@ package marvel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -59,6 +56,30 @@ public class MainView {
      * A list of ViewObserver objects to be notified of UI events
      */
     List<ViewObserver> observers;
+
+    /**
+     * Allow choice of integers to be selected by user for matching index in list
+     */
+    @FXML
+    private ChoiceBox indexList;
+
+    /**
+     * Reference to label above choice box in bottom right corner
+     */
+    @FXML
+    private Label listLabel;
+
+    /**
+     * Reference to text area for search instructions
+     */
+    @FXML
+    private TextArea searchInstruction;
+
+    /**
+     * Reference to text area in lower left panel for displaying searched list of characters
+     */
+    @FXML
+    private TextArea searchedList;
 
     public MainView() { }
 

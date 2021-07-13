@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
@@ -35,6 +36,20 @@
                <children>
                   <VBox prefHeight="109.0" prefWidth="560.0" HBox.hgrow="ALWAYS">
                      <children>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <TextArea fx:id="searchedList" prefHeight="11.0" prefWidth="662.0" style="-fx-background-color: #0000;" styleClass="label" text="Searched list: 0 - [] 1- [] 2 - []" wrapText="true">
+                                 <font>
+                                    <Font size="26.0" />
+                                 </font>
+                              </TextArea>
+                              <TextArea fx:id="searchInstruction" prefHeight="11.0" prefWidth="662.0" style="-fx-background-color: #0000;" styleClass="label" text="List is full - choose index (0-2) for swapping out in list " wrapText="true">
+                                 <font>
+                                    <Font size="26.0" />
+                                 </font>
+                              </TextArea>
+                           </children>
+                        </HBox>
                         <TextArea fx:id="message" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #0000;" styleClass="label" text="hello! &#10;Please give specified character name in the search field and click search button to begin searching. &#10;Upon successful response,  information about the character will be displayed here,&#10;additionally, the top bar buttons can be used to view lists of resources related to that character.&#10;&#10;After a successful search, clicking the send report button will generate a report on the character data to a paste,&#10;where the URL to pastebin will be displayed here." wrapText="true" VBox.vgrow="ALWAYS">
                            <VBox.margin>
                               <Insets right="5.0" />
@@ -47,6 +62,8 @@
                   </VBox>
                   <VBox alignment="BOTTOM_RIGHT" prefHeight="183.0" prefWidth="238.0">
                      <children>
+                        <Label fx:id="listLabel" prefHeight="26.0" prefWidth="129.0" text="Choose index (0 - 2)" />
+                        <ChoiceBox fx:id="indexList" prefHeight="21.0" prefWidth="132.0" styleClass="choicebox" />
                         <TextField fx:id="characterName" prefHeight="23.0" prefWidth="351.0" promptText="Enter name for searching">
                            <VBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

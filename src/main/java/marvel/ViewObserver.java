@@ -39,4 +39,10 @@ public interface ViewObserver {
      * Performs operation knwoing the Load from cache button was clicked
      */
     public void onLoadFromCache(String name);
+    /**
+     * Performs operation knowing the index chosen for matching is selected
+     *
+     * @param index Integer chosen as index in list
+     */
+    public void onIndexSelected(int index);
 }

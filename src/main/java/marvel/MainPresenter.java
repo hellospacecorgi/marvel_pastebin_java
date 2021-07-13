@@ -273,4 +273,13 @@ public class MainPresenter implements ModelObserver, ViewObserver {
             }
         });
     }
+
+    /**
+     * Performs operation knowing the index chosen for matching is selected
+     *
+     * @param index integer chosen as index for matching
+     */
+    public void onIndexSelected(int index){
+    }
+
 }
