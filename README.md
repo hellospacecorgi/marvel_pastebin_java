@@ -1,9 +1,6 @@
-# SOFT3202 Exam Pre-work README
-** 19th June UPDATE: Special Considerations approved - sitting replacement exam (<a href="https://edstem.org/courses/5417/discussion/513518?comment=1173705"> 10th June extension to be applied for pre-work state)</a> **
+# SOFT3202 Examination README
 
-** Simple Extension of 2 Days applied **
-
-** Applied for special consideration - continued pushing commits after 8th June **
+** Note 19th June: Special Considerations approved - sitting replacement exam (<a href="https://edstem.org/courses/5417/discussion/513518?comment=1173705"> 10th June extension to be applied for pre-work state)</a> **
 
 * [How to run application](#how-to-run-application)
 * [Feature claim - DISTINCTION](#feature-claim)
@@ -96,6 +93,9 @@ Note to marker:
 
 ### Commits during development for credit requirement features
 * [Credit set 1](#credit-set-1), [Credit set 2](#credit-set-2), [Credit set 3](#credit-set-3)
+
+### Commits during Replacement Examination for extension features
+* [Exam set 1](#exam-set-1), [Exam set 2](#exam-set-2)
 
 ### Pass set 1
 
@@ -327,12 +327,40 @@ Methods: getCharacterInfoByName() in ModelImpl and setCacheHandler() in InputMod
 
 ---
 
+### Exam set 1
+
+For index integer selection and searched list tracking feature,
+
+Tests: testNotifySearchedListUpdate(), testSearchedListUpdateOne(), testSearchedListUpdateMoreThanOne(), testSearchedListReplace(), testSetIndexSelectedExceptions() in ModelImplTest
+
+Methods: setIndexSelected(int index); notifyObserversSearchedListUpdated(); List<String> getSearchedList(); in ModelImpl
+
+**RED** Commits URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/1921be24c698284db8aefdeeae2094ff55bde3a6">1921be24c698284db8aefdeeae2094ff55bde3a6</a>
+
+**GREEN** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/d40d0ba8bc71398eda660691e8cec003db3485bf">d40d0ba8bc71398eda660691e8cec003db3485bf</a>
+
+
+### Exam set 2
+
+For adding unmatched names at end of report feature,
+
+Tests: Changed testSendReportFacade, added testSendReportWithNamesList() in ModelImplTest
+
+Changed testOutputModelSendReport(), added testReportServiceGenerateReportArgsOneInList(), TwoInList(), ThreeInList(), ReplacedInList(), NullListExceptions() in OnlinePasteBinModelTest
+
+Methods: Changed sendReport() in OutputModel and generateReport() in ReportService signatures to take in list of unmatched characters names
+
+**RED** Commits URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/2109741168e136bee4ff3d54f9a0007b1818da398">2109741168e136bee4ff3d54f9a0007b1818da39</a>
+
+**GREEN** Commit URL: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/46987b6ff221a8af67f6683e494f2c85614f1afb">46987b6ff221a8af67f6683e494f2c85614f1afb</a>
+
+---
+
 ### Javadoc location
 
 Javadoc documentation for the project is located under `docs` folder
   
 ### Citations for code in previous unit
-
 
 ### References
 
