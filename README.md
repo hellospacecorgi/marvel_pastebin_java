@@ -5,10 +5,17 @@
 * [How to run application](#how-to-run-application)
 * [Feature claim - DISTINCTION](#feature-claim)
 * [RED-GREEN-REFACTOR commits](#red-green-refactor-commits)
+* [TDD for exam extension features](#exam-set-1)
 
 ## Assigned APIs
 
 Input: https://developer.marvel.com/ Output: https://pastebin.com/doc_api
+
+## Assigned exam extension
+
+Maintain a list of up to 3 characters - this list should be empty when the application starts. As the user searches for characters, add them to the list in order of when they were searched. When the list is full and the user searches for a character, ask them for an index from 0 to 2, and swap out the matching index with the new character. Display this list in your GUI. 
+
+When the user requests a report, include the information on the last matched character, but also include the names of any other characters in the list in brackets at the end, eg if index 1 was matched then the brackets would be (name0) (name2), omitting any that are empty.
 
 ---
 
