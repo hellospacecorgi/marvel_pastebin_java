@@ -39,6 +39,21 @@ public class ModelImpl implements ModelFacade{
     List<ModelObserver> observers;
 
     /**
+     * Reference integer selected as matching index in search list
+     */
+    private int indexSelected;
+
+    /**
+     * Contains names of characters searched
+     */
+    private List<String> searchedList;
+
+    /**
+     * Number of searches performed
+     */
+    private int searchCount = 0;
+
+    /**
      * Takes in a version of InputModel and OutputModel for online/offline versions.
      * @param input A InputModel object that can be online or offline
      * @param output A OutputModel object that can be online or offline
@@ -210,6 +225,28 @@ public class ModelImpl implements ModelFacade{
         for(int i = 0 ; i < observers.size() ; i++){
             observers.get(i).updateReportUrl();
         }
+    }
+
+    /**
+     * Notify all observers to update searched list
+     */
+    public void notifyObserversSearchedListUpdated(){
+
+    }
+
+    /**
+     * Sets the integer selected as index in list of searched characters
+     * @param index - integer selected by user
+     */
+    public void setIndexSelected(int index){
+
+    }
+    /**
+     * Retrieve searched list of names of characters searched
+     * @return List<String> - list of names of characters searched
+     */
+    public List<String> getSearchedList(){
+        return null;
     }
 
 

@@ -13,4 +13,9 @@ public interface ModelObserver {
      * Performs action upon knowing paste report URL is obtained in model
      */
     public void updateReportUrl();
+
+    /**
+     * Performs action upon knowing the searched name list is updated in model
+     */
+    public void updateSearchedList();
 }

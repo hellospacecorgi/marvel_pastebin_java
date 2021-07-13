@@ -63,6 +63,18 @@ public class ModelImplTest {
      * Reference to a character object used in tests
      */
     CharacterInfo spiderman;
+    /**
+     * Reference to a character object used in tests
+     */
+    CharacterInfo hulk;
+    /**
+     * Reference to a character object used in tests
+     */
+    CharacterInfo groot;
+    /**
+     * Reference to a character object used in tests
+     */
+    CharacterInfo loki;
 
 
     /**
@@ -87,12 +99,18 @@ public class ModelImplTest {
         urls.add(new ResourceUrl("wiki", "dummy-url.com"));
         urls.add(new ResourceUrl("blog", "another-dummy.com"));
         Thumbnail thb = new Thumbnail("./src/main/resources/marvel/dummy.png", "png");
-        spiderman = new CharacterInfo(1234, "spiderman","Can jump around buildings", "1999-99-99");
+        spiderman = new CharacterInfo(1234, "spider-man","Can jump around buildings", "1999-99-99");
         spiderman.setUrls(urls);
         spiderman.setThumbnail(new Thumbnail("fakepath", "jpg"));
+        hulk = new CharacterInfo(324, "hulk","Very mad", "1999-99-99");
+        groot = new CharacterInfo(34, "groot","Am groot", "1999-99-99");
+        loki = new CharacterInfo(114, "loki","Evil", "1999-99-99");
 
         //GIVEN searching for valid character name search triggered will return valid CharacterInfo built from data
         when(input.getInfoByName("spider-man")).thenReturn(spiderman);
+        when(input.getInfoByName("hulk")).thenReturn(hulk);
+        when(input.getInfoByName("groot")).thenReturn(groot);
+        when(input.getInfoByName("loki")).thenReturn(loki);
 
         //GIVEN searching for invalid character name - Not a marvel character will return null
         when(input.getInfoByName("wonder-woman")).thenReturn(null);
@@ -127,7 +145,7 @@ public class ModelImplTest {
 
         //THEN - expect returned CharacterInfo object matches expected valid object
         assertEquals(1234, model.getCurrentCharacter().getId());
-        assertEquals("spiderman", model.getCurrentCharacter().getName());
+        assertEquals("spider-man", model.getCurrentCharacter().getName());
         assertEquals("fakepath", model.getCurrentCharacter().getThumbnail().getPath());
         List<ResourceUrl> urls = model.getCurrentCharacter().getUrls();
         assertEquals(2, urls.size());
