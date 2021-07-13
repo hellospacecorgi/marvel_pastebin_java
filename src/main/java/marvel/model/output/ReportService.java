@@ -63,7 +63,14 @@ public class ReportService {
             report = report.concat(" Resource URI: ").concat(info.getSeriesList().get(i).getResourcePath());
         }
 
-        report = report.concat("\n\nData provided by Marvel. 2021 MARVEL");
+        report = report.concat("\n\nData provided by Marvel. 2021 MARVEL\n");
+
+        //Add unmatched names at end of report
+        if(unmatchedNames != null){
+            for(int i = 0; i < unmatchedNames.size() ; i ++){
+                report = report.concat("(").concat(unmatchedNames.get(i)).concat(") ");
+            }
+        }
         return report;
     }
 

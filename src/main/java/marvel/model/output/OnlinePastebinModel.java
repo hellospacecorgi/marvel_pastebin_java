@@ -56,9 +56,10 @@ public class OnlinePastebinModel implements OutputModel{
         if(info == null){
             return false;
         }
-
-        String report = service.generateReport(info, null);
-
+        if(unmatchedNames == null){
+            throw new IllegalArgumentException();
+        }
+        String report = service.generateReport(info, unmatchedNames);
         return handler.sendReport(info.getName(), report);
     }
 

@@ -156,7 +156,17 @@ public class ModelImpl implements ModelFacade{
         if(info == null){
             return;
         }
-        output.sendReport(info, null);
+
+        List<String> unmatchedNames = new ArrayList<>();
+        if(searchCount < 4){
+            indexSelected = searchedList.size() - 1;
+        }
+        for(int i = 0 ; i < searchedList.size() ; i ++){
+            if(i != indexSelected){
+                unmatchedNames.add(searchedList.get(i));
+            }
+        }
+        output.sendReport(info, unmatchedNames);
         notifyObserversSendReportComplete();
     }
     /**

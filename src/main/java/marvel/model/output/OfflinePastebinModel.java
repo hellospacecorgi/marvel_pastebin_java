@@ -10,6 +10,10 @@ import java.util.List;
  * @see OutputModel
  */
 public class OfflinePastebinModel implements OutputModel{
+    /**
+     * Service for generating report based on CharacterInfo given
+     */
+    private ReportService service;
 
     /**
      * Inherited from OutputModel interface - no usage in offline model.
@@ -25,7 +29,9 @@ public class OfflinePastebinModel implements OutputModel{
      * @param service service for generating report based on CharacterInfo - ignored
      */
     @Override
-    public void setReportService(ReportService service) { }
+    public void setReportService(ReportService service) {
+        this.service = service;
+    }
 
     /**
      * Simulate send report request is processed by returning boolean value.
@@ -39,6 +45,11 @@ public class OfflinePastebinModel implements OutputModel{
         if(info == null){
             return false;
         }
+        if(unmatchedNames == null){
+            throw new IllegalArgumentException();
+        }
+        String report = service.generateReport(info, unmatchedNames);
+        System.out.println(report);
         return true;
     }
 
