@@ -2,6 +2,8 @@ package marvel.model.output;
 
 import marvel.model.character.CharacterInfo;
 
+import java.util.List;
+
 /**
  * Online version implementation of OutputModel. Sends data to the live Pastebin API.
  *
@@ -43,10 +45,11 @@ public class OnlinePastebinModel implements OutputModel{
      * <p>Delegates actual sending of HttpRequest to PastebinApiHandler</p>
      *
      * @param info CharacterInfo object containing data to generate report for
+     * @param unmatchedNames List of names that are not at the selected index in the list
      * @return boolean - return true if report successfully sent, otherwise null
      */
     @Override
-    public boolean sendReport(CharacterInfo info) {
+    public boolean sendReport(CharacterInfo info, List<String> unmatchedNames) {
         if(this.handler == null || this.service == null){
             throw new IllegalStateException();
         }
@@ -54,7 +57,7 @@ public class OnlinePastebinModel implements OutputModel{
             return false;
         }
 
-        String report = service.generateReport(info);
+        String report = service.generateReport(info, null);
 
         return handler.sendReport(info.getName(), report);
     }

@@ -2,6 +2,8 @@ package marvel.model.output;
 
 import marvel.model.character.CharacterInfo;
 
+import java.util.List;
+
 /**
  * Helper class that creates report string from CharacterInfo object
  */
@@ -11,9 +13,10 @@ public class ReportService {
      * Takes in a CharacterInfo object, generates a string report based on it's attributes
      *
      * @param info CharacterInfo object that contains data
+     * @param unmatchedNames List of names that are not at the selected index in the list
      * @return String - Report on character's information that is formatted for readability
      */
-    public String generateReport(CharacterInfo info){
+    public String generateReport(CharacterInfo info, List<String> unmatchedNames){
         if(info == null){
             return null;
         }

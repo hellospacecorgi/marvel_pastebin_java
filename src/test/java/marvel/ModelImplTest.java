@@ -10,6 +10,7 @@ import marvel.model.output.OutputModel;
 import marvel.model.output.ReportService;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -261,14 +262,43 @@ public class ModelImplTest {
     @Test
     public void testSendReportFacade(){
         //WHEN
+        model.getCharacterInfo("spider-man");
         model.sendReport(spiderman);
         //THEN
-        verify(output, times(1)).sendReport(spiderman);
+        ArgumentCaptor<List<String>> captor = ArgumentCaptor.forClass(List.class);
+        verify(output, times(1)).sendReport(eq(spiderman), captor.capture());
+        List<String> capturedList = captor.getValue();
+        assertEquals(0, capturedList.size());
 
         //WHEN
         model.sendReport(null);
         //THEN
-        verify(output, times(1)).sendReport(spiderman);
+        verify(output, times(1)).sendReport(eq(spiderman), captor.capture());
+
+    }
+
+    @Test
+    public void testSendReportWithNamesList(){
+        //WHEN
+        model.getCharacterInfo("spider-man");
+        model.getCharacterInfo("hulk");
+        model.getCharacterInfo("groot");
+        model.setIndexSelected(0);
+        model.getCharacterInfo("loki");
+        model.sendReport(loki);
+        //THEN
+        ArgumentCaptor<List<String>> captor = ArgumentCaptor.forClass(List.class);
+        verify(output, times(1)).sendReport(eq(loki), anyList());
+        verify(output).sendReport(eq(loki), captor.capture());
+        List<String> capturedList = captor.getValue();
+        assertEquals(2, capturedList.size());
+        assertEquals("hulk", capturedList.get(0));
+        assertEquals("groot", capturedList.get(1));
+
+        //WHEN
+        model.sendReport(null);
+        //THEN
+        verify(output, times(1)).sendReport(eq(loki), anyList());
 
     }
 

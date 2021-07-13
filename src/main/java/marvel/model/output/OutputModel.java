@@ -2,6 +2,8 @@ package marvel.model.output;
 
 import marvel.model.character.CharacterInfo;
 
+import java.util.List;
+
 /**
  * Submodel interface for methods relating to interacting with the output Pastebin API.
  *
@@ -28,9 +30,10 @@ public interface OutputModel {
      * Generate a report based on given CharacterInfo, sends report to output API
      *
      * @param info CharacterInfo object containing data to generate report on
+     * @param unmatchedNames List of names that are not at the selected index in the list
      * @return boolean - return true if report successfully sent, otherwise null
      */
-    public boolean sendReport(CharacterInfo info);
+    public boolean sendReport(CharacterInfo info,  List<String> unmatchedNames);
 
     /**
      * Retrieves the URL of paste created for last report sent

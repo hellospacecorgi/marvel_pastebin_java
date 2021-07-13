@@ -14,12 +14,12 @@ import marvel.model.output.PastebinApiHandler;
 import marvel.model.output.ReportService;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
@@ -129,7 +129,34 @@ public class OnlinePastebinModelTest {
 
         //GIVEN
         output = new OnlinePastebinModel();
-        input = mock(InputModel.class);
+        ConfigHandler config = new ConfigHandler(configFilePath);
+        model = new ModelImpl(input, output, config);
+        PastebinApiHandler handler = mock(PastebinApiHandler.class);
+        ReportService service = new ReportService();
+        output.setReportService(service);
+        output.setApiHandler(handler);
+        when(handler.sendReport(anyString(), anyString())).thenReturn(true);
+
+        //WHEN
+        model.getCharacterInfo("spider-man");
+        model.getCharacterInfo("hulk");
+        model.getCharacterInfo("groot");
+        model.setIndexSelected(0);
+        model.getCharacterInfo("spider-man");
+        model.sendReport(spiderman);
+        //THEN
+        ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
+        verify(handler, times(1)).sendReport(anyString(), captor.capture());
+        String capturedReport = captor.getValue();
+        assertTrue(capturedReport.contains("(hulk) (groot)"));
+
+    }
+
+    @Test
+    public void testReportServiceGenerateReportArgsOneInList(){
+
+        //GIVEN
+        output = new OnlinePastebinModel();
         ConfigHandler config = new ConfigHandler(configFilePath);
         model = new ModelImpl(input, output, config);
         PastebinApiHandler handler = mock(PastebinApiHandler.class);
@@ -137,12 +164,126 @@ public class OnlinePastebinModelTest {
         output.setReportService(service);
         output.setApiHandler(handler);
         when(handler.sendReport(anyString(), anyString())).thenReturn(true);
-        when(service.generateReport(spiderman)).thenReturn("report");
 
         //WHEN
+        model.getCharacterInfo("spider-man");
         model.sendReport(spiderman);
         //THEN
-        verify(handler, times(1)).sendReport(anyString(), anyString());
+        ArgumentCaptor<List<String>> captor = ArgumentCaptor.forClass(List.class);
+        verify(service, times(1)).generateReport(eq(spiderman), captor.capture());
+        List<String> capturedList = captor.getValue();
+        assertEquals(0, capturedList.size());
+
+    }
+
+    @Test
+    public void testReportServiceGenerateReportArgsTwoInList(){
+
+        //GIVEN
+        output = new OnlinePastebinModel();
+        ConfigHandler config = new ConfigHandler(configFilePath);
+        model = new ModelImpl(input, output, config);
+        PastebinApiHandler handler = mock(PastebinApiHandler.class);
+        ReportService service = mock(ReportService.class);
+        output.setReportService(service);
+        output.setApiHandler(handler);
+        when(handler.sendReport(anyString(), anyString())).thenReturn(true);
+
+        //WHEN
+        model.getCharacterInfo("hulk");
+        model.getCharacterInfo("spider-man");
+        model.sendReport(spiderman);
+        //THEN
+        ArgumentCaptor<List<String>> captor = ArgumentCaptor.forClass(List.class);
+        verify(service, times(1)).generateReport(eq(spiderman), captor.capture());
+        List<String> capturedList = captor.getValue();
+        assertEquals(1, capturedList.size());
+        assertEquals("hulk", capturedList.get(0));
+
+    }
+
+    @Test
+    public void testReportServiceGenerateReportArgsThreeInList(){
+
+        //GIVEN
+        output = new OnlinePastebinModel();
+        ConfigHandler config = new ConfigHandler(configFilePath);
+        model = new ModelImpl(input, output, config);
+        PastebinApiHandler handler = mock(PastebinApiHandler.class);
+        ReportService service = mock(ReportService.class);
+        output.setReportService(service);
+        output.setApiHandler(handler);
+        when(handler.sendReport(anyString(), anyString())).thenReturn(true);
+
+        //WHEN
+        model.getCharacterInfo("hulk");
+        model.getCharacterInfo("groot");
+        model.getCharacterInfo("spider-man");
+        model.sendReport(spiderman);
+        //THEN
+        ArgumentCaptor<List<String>> captor = ArgumentCaptor.forClass(List.class);
+        verify(service, times(1)).generateReport(eq(spiderman), captor.capture());
+        List<String> capturedList = captor.getValue();
+        System.out.println(capturedList);
+        System.out.println(model.getSearchedList());
+        assertEquals(2, capturedList.size());
+        assertEquals("hulk", capturedList.get(0));
+        assertEquals("groot", capturedList.get(1));
+
+    }
+
+    @Test
+    public void testReportServiceGenerateReportArgsReplacedInList(){
+
+        //GIVEN
+        output = new OnlinePastebinModel();
+        ConfigHandler config = new ConfigHandler(configFilePath);
+        model = new ModelImpl(input, output, config);
+        PastebinApiHandler handler = mock(PastebinApiHandler.class);
+        ReportService service = mock(ReportService.class);
+        output.setReportService(service);
+        output.setApiHandler(handler);
+        when(handler.sendReport(anyString(), anyString())).thenReturn(true);
+
+        //WHEN
+        model.getCharacterInfo("hulk");
+        model.getCharacterInfo("groot");
+        model.getCharacterInfo("spider-man");
+        model.setIndexSelected(1);
+        model.getCharacterInfo("loki");
+        model.sendReport(loki);
+        //THEN
+        ArgumentCaptor<List<String>> captor = ArgumentCaptor.forClass(List.class);
+        verify(service, times(1)).generateReport(eq(loki), captor.capture());
+        List<String> capturedList = captor.getValue();
+        assertEquals(2, capturedList.size());
+        assertEquals("hulk", capturedList.get(0));
+        assertEquals("spider-man", capturedList.get(1));
+
+        List<String> namesList = model.getSearchedList();
+        assertEquals("hulk", namesList.get(0));
+        assertEquals("loki", namesList.get(1));
+        assertEquals("spider-man", namesList.get(2));
+
+
+    }
+
+    @Test
+    public void testSendReportNullUnmatchedNamesListExceptions(){
+        //GIVEN
+        output = new OnlinePastebinModel();
+        ConfigHandler config = new ConfigHandler(configFilePath);
+        model = new ModelImpl(input, output, config);
+        PastebinApiHandler handler = mock(PastebinApiHandler.class);
+        ReportService service = mock(ReportService.class);
+        output.setReportService(service);
+        output.setApiHandler(handler);
+        when(handler.sendReport(anyString(), anyString())).thenReturn(true);
+
+        //THEN
+        assertThrows(IllegalArgumentException.class, () -> {
+            output.sendReport(spiderman, null);
+        });
 
     }
 
@@ -222,8 +363,8 @@ public class OnlinePastebinModelTest {
         output = new OnlinePastebinModel();
         model = new ModelImpl(input, output, handler);
         ReportService service = mock(ReportService.class);
-        when(service.generateReport(null)).thenReturn(null);
-        when(service.generateReport(spiderman)).thenReturn("report");
+        when(service.generateReport(eq(null), anyList())).thenReturn(null);
+        when(service.generateReport(eq(spiderman), anyList())).thenReturn("report");
 
         PastebinApiHandler pastebinHandler = mock(PastebinApiHandler.class);
         model.getOutputSubModel().setApiHandler(pastebinHandler);
@@ -249,15 +390,15 @@ public class OnlinePastebinModelTest {
         model.getOutputSubModel().setReportService(service);
         PastebinApiHandler pastebinHandler = mock(PastebinApiHandler.class);
         model.getOutputSubModel().setApiHandler(pastebinHandler);
-        when(service.generateReport(null)).thenReturn(null);
-        when(service.generateReport(spiderman)).thenReturn("report");
+        when(service.generateReport(null, null)).thenReturn(null);
+        when(service.generateReport(eq(spiderman), anyList())).thenReturn("report");
 
         //WHEN
         model.sendReport(spiderman);
 
         //THEN
         verify(pastebinHandler, times(1)).sendReport(anyString(), anyString());
-        verify(service, times(1)).generateReport(spiderman);
+        verify(service, times(1)).generateReport(eq(spiderman), anyList());
     }
 
 }

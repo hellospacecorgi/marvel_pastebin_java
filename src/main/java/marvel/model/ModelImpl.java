@@ -156,7 +156,7 @@ public class ModelImpl implements ModelFacade{
         if(info == null){
             return;
         }
-        output.sendReport(info);
+        output.sendReport(info, null);
         notifyObserversSendReportComplete();
     }
     /**
