@@ -63,7 +63,10 @@
                   <VBox alignment="BOTTOM_RIGHT" prefHeight="183.0" prefWidth="238.0">
                      <children>
                         <Label fx:id="listLabel" prefHeight="26.0" prefWidth="129.0" text="Choose index (0 - 2)" />
-                        <ChoiceBox fx:id="indexList" prefHeight="21.0" prefWidth="132.0" styleClass="choicebox" />
+                        <ChoiceBox fx:id="indexList" prefHeight="21.0" prefWidth="132.0" styleClass="choicebox">
+                           <VBox.margin>
+                              <Insets right="5.0" />
+                           </VBox.margin></ChoiceBox>
                         <TextField fx:id="characterName" prefHeight="23.0" prefWidth="351.0" promptText="Enter name for searching">
                            <VBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
