@@ -2,6 +2,8 @@
 
 ** Note 19th June: Special Considerations approved - sitting replacement exam (<a href="https://edstem.org/courses/5417/discussion/513518?comment=1173705"> 10th June extension to be applied for pre-work state)</a> **
 
+Pre-work version: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/06e8273b9107810a16a0bdd613183e71a4e411f7">06e8273b9107810a16a0bdd613183e71a4e411f7</a>(last commit on 10th June)
+
 * [How to run application](#how-to-run-application)
 * [Feature claim - DISTINCTION](#feature-claim)
 * [RED-GREEN-REFACTOR commits](#red-green-refactor-commits)
