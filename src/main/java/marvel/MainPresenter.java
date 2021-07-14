@@ -80,7 +80,7 @@ public class MainPresenter implements ModelObserver, ViewObserver {
         String instruction = "";
         //If list is full ask user to choose integer for swapping out character in searched list
         if(model.getSearchedList().size() == 3){
-            instruction = "List is full \n".concat("Please choose integer for matching index in list for swapping out.\n\n");
+            instruction = "List is full \n".concat("Please choose integer for matching index in list for swapping out and click search again to retrieve result.\n\n");
             view.displayIndexList();
             lastSearched = name;
         }
