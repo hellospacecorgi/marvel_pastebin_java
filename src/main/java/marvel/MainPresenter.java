@@ -82,6 +82,7 @@ public class MainPresenter implements ModelObserver, ViewObserver {
         if(model.getSearchedList().size() == 3){
             instruction = "List is full \n".concat("Please choose integer for matching index in list for swapping out.\n\n");
             view.displayIndexList();
+            lastSearched = name;
         }
 
         //Check if there is cached data in database
@@ -93,16 +94,19 @@ public class MainPresenter implements ModelObserver, ViewObserver {
             lastSearched = name;
 
         } else {
-            Task<Void> task = new Task<Void>(){
-                @Override
-                protected Void call() throws Exception{
-                    //ask model to get info from API
-                    model.getCharacterInfo(name);
-                    return null;
-                }
-            };
-            Platform.runLater(task);
-            lastSearched = "";
+            if(model.getSearchedList().size() < 3){
+                Task<Void> task = new Task<Void>(){
+                    @Override
+                    protected Void call() throws Exception{
+                        //ask model to get info from API
+                        model.getCharacterInfo(name);
+                        return null;
+                    }
+                };
+                Platform.runLater(task);
+                lastSearched = "";
+            }
+
         }
 
         view.updateMessage(instruction);
@@ -268,7 +272,7 @@ public class MainPresenter implements ModelObserver, ViewObserver {
                 view.updateThumbnail(model.getImagePathByInfo(info));
 
                 //Hide index list to prevent user changing index number before next search
-                view.hideIndexList();
+                //view.hideIndexList();
             }
         });
 
