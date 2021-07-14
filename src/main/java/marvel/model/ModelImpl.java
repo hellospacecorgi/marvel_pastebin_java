@@ -39,17 +39,19 @@ public class ModelImpl implements ModelFacade{
     List<ModelObserver> observers;
 
     /**
-     * Reference integer selected as matching index in search list
+     * Reference integer selected by user
+     *
+     * <p>Used as matching index in search list for swapping out names when list is full</p>
      */
     private int indexSelected;
 
     /**
-     * Contains names of characters searched
+     * Contains up to 3 names of characters searched by user
      */
     private List<String> searchedList;
 
     /**
-     * Number of searches performed
+     * Number of searches performed by user
      */
     private int searchCount = 0;
 
@@ -93,9 +95,17 @@ public class ModelImpl implements ModelFacade{
     }
 
     /**
-     * Ask input sub model to conduct search for character information with provided name.
+     * Performs operations needed to retrieve information on character matching given name
      *
-     * <p>Calls notifyObserverGetInfoComplete() to notify all observers when operation is done.</p>
+     * <p>Ask input sub model to conduct search for character information with provided name.</p>
+     *
+     * <p>Upon successful search, update searched list with names of character,
+     * adding name to list in order of search when list is not full and
+     * replacing name in list at matching index chosen by user when list is full</p>
+     *
+     * <p>After input model completed request, notify observers request complete</p>
+     *
+     * <p>After searched list is updated, notify observers about the update</p>
      *
      * @param name String of name of character to search API with.
      */
@@ -109,6 +119,8 @@ public class ModelImpl implements ModelFacade{
         }
         currentCharacter = input.getInfoByName(name);
         notifyObserversGetInfoComplete();
+
+        //Add name to search list and notify observers
         if (currentCharacter != null) {
             if(searchedList.size() < 3){
                 searchedList.add(name);
@@ -194,12 +206,19 @@ public class ModelImpl implements ModelFacade{
     }
 
     /**
-     * Ask input model to search for record with name as key from cache,
+     * Performs operations needed to retrieve information on character matching given name from the cache database
      *
-     * <p>If found and CharacterInfo created from record,
-     * set current character reference to it</p>
+     * <p>Ask input model to search for record with name as key from cache</p>
+     *
+     * <p>If found and CharacterInfo created from record, set current character reference to it</p>
+     *
+     * <p>Upon successful retrieval, update searched list with name of character,
+     * adding name to list in order of search when list is not full and
+     * replacing name in list at matching index chosen by user when list is full</p>
      *
      * <p>After input model completed request, notify observers request complete</p>
+     *
+     * <p>After searched list is updated, notify observers about the update</p>
      *
      * @param name String to search database for matching record
      */
@@ -214,6 +233,8 @@ public class ModelImpl implements ModelFacade{
                 currentCharacter = info;
             }
             notifyObserversGetInfoComplete();
+
+            //Add name to search list and notify observers
             if (currentCharacter != null) {
                 if(searchedList.size() < 3){
                     searchedList.add(name);
@@ -267,7 +288,8 @@ public class ModelImpl implements ModelFacade{
 
     /**
      * Sets the integer selected as index in list of searched characters
-     * @param index - integer selected by user
+     *
+     * @param index integer selected by user to be used for swapping out names in searched list, must be in range 0-2
      */
     public void setIndexSelected(int index){
         if(index < 0 || index > 2){
@@ -277,6 +299,7 @@ public class ModelImpl implements ModelFacade{
     }
     /**
      * Retrieve searched list of names of characters searched
+     *
      * @return List<String> - list of names of characters searched
      */
     public List<String> getSearchedList(){

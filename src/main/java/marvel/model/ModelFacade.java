@@ -111,12 +111,14 @@ public interface ModelFacade {
 
     /**
      * Sets the integer selected as index in list of searched characters
-     * @param index - integer selected by user
+     *
+     * @param index integer selected by user to be used for swapping out names in searched list, must be in range 0-2
      */
     public void setIndexSelected(int index);
 
     /**
      * Retrieve searched list of names of characters searched
+     *
      * @return List<String> - list of names of characters searched
      */
     public List<String> getSearchedList();

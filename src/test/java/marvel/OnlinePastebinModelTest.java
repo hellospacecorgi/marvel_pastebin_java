@@ -123,6 +123,8 @@ public class OnlinePastebinModelTest {
      * <p>Testing with mock PastebinApiHandler, testing interaction between OnlinePastebinModel and PastebinHandler.
      *
      * <p>PastebinApiHandler is mocked using Mockito</p>
+     *
+     * <p>Verify report string passed to handler includes unmatched names in brackets using ArgumentCaptor</p>
      */
     @Test
     public void testOutputModelSendReport(){
@@ -152,6 +154,10 @@ public class OnlinePastebinModelTest {
 
     }
 
+    /**
+     * Testing size and content of unmatched names list passed to ReportService in the case when searched list only has 1 name
+     * verify that generateReport is called with unmatched names list that has size of 0 (empty)
+     */
     @Test
     public void testReportServiceGenerateReportArgsOneInList(){
 
@@ -176,6 +182,11 @@ public class OnlinePastebinModelTest {
 
     }
 
+    /**
+     * Testing size and content of unmatched names list passed to ReportService in the case when searched list has 2 names
+     * verify that generateReport is called with unmatched names list that has size of 1,
+     * and the unmatched name is the one that is not at the matching index
+     */
     @Test
     public void testReportServiceGenerateReportArgsTwoInList(){
 
@@ -202,6 +213,11 @@ public class OnlinePastebinModelTest {
 
     }
 
+    /**
+     * Testing size and content of unmatched names list passed to ReportService in the case when searched list has 3 names
+     * verify that generateReport is called with unmatched names list that has size of 2,
+     * and the unmatched names are the ones that are not at the matching index
+     */
     @Test
     public void testReportServiceGenerateReportArgsThreeInList(){
 
@@ -231,7 +247,13 @@ public class OnlinePastebinModelTest {
         assertEquals("groot", capturedList.get(1));
 
     }
-
+    /**
+     * Testing size and content of unmatched names list passed to ReportService in the case when searched list has 3 names,
+     * and the searched list underwent index selection and swapping a name out at the selected index
+     *
+     * <p>Verify that generateReport is called with unmatched names list that has size of 2,
+     * and the unmatched names are the ones that are not at the matching index</p>
+     */
     @Test
     public void testReportServiceGenerateReportArgsReplacedInList(){
 
@@ -268,6 +290,9 @@ public class OnlinePastebinModelTest {
 
     }
 
+    /**
+     * Testing expected exception thrown when a null unmatched names list is passed to sendReport()
+     */
     @Test
     public void testSendReportNullUnmatchedNamesListExceptions(){
         //GIVEN

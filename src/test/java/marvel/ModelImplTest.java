@@ -255,9 +255,8 @@ public class ModelImplTest {
     }
 
     /**
-     * Testing ModelFacade sendReport() behavior for valid and invalid CharacterInfo passed in.
-     *
-     * <p>Test for interaction between ModelImpl and OutputModel</p>
+     * Test for interaction between ModelImpl (implementation) and OutputModel (mocked),
+     * verify size of unmatched names passed to OutputModel when sendReport() is called with empty and null list
      */
     @Test
     public void testSendReportFacade(){
@@ -277,6 +276,10 @@ public class ModelImplTest {
 
     }
 
+    /**
+     * Test for interaction between ModelImpl (implementation) and OutputModel (mocked),
+     * verify size and content of unmatched names passed to OutputModel when sendReport() is called
+     */
     @Test
     public void testSendReportWithNamesList(){
         //WHEN
@@ -499,6 +502,10 @@ public class ModelImplTest {
         });
     }
 
+    /**
+     * Testing model observers are notified when searched list is updated,
+     * verify updateSearchedList() is called after list is updated following successful search
+     */
     @Test
     public void testNotifySearchedListUpdate(){
         //GIVEN
@@ -514,6 +521,10 @@ public class ModelImplTest {
         verify(obs2, times(1)).updateSearchedList();
     }
 
+    /**
+     * Testing searched list tracking in the case when list has one name tracked
+     * and verifying content of searched list with getSearchedList()
+     */
     @Test
     public void testSearchedListUpdateOne(){
         //WHEN
@@ -524,6 +535,10 @@ public class ModelImplTest {
         assertEquals("spider-man", searchedList.get(0));
     }
 
+    /**
+     * Testing searched list tracking in the case when list has more than one name tracked
+     * and verifying content of searched list with getSearchedList()
+     */
     @Test
     public void testSearchedListUpdateMoreThanOne(){
         //WHEN
@@ -541,6 +556,10 @@ public class ModelImplTest {
         assertEquals("loki", searchedList.get(2));
     }
 
+    /**
+     * Testing searched list tracking with index selection in the case when list is full
+     * and replacement according to selected index is required
+     */
     @Test
     public void testSearchedListReplace(){
         //WHEN
@@ -557,6 +576,9 @@ public class ModelImplTest {
         assertEquals("loki", searchedList.get(2));
     }
 
+    /**
+     * Testing expected behavior on setIndexSelected() in ModelImpl and expected exception when selected index is out of range 0-2
+     */
     @Test
     public void testSetIndexSelectedExceptions(){
         model.setIndexSelected(0);

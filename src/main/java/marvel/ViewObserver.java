@@ -6,6 +6,7 @@ package marvel;
 public interface ViewObserver {
     /**
      * Performs operation knowing the Search Character button was clicked
+     *
      * @param name Text inside text field when event happened
      */
     public void onSearch(String name);
@@ -37,6 +38,8 @@ public interface ViewObserver {
     public void onSendReport();
     /**
      * Performs operation knowing the Load from cache button was clicked
+     *
+     * @param name Text inside text field when event happened
      */
     public void onLoadFromCache(String name);
     /**

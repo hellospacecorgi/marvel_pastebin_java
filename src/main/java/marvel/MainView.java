@@ -78,7 +78,7 @@ public class MainView {
     private TextArea searchInstruction;
 
     /**
-     * Reference to text area in lower left panel for displaying searched list of characters
+     * Reference to text area in lower left panel for displaying searched list of character names
      */
     @FXML
     private TextArea searchedList;
@@ -86,7 +86,9 @@ public class MainView {
     public MainView() { }
 
     /**
-     * Display instruction, populate choice box on right hand side with 0-2 and set change listener on selected.
+     * Set visibility of index list, label and search instructions, and change listener event handling.
+     *
+     * <p>populate choice box on right hand side with 0-2 and set change listener on selected</p>
      *
      * <p>Populate choice box on right hand side for user to index for swapping out character in list when list is full</p>
      *
@@ -98,6 +100,7 @@ public class MainView {
             indexList.getItems().add(i);
         }
 
+        //Hide components when application starts
         indexList.setVisible(false);
         listLabel.setVisible(false);
         searchInstruction.setVisible(false);
@@ -380,14 +383,17 @@ public class MainView {
 
     /**
      * Update searched list maintaining up to 3 characters searched by user
-     * @param list
+     *
+     * @param list - Formatted string of list of searched character names
      */
     public void updateSearchedList(String list){
         searchedList.setText(list);
     }
 
     /**
-     * Display the choice box list for choosing index for swapping out character in searched list and instructions
+     * Display index list choice box, list label and search instructions
+     *
+     * <p>Set visibility of components for selecting index for swapping out names in searched list and user prompts to true</p>
      */
     public void displayIndexList(){
         indexList.setVisible(true);
@@ -396,7 +402,9 @@ public class MainView {
     }
 
     /**
-     * Hide the choice box list for choosing index for swapping out character in searched list and instructions
+     * Hide index list choice box, list label and search instructions for selecting index for swapping out names in searched list
+     *
+     * <p>Set visibility of components for selecting index for swapping out names in searched list and user prompts to false</p>
      */
     public void hideIndexList(){
         indexList.setVisible(false);

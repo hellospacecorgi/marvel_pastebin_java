@@ -44,6 +44,8 @@ public class OnlinePastebinModel implements OutputModel{
      *
      * <p>Delegates actual sending of HttpRequest to PastebinApiHandler</p>
      *
+     * <p>Delegates formatting of report string to ReportService</p>
+     *
      * @param info CharacterInfo object containing data to generate report for
      * @param unmatchedNames List of names that are not at the selected index in the list
      * @return boolean - return true if report successfully sent, otherwise null

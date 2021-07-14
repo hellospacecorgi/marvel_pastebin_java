@@ -36,6 +36,10 @@ public class OfflinePastebinModel implements OutputModel{
     /**
      * Simulate send report request is processed by returning boolean value.
      *
+     * <p>Delegates formatting of report string to ReportService</p>
+     *
+     * <p>Outputs report string returned from ReportService to CLI</p>
+     *
      * @param info CharacterInfo object containing data to generate report on
      * @param unmatchedNames List of names that are not at the selected index in the list
      * @return boolean - Return true if info is not null, otherwise return false

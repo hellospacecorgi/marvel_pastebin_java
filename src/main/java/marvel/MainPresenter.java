@@ -296,7 +296,7 @@ public class MainPresenter implements ModelObserver, ViewObserver {
     /**
      * Performs operation knowing the index chosen for matching is selected
      *
-     * @param index integer chosen as index for matching
+     * @param index integer chosen by user from index list, must be in the range 0 - 2
      */
     @Override
     public void onIndexSelected(int index){
@@ -309,7 +309,7 @@ public class MainPresenter implements ModelObserver, ViewObserver {
     /**
      * Performs action upon knowing the searched name list is updated in model
      *
-     * Ask view to display updated searched list
+     * Formats character names in list and ask view to display formatted searched list string
      */
     @Override
     public void updateSearchedList() {

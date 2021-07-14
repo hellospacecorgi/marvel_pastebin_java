@@ -10,10 +10,13 @@ import java.util.List;
 public class ReportService {
 
     /**
-     * Takes in a CharacterInfo object, generates a string report based on it's attributes
+     * Takes in a CharacterInfo object and list of unmatched names in searched list, generates a string report based on it's attributes
+     *
+     * <p>Report string contains information on character (based on CharacterInfo object),
+     * and also includes names of any other characters in the searched list (based on list of unmatched names) in brackets at the end.</p>
      *
      * @param info CharacterInfo object that contains data
-     * @param unmatchedNames List of names that are not at the selected index in the list
+     * @param unmatchedNames List of names that are not at the selected index in the searched list
      * @return String - Report on character's information that is formatted for readability
      */
     public String generateReport(CharacterInfo info, List<String> unmatchedNames){
@@ -65,7 +68,7 @@ public class ReportService {
 
         report = report.concat("\n\nData provided by Marvel. 2021 MARVEL\n");
 
-        //Add unmatched names at end of report
+        //Add unmatched names in brackets at end of report
         if(unmatchedNames != null){
             for(int i = 0; i < unmatchedNames.size() ; i ++){
                 report = report.concat("(").concat(unmatchedNames.get(i)).concat(") ");
