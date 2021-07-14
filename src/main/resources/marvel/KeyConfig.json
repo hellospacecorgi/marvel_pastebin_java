@@ -1,5 +1,5 @@
 {
-  "marvelKey": "<Marvel API public key>",
-  "marvelPrivateKey": "<Marvel API private key>",
-  "pastebinKey" : "<Pastebin API public key>"
+  "marvelKey": "9809e50b4e4428f620e48572801b007f",
+  "marvelPrivateKey": "6480971221bbbb81b20b3ae5a50d3093b463c62f",
+  "pastebinKey" : "<pastebin>"
 }
