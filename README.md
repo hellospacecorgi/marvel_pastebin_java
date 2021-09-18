@@ -1,5 +1,7 @@
 # Marvel-Pastebin Java Application README
 
+<img src="https://user-images.githubusercontent.com/24476996/133878609-dd4af644-8ef6-4c42-8853-5a74a04b52f1.png" width=400> <img src="https://user-images.githubusercontent.com/24476996/133878653-9e34158b-3766-4f60-8be4-88b43b9cb3c9.png" width=400> <img src="https://user-images.githubusercontent.com/24476996/133878730-5e037aaf-9e4f-4be6-8349-a6be3fc2d212.png" width=400> <img src="https://user-images.githubusercontent.com/24476996/133878763-8226d109-226e-4b06-8df6-4200e4a755bb.png" width=400>
+
 This application fetches character information from the <a href="https://developer.marvel.com/">Marvel API</a> based on user's input for character name, and displays the information (character description, featured comics/books/thumbnail etc); additionally, user can request to generate a report where the application will post the report on <a hre=" https://pastebin.com/doc_api">Pastebin</a> and display the URL on the GUI.
 
 The application backend interacts with the Marvel API, Pastebin API, and also a SQLite database for caching response strings to be displayed in the offline version.
