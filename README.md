@@ -1,17 +1,25 @@
-# SOFT3202 Examination README
+# Marvel-Pastebin Java Application README
 
-** Note 19th June: Special Considerations approved - sitting replacement exam (<a href="https://edstem.org/courses/5417/discussion/513518?comment=1173705"> 10th June extension to be applied for pre-work state)</a> **
+This application fetches character information from the <a href="https://developer.marvel.com/">Marvel API</a> based on user's input for character name, and displays the information (character description, featured comics/books/thumbnail etc); additionally, user can request to generate a report where the application will post the report on <a hre=" https://pastebin.com/doc_api">Pastebin</a> and display the URL on the GUI.
 
-Pre-work version: <a href="https://github.sydney.edu.au/hcha8985/SCD2_2021_Exam/commit/06e8273b9107810a16a0bdd613183e71a4e411f7">06e8273b9107810a16a0bdd613183e71a4e411f7</a>(last commit on 10th June)
+The application backend interacts with the Marvel API, Pastebin API, and also a SQLite database for caching response strings to be displayed in the offline version.
+
+The application frontend was designed and developed with Scenebuilder, where a FXML file is generated and can be referenced in the respective controller class to handle UI events.
 
 * [How to run application](#how-to-run-application)
 * [Feature claim - DISTINCTION](#feature-claim)
 * [RED-GREEN-REFACTOR commits](#red-green-refactor-commits)
 * [TDD for exam extension features](#exam-set-1)
 
-## Assigned APIs
+## Developer's Note
 
-Input: https://developer.marvel.com/ Output: https://pastebin.com/doc_api
+<i>This was a project done for the SOFT3202 Software Design and Consturction unit in my final year of studies, it contains submitted and assessed components for the unit. The tutor has approved students to post our work as part of a portfolio and display it publicly. </i>
+
+As part of the unit's focus on design patterns and principles, the MVP architecture and Facade pattern was applied to achieve maintanability, extensibility and modularity of the application components.
+
+<i>If any future students who are doing SOFT2201/SOFT3203 is reading this - please double check with your unit coordinator on whether it is okay to reference this work, I am NOT promoting this work as a solution to the assessment in the unit.</i>
+
+
 
 ## Assigned exam extension
 
