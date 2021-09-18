@@ -6,7 +6,7 @@ This application fetches character information from the <a href="https://develop
 
 The application backend interacts with the Marvel API, Pastebin API, and also a SQLite database for caching response strings to be displayed in the offline version.
 
-The application frontend was designed and developed with Scenebuilder, where a FXML file is generated and can be referenced in the respective controller class to handle UI events.
+The application frontend was designed and developed with Scenebuilder, where a FXML file is generated and elements can be referenced via their fxid in the respective controller class to handle UI events.
 
 * [How to run application](#how-to-run-application)
 * [Features](#features)
