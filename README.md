@@ -7,9 +7,8 @@ The application backend interacts with the Marvel API, Pastebin API, and also a 
 The application frontend was designed and developed with Scenebuilder, where a FXML file is generated and can be referenced in the respective controller class to handle UI events.
 
 * [How to run application](#how-to-run-application)
-* [Feature claim - DISTINCTION](#feature-claim)
-* [RED-GREEN-REFACTOR commits](#red-green-refactor-commits)
-* [TDD for exam extension features](#exam-set-1)
+* [Features](#features)
+* [References](#reference)
 
 ## Developer's Note
 
@@ -56,11 +55,15 @@ will run the application using  live (requests hitting the web) input API and of
 ---
 # Features
 
+## Version 1.2.2
+
 - Given specified Marvel character name, display information about it (information on character, including image) on GUI in a way that would be useful to a user
 
 - Produce report related to character information entity built from input Marvel API for output Pastebin API
 
 The version where this is fully completed and tested in tagged with version `v1.2.2`.
+
+## Version 1.3
 
 - Cache feature: The input model will automatically cache the JSON response body from a successful character data search request.
 
@@ -83,8 +86,7 @@ The version where this is fully completed and tested in tagged with version `v1.
 ### Javadoc location
 
 Javadoc documentation for the project is located under `docs` folder
-  
-### Citations for code in previous unit
+
 
 ### References
 
