@@ -16,7 +16,7 @@ The application frontend was designed and developed with Scenebuilder, where a F
 
 <i>This was a project done for the SOFT3202 Software Design and Consturction unit in my final year of studies, it contains submitted and assessed components for the unit. The tutor has approved students to post our work as part of a portfolio and display it publicly. </i>
 
-As part of the unit's focus on design patterns and principles, the MVP architecture and Facade pattern was applied to achieve maintanability, extensibility and modularity of the application components.
+As part of the unit's focus on design patterns and principles, the MVP architecture and Facade pattern was applied to achieve maintanability, extensibility and modularity of the application components. The project was developed following test-driven development practices, and used JUnit and Mockito for testing, testing coverage can be viewed with Jacoco or Gradle test reports. Please see <a href="https://github.com/hellospacecorgi/marvel_pastebin_java/blob/master/SOFT3202_README.md" SOFT3202 README</a> for detailed documentation.
 
 <i>If any future students who are doing SOFT2201/SOFT3203 is reading this - please double check with your unit coordinator on whether it is okay to reference this work, I am NOT promoting this work as a solution to the assessment in the unit.</i>
 
